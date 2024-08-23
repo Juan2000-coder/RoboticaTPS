@@ -62,7 +62,7 @@ Se utiliza la función $trplot$ del \textbf{Robotic Toolbox} para obtener las gr
 
 Se utiliza la función $tr2eul$ para obtener los \textbf{ángulos de Euler} (roll, pitch, yaw).
 
-\subsection{a}
+\subsection{Inciso a}
 \begin{equation*}
     \prescript{O}{}{Rot_M} = 
     \begin{bmatrix}
@@ -79,7 +79,7 @@ Se utiliza la función $tr2eul$ para obtener los \textbf{ángulos de Euler} (rol
     \caption{Sistema O y Sistema M superpuestos con indicación de ángulo de rotación.}
 \end{figure}
 
-\subsection{b}
+\subsection{Inciso b}
 \begin{equation*}
     \prescript{O}{}{Rot_M} = 
     \begin{bmatrix}
@@ -111,7 +111,7 @@ Otra posibilidad es:
     \caption{Sistema O y Sistema M superpuestos}
 \end{figure}
 
-\subsection{c}
+\subsection{Inciso c}
 \begin{equation*}
     \prescript{M}{}{Rot_O} = 
     \begin{bmatrix}
@@ -165,7 +165,7 @@ homogénea $\prescript{O}{}{T_M}$. Así:
 \end{equation}
 
 
-\subsection{a}
+\subsection{Inciso a}
 \begin{equation*}
     \prescript{M}{}{a} = 
     \begin{bmatrix}
@@ -189,7 +189,7 @@ homogénea $\prescript{O}{}{T_M}$. Así:
     \caption{Sistemas M y O superpuestos - Vector con guías de proyección y cota de ángulo}
 \end{figure}
 
-\subsection{b}
+\subsection{Inciso b}
 \begin{equation*}
     \prescript{M}{}{b} = 
     \begin{bmatrix}
@@ -213,7 +213,7 @@ homogénea $\prescript{O}{}{T_M}$. Así:
     \caption{Sistemas M y O superpuestos - Vector con guías de proyección y cota de ángulo}
 \end{figure}
 
-\subsection{c}
+\subsection{Inciso c}
 \begin{equation*}
     \prescript{M}{}{b} = 
     \begin{bmatrix}
@@ -305,7 +305,10 @@ El punto $\mathbf{M}$ respecto de $\mathbf{\{O\}}$ es $\prescript{O}{}{p_M} = \l
     \caption{Gráfica del enunciado.}
 \end{figure}
 
-\subsection{a. Halle, por el método que elija, el ángulo de rotación del sistema {M} respecto de {O}}
+\subsection{Inciso a.}
+\textbf{Halle, por el método que elija, el ángulo de rotación del sistema {M} respecto de {O}.}
+\vspace{0.5 cm}
+
 Como el vector $a$ es paralelo a $\mathbf{X_O}$, 
 el ángulo que forma con $\mathbf{X_M}$ (sentido dextrógiro)
 es el ángulo que se debe rotar este eje para que sea paralelo a $\mathbf{X_O}$
@@ -319,8 +322,10 @@ de $a$ en el sistema $\mathbf{\{M\}}$ y tomándo el opuesto.
     \gamma \text(yaw) = -26.56^\circ
 \]
 
-\subsection{b. Exprese la matriz de transformación homogénea que describe la posición y orientación
-del sistema {M} respecto de {O}}
+\subsection{Inciso b.}
+\textbf{Exprese la matriz de transformación homogénea que describe la posición y orientación
+del sistema {M} respecto de {O}.}
+\vspace{0.5 cm}
 
 Se usa \textbf{trotz} para obtener la matriz de rotación.
 
@@ -333,8 +338,10 @@ Se usa \textbf{trotz} para obtener la matriz de rotación.
     \end{bmatrix}
 \end{equation*}
 
-\subsection{c. Use la transformación hallada para representar el vector $a$ respecto del sistema {O}.
+\subsection{Inciso c.}
+\textbf{Use la transformación hallada para representar el vector $a$ respecto del sistema {O}.
 Verifique gráficamente el resultado.}
+\vspace{0.5 cm}
 
 Se obtiene segun \cref{transformacion}
 \[
@@ -358,13 +365,17 @@ Escriba la matriz de transformación homogénea que representa la posición y
 orientación del sistema {M} respecto de {O} para cada caso. Realice un gráfico donde se
 aprecie la diferencia.
 
-\subsection{a. El sistema {M} giró 45° respecto del eje $Y_O$, luego se trasladó un vector $\prescript{M}{}{p}$ = (0, 0, 1)}
+\subsection{Inciso a.}
+\textbf{El sistema {M} giró 45° respecto del eje $Y_O$, luego se trasladó un vector $\prescript{M}{}{p} = (0, 0, 1)$}
+\vspace{0.5 cm}
 
 Se usa \textbf{troty} con $\beta = 45^\circ$ y se obtiene la matriz de trasnformación homogénea R.
 Luego se usa \textbf{transl} con $\prescript{M}{}{p}$ y se obtiene la matriz de transformación homogénea T.
 Se obtiene $\prescript{O}{}{T_M} = R_a*T_a$.
 
-\subsection{b. El sistema {M} se trasladó un vector  $\prescript{O}{}{p}$ = (0, 0, 1), luego giró 45° respecto del eje $Y_M$}
+\subsection{Inciso b.}
+\textbf{El sistema {M} se trasladó un vector  $\prescript{O}{}{p}$ = (0, 0, 1), luego giró 45° respecto del eje $Y_M$.}
+\vspace{0.5 cm}
 
 Se usa \textbf{transl} con $\prescript{O}{}{p}$ y se obtiene la matriz de transformación homogénea T.
 Luego Se usa \textbf{troty} con $\beta = 45^\circ$ y se obtiene la matriz de trasnformación homogénea R.
@@ -401,7 +412,78 @@ De \cref{transformacion} se puede obtener:
 Sin embargo obtendremos la solución de los problemas utilizando el operador \textbackslash de MATLAB.
 
 \subsection{a}
-
+\[
+    \prescript{O}{}{p} =
+    \begin{bmatrix}
+        -0.3536\\
+        0      \\
+        0.0607
+    \end{bmatrix}
+\]
 \subsection{b}
+\[
+    \prescript{O}{}{p} =
+    \begin{bmatrix}
+        0.3536\\
+        0     \\
+        0.3536
+    \end{bmatrix}
+\]
+
+\section{Ejercicio 7.}
+Analizar la siguiente transformación compuesta e indicar V o F. Considere que $T$
+representa la posición y orientación de un sistema de referencia {M} respecto de otro sistema
+de referencia {O}.
+
+\[T = TrotX(\alpha) Ttrans(0,2,0) TrotY(\beta)\]
+
+\subsection{Inciso a}
+\textbf{El sistema {M} sufrió una rotación $\alpha$ respecto de $X_O$, luego una traslación de 2
+unidades sobre el eje $Y_O$, y finalmente una rotación $\beta$ respecto de este mismo eje.}
+\vspace*{0.5 cm}
+
+\textbf{F}. La traslación y la última rotación no son sobre los ejes del sistema {O} sino respecto del último sistema obtenido luego de la transformación previa.
+
+\subsection{Inciso b}
+\textbf{El sistema {M} sufrió una rotación $\alpha$ respecto de $X_M$, luego una traslación de 2
+unidades sobre el eje $Y_M$, y finalmente una rotación $\beta$ respecto de este mismo eje}
+\vspace*{0.5 cm}
+
+\textbf{F}. La primera rotación es respecto del eje $X_O$.
+
+\subsection{Inciso c}
+\textbf{Un vector $p$ expresado en {O} puede expresarse en {M} realizando el producto: $\prescript{M}{}{p} =
+T. p$}
+\vspace*{0.5 cm}
+
+\textbf{F}. La premultiplicación debería ser por la inversa T.
+
+\subsection{Inciso d}
+\textbf{Un vector $p$ expresado en {M} puede expresarse en {O} realizando el producto: $\prescript{O}{}{p} =
+T. p$}
+\vspace*{0.5 cm}
+
+\textbf{V}.
+
+\section{Ejercicio 8}
+En función de las siguientes matrices escritas en forma simbólica halle la expresión
+correcta para cada caso:
+
+\begin{itemize}
+    \item $\prescript{O}{}{T_M}$: matriz de trasformación homogénea del sistema {M} respecto de {O}.
+    \item $\prescript{M}{}{T_A}$: matriz de trasformación homogénea del sistema {A} respecto de {M}.
+    \item $\prescript{A}{}{T_B}$: matriz de trasformación homogénea del sistema {B} respecto de {A}.
+    \item $\prescript{O}{}{T_F}$: matriz de trasformación homogénea del sistema {F} respecto de {O}
+    \item $\prescript{F}{}{T_D}$: matriz de trasformación homogénea del sistema {D} respecto de {F}
+\end{itemize}
+
+\subsection{{B} respecto de {O}}
+\[\prescript{O}{}{T_B} = \prescript{O}{}{T_M} \prescript{M}{}{T_A} \prescript{A}{}{T_B}\]
+
+\subsection{{F} respecto de {B}}
+\[\prescript{B}{}{T_F} = \prescript{O}{}{T_B}^{-1} \prescript{O}{}{T_F}\]
+
+\subsection{{B} respecto de {D}}
+\[\prescript{D}{}{T_B} = \prescript{F}{}{T_D}^{-1} \prescript{B}{}{T_F}^{-1} \]
 
 \end{document}
