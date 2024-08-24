@@ -92,7 +92,7 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.85, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.8, max width=\columnwidth}
         \framebox{\includegraphics{1-Ejercicio_2_1_enunciado.JPG}}
     \end{adjustbox}
     \caption{Robot planar de 3 articulaciones rotacionales (Spong 2005).}
@@ -100,7 +100,7 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.85, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.8, max width=\columnwidth}
         \framebox{\includegraphics{2-Ejercicio_2_1_eslabones_articulaciones.JPG}}
     \end{adjustbox}
     \caption{Identificación de eslabones y articulaciones.}
@@ -122,7 +122,64 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
     \caption{Aplicación de la convención DH.}
 \end{figure}
 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Sistema & $\theta$ & $d$ & $a$         & $\alpha$ & $\sigma$ \\ \hline
+    1       & $q_1$     & 0   & $l_{esl1}$  & 0        & 0        \\ \hline
+    2       & $q_2$     & 0   & $l_{esl2}$  & 0        & 0        \\ \hline
+    3       & $q_3$     & 0   & $l_{esl3}$  & 0        & 0        \\ \hline
+    \end{tabular}
+    \caption{Síntesis de la convención DH.}
+\end{table}
+
 \subsection{Inciso 2.}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.7, max width=\columnwidth}
+        \framebox{\includegraphics{5-Ejercicio_2_2_enunciado.JPG}}
+    \end{adjustbox}
+    \caption{Robot planar con 3 articulaciones: rotación, traslación, rotación (Spong 2005).}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.7, max width=\columnwidth}
+        \framebox{\includegraphics{6-Ejercicio_2_2_eslabones_articulaciones.JPG}}
+    \end{adjustbox}
+    \caption{Identificación de eslabones y articulaciones.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.85, max width=\columnwidth}
+        \framebox{\includegraphics{7-Ejercicio_2_2_sistemas.JPG}}
+    \end{adjustbox}
+    \caption{Definición de los sistemas.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.85, max width=\columnwidth}
+        \framebox{\includegraphics{8-Ejercicio_2_2_DH.JPG}}
+    \end{adjustbox}
+    \caption{Aplicación de la convención DH.}
+\end{figure}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Sistema & $\theta$          & $d$                               & $a$         & $\alpha$     & $\sigma$ \\ \hline
+    1       & $q_1$             & 0                                 & $0$         & $90^\circ$   & 0        \\ \hline
+    2       & $0$               & $q_2 + l_{esl1} + l_{esl2} - b$   & $0$         & $-90^\circ$  & 1        \\ \hline
+    3       & $q_3 - 90^\circ$  & 0                                 & $l_{esl3}$  & 0            & 0        \\ \hline
+    \end{tabular}
+    \caption{Síntesis de la convención DH.}
+\end{table}
+\end{document}
 
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
