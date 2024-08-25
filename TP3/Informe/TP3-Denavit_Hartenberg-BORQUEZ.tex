@@ -282,7 +282,7 @@ de árbol la cuenta que hay que hacer para determinar $d_4$.
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.66, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.6, max width=\columnwidth}
         \framebox{\includegraphics{17-Ejercicio_3_1_DH_superior.JPG}}
     \end{adjustbox}
     \caption{Aplicación de la convención DH vista superior.}
@@ -320,6 +320,54 @@ de árbol la cuenta que hay que hacer para determinar $d_4$.
 \end{table}
 
 \subsection{Paint Mate 200iA (FANUC).}
+
+Aplicamos la convención DH directamente como se muestra en las \cref{DH FANUC overview} y \cref{DH FANUC lateral}..
+En las que se ha identificado los sistemas de referencias para cada articulación y para el efector final
+y se han resaltado los parámetros del robot que son útiles para la definición de la matriz de transformación 
+homogénea según DH.
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.9, max width=\columnwidth}
+        \framebox{\includegraphics{20-Ejercicio_3_2_DH_parametros_dsh_overview.JPG}}
+    \end{adjustbox}
+    \caption{Aplicación de la convención DH overview.}
+    \label{DH FANUC overview}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{22-Ejercicio_3_2_DH_parametros_dsh_wrist.JPG}}
+    \end{adjustbox}
+    \caption{Datos de la muñeca.}
+    \label{DH FANUC muñeca}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.9, max width=\columnwidth}
+        \framebox{\includegraphics{21-Ejercicio_3_2_DH_parametros_dsh_side.JPG}}
+    \end{adjustbox}
+    \caption{Aplicación de la convención DH vista lateral.}
+    \label{DH FANUC lateral}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Sistema & $\theta$          & $d$    & $a$   & $\alpha$    & $\sigma$ \\ \hline
+    1       & $q_1$             & $450$  & $75$  & $90^\circ$  & 0        \\ \hline
+    2       & $90^\circ + q_2$  & $0$    & $300$ & $0$         & 0        \\ \hline
+    3       & $q_3$             & $0$    & $75$  & $90^\circ$  & 0        \\ \hline
+    4       & $q_4$             & $320$  & $0$   & $-90^\circ$ & 0        \\ \hline
+    5       & $q_5$             & $0$    & $0$   & $90^\circ$  & 0        \\ \hline
+    6       & $q_6$             & $80$   & $0$   & $0$         & 0        \\ \hline
+    \end{tabular}
+    \caption{Síntesis de la convención DH.}
+    \label{sintesis DH FANUC}
+\end{table}
 
 \subsection{LBR iiwa 7 R800 (KUKA).}
 
