@@ -92,7 +92,7 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.8, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.5, max width=\columnwidth}
         \framebox{\includegraphics{1-Ejercicio_2_1_enunciado.JPG}}
     \end{adjustbox}
     \caption{Robot planar de 3 articulaciones rotacionales (Spong 2005).}
@@ -100,7 +100,7 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.8, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.5, max width=\columnwidth}
         \framebox{\includegraphics{2-Ejercicio_2_1_eslabones_articulaciones.JPG}}
     \end{adjustbox}
     \caption{Identificación de eslabones y articulaciones.}
@@ -108,7 +108,7 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.58, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.6, max width=\columnwidth}
         \framebox{\includegraphics{3-Ejercicio_2_1_sistemas.JPG}}
     \end{adjustbox}
     \caption{Definición de los sistemas.}
@@ -138,7 +138,7 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.7, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.5, max width=\columnwidth}
         \framebox{\includegraphics{5-Ejercicio_2_2_enunciado.JPG}}
     \end{adjustbox}
     \caption{Robot planar con 3 articulaciones: rotación, traslación, rotación (Spong 2005).}
@@ -146,7 +146,7 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.7, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.5, max width=\columnwidth}
         \framebox{\includegraphics{6-Ejercicio_2_2_eslabones_articulaciones.JPG}}
     \end{adjustbox}
     \caption{Identificación de eslabones y articulaciones.}
@@ -154,7 +154,7 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.85, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.5, max width=\columnwidth}
         \framebox{\includegraphics{7-Ejercicio_2_2_sistemas.JPG}}
     \end{adjustbox}
     \caption{Definición de los sistemas.}
@@ -232,9 +232,95 @@ cada uno de ellos y obtenga los datos necesarios de su geometría a partir de la
 gratuita que el fabricante pone a disposición en su página web. Si existe más de un modelo
 para cada caso seleccione uno, cualquiera.}
 
-\subsection{SCARA IRB 910SC (ABB).}
+\subsection{SCARA IRB 910SC-3/0.45 (ABB).}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.662, max width=\columnwidth}
+        \framebox{\includegraphics{13-Ejercicio_3_1_eslabones_articulaciones.JPG}}
+    \end{adjustbox}
+    \caption{Identificación de eslabones y articulaciones.}
+    \label{scara_eslabones_articulaciones}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.662, max width=\columnwidth}
+        \framebox{\includegraphics{14-Ejercicio_3_1_sistemas_lateral.JPG}}
+    \end{adjustbox}
+    \caption{Definición de sistemas vista lateral.}
+    \label{scara_sistemas_lateral}
+\end{figure}
+
+Como se puede ver en las \cref{scara_eslabones_articulaciones}, \cref{scara_sistemas_lateral} y \cref{scara_sistemas_superior},
+hemos separado al par cilíndrico en el extremo del robot por un par de rotación más un par prismático
+y hemos considerado un sistema de referencia independiente para cada uno (\{S2\} y \{S3\}).
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.7, max width=\columnwidth}
+        \framebox{\includegraphics{15-Ejercicio_3_1_sistemas_superior.JPG}}
+    \end{adjustbox}
+    \caption{Definición de los sistemas vista superior.}
+    \label{scara_sistemas_superior}
+\end{figure}
+
+Los parámetros para la convención DH se resaltaron en las \cref{DH_superior} y \cref{DH_lateral}
+con cuadros de color violeta para las dimensiones en milímetros y con cuadros en rojo
+para la denominación de los parámetros; mientras que aquellos parámetros que no se indican en las figuras
+se colocan directamente en la \cref{sintesis_DH_scara}. En la \cref{DH_lateral} también se indica en forma
+de árbol la cuenta que hay que hacer para determinar $d_4$.
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.66, max width=\columnwidth}
+        \framebox{\includegraphics{16-Ejercicio_3_1_DH_lateral.JPG}}
+    \end{adjustbox}
+    \caption{Aplicación de la convención DH vista lateral.}
+    \label{DH_lateral}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.66, max width=\columnwidth}
+        \framebox{\includegraphics{17-Ejercicio_3_1_DH_superior.JPG}}
+    \end{adjustbox}
+    \caption{Aplicación de la convención DH vista superior.}
+    \label{DH_superior}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.66, max width=\columnwidth}
+        \framebox{\includegraphics{18-Ejercicio_3_1_DH_parametros_dsh.JPG}}
+    \end{adjustbox}
+    \caption{parámetros 1.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.66, max width=\columnwidth}
+        \framebox{\includegraphics{19-Ejercicio_3_1_DH_parametros_dsh.JPG}}
+    \end{adjustbox}
+    \caption{parámetros 2.}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Sistema & $\theta$  & $d$           & $a$    & $\alpha$ & $\sigma$ \\ \hline
+    1       & $q_1$     & $199.2$       & $200$  & 0        & 0        \\ \hline
+    2       & $q_2$     & $59.5$        & $250$  & 0        & 0        \\ \hline
+    3       & $q_3$     & $0$           & $0$    & 90°      & 0        \\ \hline
+    4       & $0$       & $37.5 + q_4$  & $0$    & 0        & 1        \\ \hline
+    \end{tabular}
+    \caption{Síntesis de la convención DH.}
+    \label{sintesis_DH_scara}
+\end{table}
 
 \subsection{Paint Mate 200iA (FANUC).}
+
 \subsection{LBR iiwa 7 R800 (KUKA).}
 
 \end{document}
