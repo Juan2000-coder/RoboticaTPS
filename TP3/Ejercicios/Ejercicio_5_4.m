@@ -17,7 +17,7 @@ DH = [0.0 199.2 200.0 0.0  0;
       0.0   0.0   0.0 0.0  1];
 
 % Variables articulares
-q  = [0 0 0 0];
+q  = [1 1 0 0];
 
 % Construcción del robot
 robot      = SerialLink(DH, 'name', 'SCARA IRB');

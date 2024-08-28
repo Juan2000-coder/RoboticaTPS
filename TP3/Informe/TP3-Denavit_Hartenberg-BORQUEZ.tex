@@ -9,6 +9,7 @@
 \usepackage[spanish]{babel} 
 \usepackage{lastpage}
 \usepackage{amssymb} % Para símbolos matemáticos adicionales
+\usepackage{hyperref}
 \usepackage{cleveref}
 %\usepackage[none]{hyphenat}
 \usepackage{array}
@@ -271,7 +272,7 @@ y hemos considerado un sistema de referencia independiente para cada uno (\{S2\}
     \label{scara_sistemas_superior}
 \end{figure}
 
-Los parámetros para la convención DH se resaltaron en las \cref{DH_superior} y \cref{DH_lateral}
+Los \href{https://library.e.abb.com/public/bfb473ab8a774b01919d7f1b7f0fb8af/3HAC056431%20PS%20IRB%20910SC-es.pdf}{parámetros} para la convención DH se resaltaron en las \cref{DH_superior} y \cref{DH_lateral}
 con cuadros de color violeta para las dimensiones en milímetros y con cuadros en rojo
 para la denominación de los parámetros; mientras que aquellos parámetros que no se indican en las figuras
 se colocan directamente en la \cref{sintesis_DH_scara}. En la \cref{DH_lateral} también se indica en forma
@@ -334,7 +335,7 @@ con una línea de referencia inicial sobre la transversal al eslabón final del 
 
 Aplicamos la convención DH directamente como se muestra en las \cref{DH FANUC overview} y \cref{DH FANUC lateral}..
 En las que se ha identificado los sistemas de referencias para cada articulación y para el efector final
-y se han resaltado los parámetros del robot que son útiles para la definición de la matriz de transformación 
+y se han resaltado los \href{https://www.fanuc.co.za/wp-content/uploads/2021/12/Paint-Mate-200iA.pdf}{parámetros} del robot que son útiles para la definición de la matriz de transformación 
 homogénea según DH.
 
 \begin{figure}[H]
@@ -380,8 +381,11 @@ homogénea según DH.
     \label{sintesis DH FANUC}
 \end{table}
 
+\newpage
 \subsection{LBR iiwa 7 R800 (KUKA)}
 \label{subsec: robot 6}
+
+\href{https://www.kuka.com/-/media/kuka-downloads/imported/8350ff3ca11642998dbdc81dcc2ed44c/0000246832_es.pdf?rev=b8bb2cd18a86416c98d05eb8edb9c187&hash=9C76A209C7EE46596A933A841554D4CD}{Parámetros del robot}
 
 \begin{figure}[H]
     \centering
@@ -520,7 +524,7 @@ Los rangos de movimiento de las articulaciones se indican en \cref{rangos scara}
 
 \begin{figure}[htpb]
     \centering
-    \begin{adjustbox}{max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.8, max width=\columnwidth}
         \framebox{\includegraphics{31-Rangos_scara.JPG}}
     \end{adjustbox}
     \caption{Rangos articulares.}
@@ -546,7 +550,18 @@ Los rangos de movimiento de las articulaciones se indican en \cref{rangos scara}
 \end{figure}
 
 \subsection{Robot en \cref{subsec: robot 5}}
-Verificación gráfica en la \cref{teach robot 5}.
+Los rangos de movimiento de las articulaciones se indican en \cref{rangos fanuc}
+y se toman simétricos centrados en el cero. La
+verificación gráfica se indica en la \cref{teach robot 5}.
+
+\begin{figure}[htpb]
+    \centering
+    \begin{adjustbox}{scale = 0.7, max width=\columnwidth}
+        \framebox{\includegraphics{32-Rangos_fanuc.JPG}}
+    \end{adjustbox}
+    \caption{Rangos articulares.}
+    \label{rangos fanuc}
+\end{figure}
 
 \begin{figure}[htpb]
     \centering
@@ -556,10 +571,18 @@ Verificación gráfica en la \cref{teach robot 5}.
     \caption{SerialLink.plot() y SerialLink.teach() robot 5}
     \label{teach robot 5}
 \end{figure}
-\end{document}
 
 \subsection{Robot en \cref{subsec: robot 6}}
-Verificación gráfica en la \cref{teach robot 6}.
+Los rangos articulares se indican en la \cref{rangos kuka}. La verificación gráfica se muestra en la \cref{teach robot 6}.
+
+\begin{figure}[htpb]
+    \centering
+    \begin{adjustbox}{scale = 0.5, max width=\columnwidth}
+        \framebox{\includegraphics{33-Rangos_kuka.JPG}}
+    \end{adjustbox}
+    \caption{Rangos articulares.}
+    \label{rangos kuka}
+\end{figure}
 
 \begin{figure}[htpb]
     \centering
@@ -569,7 +592,7 @@ Verificación gráfica en la \cref{teach robot 6}.
     \caption{SerialLink.plot() y SerialLink.teach() robot 6}
     \label{teach robot 6}
 \end{figure}
-\end{document}
+
 
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
