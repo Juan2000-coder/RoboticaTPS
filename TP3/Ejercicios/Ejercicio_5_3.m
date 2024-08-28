@@ -1,0 +1,38 @@
+close all;
+clear;
+clc;
+
+fprintf('######################################################\n');
+fprintf('#                Ejercicios 5  TP3                   #\n');
+fprintf('######################################################\n\n');
+
+
+fprintf("------------Robot de la sección 2.3------------------\n\n");
+
+% Considero dimensiones unitarias.
+
+% Parametros DH robot
+DH = [0.0 1.0 1.0 0.0  1;
+      0.0 0.0 1.0 0.0  0;
+      0.0 0.0 1.0 0.0  0];
+
+% Variables articulares
+q  = [0 0 0];
+
+% Construcción del robot
+robot      = SerialLink(DH, 'name', 'Robot sección 2.3');
+
+
+% Offsets iniciales
+robot.offset = [1 0 0];
+
+% Límites
+robot.qlim   = [        [ 1     2];
+                deg2rad([-90  270]);
+                deg2rad([-90  270])];
+
+% Plot del robot
+
+robot.plot(q, 'workspace', [-5 5 -5 5 -5 5], 'trail', {'r', 'LineWidth', 2});
+
+robot.teach();

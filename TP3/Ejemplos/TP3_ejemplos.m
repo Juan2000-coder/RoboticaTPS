@@ -7,10 +7,10 @@ fprintf('######################################################\n')
 fprintf('#                Ejemplos para el TP3                #\n')
 fprintf('######################################################\n\n')
 fprintf('Ejemplo para ABB IRB910 SC\n')
-fprintf('> definición de matriz de parámetros DH\n')
-fprintf('> creación de objeto SerialLink con nombre\n')
+fprintf('> definiciï¿½n de matriz de parï¿½metros DH\n')
+fprintf('> creaciï¿½n de objeto SerialLink con nombre\n')
 fprintf('> vector inicial\n')
-fprintf('> límites articulares\n')
+fprintf('> lï¿½mites articulares\n')
 fprintf('> matriz de base\n')
 fprintf('> matriz de herramienta\n')
 fprintf('> offsets articulares\n')
@@ -35,7 +35,7 @@ R.qlim(4,1:2) = [-400,  400]*pi/180;
 %R.tool = transl(.2, .2, 0);
 R.offset = [pi/4 0 0 0];
 
-% R.plot(q,'workspace',[-1 1 -1 1 -1 1])
+%R.plot(q,'workspace',[-1 1 -1 1 -1 1])
 R.plot(q,'scale',0.8,'trail',{'r', 'LineWidth', 2})
 R.teach()
 %=========================================================================%

@@ -89,6 +89,7 @@ los sistemas de referencia y determine los 4 parámetros de cada articulación: 
 un esquema adecuado donde se aprecien todos los parámetros involucrados.}
 
 \subsection{Inciso 1}
+\label{subsec: robot 1}
 
 \begin{figure}[H]
     \centering
@@ -134,7 +135,8 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
     \caption{Síntesis de la convención DH.}
 \end{table}
 
-\subsection{Inciso 2.}
+\subsection{Inciso 2}
+\label{subsec: robot 2}
 
 \begin{figure}[H]
     \centering
@@ -166,6 +168,7 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
         \framebox{\includegraphics{8-Ejercicio_2_2_DH.JPG}}
     \end{adjustbox}
     \caption{Aplicación de la convención DH.}
+    \label{robot 2 convencion}
 \end{figure}
 
 \begin{table}[H]
@@ -178,9 +181,11 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
     3       & $q_3 - 90^\circ$  & 0                                 & $l_{esl3}$  & 0            & 0        \\ \hline
     \end{tabular}
     \caption{Síntesis de la convención DH.}
+    \label{dh robot 2}
 \end{table}
 
-\subsection{Inciso 3.}
+\subsection{Inciso 3}
+\label{subsec: robot 3}
 
 \begin{figure}[H]
     \centering
@@ -226,13 +231,14 @@ un esquema adecuado donde se aprecien todos los parámetros involucrados.}
     \caption{Síntesis de la convención DH.}
 \end{table}
 
-\section{Ejercicio 3.}
+\section{Ejercicio 3}
 \textbf{Determine los parámetros DH de cada uno de los siguientes robots reales. Analice
 cada uno de ellos y obtenga los datos necesarios de su geometría a partir de la información
 gratuita que el fabricante pone a disposición en su página web. Si existe más de un modelo
 para cada caso seleccione uno, cualquiera.}
 
-\subsection{SCARA IRB 910SC-3/0.45 (ABB).}
+\subsection{SCARA IRB 910SC-3/0.45 (ABB)}
+\label{subsec: robot 4}
 
 \begin{figure}[H]
     \centering
@@ -269,7 +275,7 @@ Los parámetros para la convención DH se resaltaron en las \cref{DH_superior} y
 con cuadros de color violeta para las dimensiones en milímetros y con cuadros en rojo
 para la denominación de los parámetros; mientras que aquellos parámetros que no se indican en las figuras
 se colocan directamente en la \cref{sintesis_DH_scara}. En la \cref{DH_lateral} también se indica en forma
-de árbol la cuenta que hay que hacer para determinar $d_4$.
+de árbol la cuenta para determinar $d_4$.
 
 \begin{figure}[H]
     \centering
@@ -279,6 +285,9 @@ de árbol la cuenta que hay que hacer para determinar $d_4$.
     \caption{Aplicación de la convención DH vista lateral.}
     \label{DH_lateral}
 \end{figure}
+
+El eje $X_3$ correspondiente al par prismático y el $X_4$ correspondiente al efector final, se mantienen alineados
+con una línea de referencia inicial sobre la transversal al eslabón final del robot.
 
 \begin{figure}[H]
     \centering
@@ -303,6 +312,7 @@ de árbol la cuenta que hay que hacer para determinar $d_4$.
         \framebox{\includegraphics{19-Ejercicio_3_1_DH_parametros_dsh.JPG}}
     \end{adjustbox}
     \caption{parámetros 2.}
+    \label{rango lineal scara}
 \end{figure}
 
 \begin{table}[H]
@@ -312,14 +322,15 @@ de árbol la cuenta que hay que hacer para determinar $d_4$.
     Sistema & $\theta$  & $d$           & $a$    & $\alpha$ & $\sigma$ \\ \hline
     1       & $q_1$     & $199.2$       & $200$  & 0        & 0        \\ \hline
     2       & $q_2$     & $59.5$        & $250$  & 0        & 0        \\ \hline
-    3       & $q_3$     & $0$           & $0$    & 90°      & 0        \\ \hline
+    3       & $q_3$     & $0$           & $0$    & 180°      & 0        \\ \hline
     4       & $0$       & $37.5 + q_4$  & $0$    & 0        & 1        \\ \hline
     \end{tabular}
     \caption{Síntesis de la convención DH.}
     \label{sintesis_DH_scara}
 \end{table}
 
-\subsection{Paint Mate 200iA (FANUC).}
+\subsection{Paint Mate 200iA (FANUC)}
+\label{subsec: robot 5}
 
 Aplicamos la convención DH directamente como se muestra en las \cref{DH FANUC overview} y \cref{DH FANUC lateral}..
 En las que se ha identificado los sistemas de referencias para cada articulación y para el efector final
@@ -369,7 +380,8 @@ homogénea según DH.
     \label{sintesis DH FANUC}
 \end{table}
 
-\subsection{LBR iiwa 7 R800 (KUKA).}
+\subsection{LBR iiwa 7 R800 (KUKA)}
+\label{subsec: robot 6}
 
 \begin{figure}[H]
     \centering
@@ -405,6 +417,123 @@ homogénea según DH.
     \caption{Síntesis de la convención DH.}
     \label{sintesis DH KUKA}
 \end{table}
+
+\section{Ejercicio 4}
+\textbf{Tome el robot 1 del punto anterior y escriba al menos 2 conjuntos de parámetros
+DH diferentes que lo representen.}
+
+Para conseguir otro juego de parámetros de DH nuevamente dividimos
+el par cilíndrico en un par prismático y un par de rotación, pero ahora
+tomamos el par prismático antes que el par de rotación en la cadena cinemática,
+de esta manera, los parámetros DH son los que se muestran en \cref{parametros DH2}.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Sistema & $\theta$  & $d$           & $a$    & $\alpha$ & $\sigma$ \\ \hline
+    1       & $q_1$     & $199.2$       & $200$  & 0        & 0        \\ \hline
+    2       & $q_2$     & $59.5$        & $250$  & 0        & 0        \\ \hline
+    3       & $0$       & $q_3$         & $0$    & 180°     & 1        \\ \hline
+    4       & $q_4$     & $37.5$        & $0$    & 0        & 0        \\ \hline
+    \end{tabular}
+    \caption{Parámetros DH alternativos.}
+    \label{parametros DH2}
+\end{table}
+En este caso, se toma el eje $X_3$, correspondiente el par de rotación,
+en la misma dirección que el eje $X_2$ y el eje $X_4$, correspondiente al efector final,
+en la dirección que una línea de referencia sobre la transversal al eslabón final del robot.
+
+\section{Ejercicio 5.}
+\textbf{Escriba un script de Matlab para cada robot del trabajo práctico. Use el toolbox de
+Peter Corke para definirlos - clase (SerialLink) - y haga un plot de cada uno (SerialLink.plot).
+Verifique gráficamente que sea el correcto mediante el movimiento de las articulaciones
+(SerialLink.teach). Asigne medidas unitarias o genéricas si no dispone de 
+reales}
+
+
+\subsection{Robot en \cref{subsec: robot 1}}
+\begin{itemize}
+    \item Se toman longitudes unitarias de los eslabones.
+    \item No se asignan offset de las variables articulares.
+    \item Los límites articulares son de $\left(0^\circ; 180^\circ\right)$, $\left(-90^\circ; 270^\circ\right)$ y $\left(-90^\circ; 270^\circ\right)$ para las articulaciones 1, 2 y 3 respectivamente.
+\end{itemize}
+
+Verificación gráfica en \cref{teach robot 1}.
+
+\begin{figure}[htpb]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{25-Ejercicio_5_1.pdf}}
+    \end{adjustbox}
+    \caption{SerialLink.plot() y SerialLink.teach() robot 1}
+    \label{teach robot 1}
+\end{figure}
+
+\subsection{Robot en \cref{subsec: robot 2}}
+\begin{itemize}
+    \item Se toman longitudes genericas de los eslabones.
+    \item De la \cref{dh robot 2} se toman offsets de $0^\circ$, $0.5$ y $-90^\circ$ para las articulaciones 1, 2 y 3 respectivamente.
+    \item Los límites articulares son de $\left(0^\circ; 180^\circ\right)$, $\left(0.5; 1\right)$ y $\left(-90^\circ; 270^\circ\right)$ para las articulaciones 1, 2 y 3 respectivamente.
+    \item Como se puede observar en \cref{robot 2 convencion} hay una rotaión del sistema base de $90^\circ$ alrededor del eje z.
+\end{itemize}
+
+Verificación gráfica en \cref{teach robot 2}.
+
+\begin{figure}[htpb]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{26-Ejercicio_5_2.pdf}}
+    \end{adjustbox}
+    \caption{SerialLink.plot() y SerialLink.teach() robot 2}
+    \label{teach robot 2}
+\end{figure}
+
+\subsection{Robot en \cref{subsec: robot 3}}
+\begin{itemize}
+    \item Se toman longitudes genericas de los eslabones.
+    \item Se toma un offset de 1 en la primera articulación.
+    \item Los límites articulares son de $\left(1; 2\right)$, $\left(-90^\circ; 270^\circ\right)$ y $\left(-90^\circ; 270^\circ\right)$ para las articulaciones 1, 2 y 3 respectivamente.
+\end{itemize}
+
+Verificación gráfica en \cref{teach robot 3}.
+
+\begin{figure}[htpb]
+    \centering
+    \begin{adjustbox}{scale = 0.9, max width=\columnwidth}
+        \framebox{\includegraphics{27-Ejercicio_5_3.pdf}}
+    \end{adjustbox}
+    \caption{SerialLink.plot() y SerialLink.teach() robot 3}
+    \label{teach robot 3}
+\end{figure}
+
+\subsection{Robot en \cref{subsec: robot 4}}
+Todos los parámetros se obtienen de la \cref{sintesis_DH_scara}
+y de las figuras en la \cref{subsec: robot 4}. Verificación gráfica en \cref{teach robot 4}.
+
+Cuando se utilizan los parámetros alternativos que se dieron en la \cref{parametros DH2}
+se obtiene lo que se indica en la \cref{teach robot 4 alt}.
+En este caso, para el par prismático se toma un offset inicial igual a -180, que es el recorrido indicado en
+\cref{rango lineal scara} y el rango de esa articulación se toma de 0 a 180 dado que no se pueden tener límites negativos en el rango de la variable articular prismática.
+
+\begin{figure}[htpb]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{28-Ejercicio_5_4.pdf}}
+    \end{adjustbox}
+    \caption{SerialLink.plot() y SerialLink.teach() robot 4}
+    \label{teach robot 4}
+\end{figure}
+
+\begin{figure}[htpb]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{29-Ejercicio_5_4_1.pdf}}
+    \end{adjustbox}
+    \caption{SerialLink.plot() y SerialLink.teach() robot 4 DH alternativo}
+    \label{teach robot 4 alt}
+\end{figure}
+
 \end{document}
 
 %\begin{equation*}
