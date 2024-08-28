@@ -9,7 +9,7 @@ fprintf('######################################################\n\n');
 
 fprintf("------------Robot de la sección 2.2------------------\n\n");
 
-% Considero dimensiones unitarias.
+% Considero dimensiones genericas.
 
 % Parametros DH robot
 DH = [0.0 0.0 0.0 pi/2  0;

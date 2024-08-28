@@ -7,9 +7,7 @@ fprintf('#                Ejercicios 5  TP3                   #\n');
 fprintf('######################################################\n\n');
 
 
-fprintf("-Robot de la sección 2.4 con parametros alternativos-\n\n");
-
-% Considero dimensiones unitarias.
+fprintf("-Robot de la sección 3.1 con parametros alternativos-\n\n");
 
 % Parametros DH robot
 DH = [0.0 199.2 200.0 0.0  0;
@@ -27,7 +25,7 @@ robot      = SerialLink(DH, 'name', 'SCARA IRB');
 % Offsets iniciales
 robot.offset = [0 0 -180 0];
 
-% Límites
+% Límites obtenidos del datasheet
 robot.qlim   = [deg2rad([-140   140]);
                 deg2rad([-150   150]);
                         [ 0     180];
