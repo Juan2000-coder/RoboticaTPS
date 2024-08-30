@@ -13,7 +13,7 @@ sistemas = [1, 1, 1, 1, 1, 1, 1];  %graficar todos los sistemas de referencia
 
 % ploteo del robot
 figure;
-R.plot(q_analysis, 'scale', 0.7, 'jointdiam', 0.5, 'notiles');
+R.plot(q_analysis, 'scale', 0.1, 'jointdiam', 0.2, 'notiles');
 
 hold on;
 
