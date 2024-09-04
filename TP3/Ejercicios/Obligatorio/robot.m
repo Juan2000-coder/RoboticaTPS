@@ -1,5 +1,3 @@
-clc; clear; close all;
-
 % parámetros de Denavit-Hartenberg
 dh = [0.0   0.1807   0       pi/2    0   ;
       0.0   0.17415 0.6127   0       0   ;
