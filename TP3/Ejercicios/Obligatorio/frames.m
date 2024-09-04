@@ -1,7 +1,7 @@
 clc; clear; close all;
 
 % llamado a robot.m para que cargue el archivo, que esta en el mismo directorio
-robot.m; % crea el objeto R
+robot; % crea el objeto R
 
 % asegurarse de que R es un objeto SerialLink antes de proceder
 if ~exist('R', 'var') || ~isa(R, 'SerialLink')
