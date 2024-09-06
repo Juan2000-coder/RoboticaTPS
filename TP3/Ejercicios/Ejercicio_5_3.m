@@ -20,7 +20,7 @@ DH = [0.0 1.0 1.0 0.0  1;
 q  = [0 0 0];
 
 % Construcción del robot
-robot      = SerialLink(DH, 'name', 'Robot sección 2.3');
+robot      = SerialLink(DH, 'name', '3 gdl LRR');
 
 
 % Offsets iniciales

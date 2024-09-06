@@ -20,7 +20,7 @@ DH = [0.0 0.0 0.0 pi/2  0;
 q  = [0 0 0];
 
 % Construcción del robot
-robot      = SerialLink(DH, 'name', 'Robot sección 2.2');
+robot      = SerialLink(DH, 'name', '3 gdl RLR');
 
 % base
 robot.base = trotz(pi/2);

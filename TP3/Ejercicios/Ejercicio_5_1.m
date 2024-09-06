@@ -22,7 +22,7 @@ dh = [0.0 0.0 1.0 0.0 0;
 q  = [0 0 0];
 
 % Construcción del robot
-robot        = SerialLink(dh, 'name', 'Robot de la sección 2.1');
+robot        = SerialLink(dh, 'name', '3 gdl RRR');
 
 % Offsets inniciales
 robot.offset = deg2rad([0 0 0]);
