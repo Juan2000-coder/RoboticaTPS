@@ -1,6 +1,6 @@
 clc; clear all; close all;
 
-% Parámetros DH Fanuc
+%% Parámetros DH Fanuc
 dh = [0 0.450 0.075 -pi/2 0;
       0 0.000 0.300  0.0  0;
       0 0.000 0.075 -pi/2 0;
@@ -8,31 +8,40 @@ dh = [0 0.450 0.075 -pi/2 0;
       0 0.000 0.000 -pi/2 0;
       0 0.008 0.000  0.0  0];
 
-% COORDENADAS ARTICULARES
+%% COORDENADAS ARTICULARES
 q1 = [0         0        0     0      0       0 ];  % Inciso 1
 q2 = [pi/4    -pi/2      0     0      0       0 ];  % Inciso 2
 q3 = [pi/5  -2*pi/5  -pi/10  pi/2  3*pi/10 -pi/2];  % Inciso 3
 q4 = [-0.61   -0.15   -0.30   1.40   1.90  -1.40];  % Inciso 4
 Q  = [q1; q2; q3; q4];                            % Todos los vectores articulares
 
-% OBTENCIÓN DE LA MATRIZ TOTAL
+%% CREACIÓN DEL robot
+robot = SerialLink(dh, 'name', 'FANUC');
+
+%% OBTENCIÓN DE LA MATRIZ TOTAL
 fprintf("Matrices de transformación homogénea: \n\n");
-sz = size(Q);
+sz  = size(Q);
+tol = 1e-5;
 for i = 1:sz(1)      % Recorremos vectores articulares
     T = eye(4);      % Base S0 (todos los casos)
+    q = Q(i, :);     % Vector de coordenadas
     for k = 1:sz(2)  % Recorremos variables articulares
-        q = Q(i, :);
         T = T*dhtrans(dh(k, :), q(k));
     end
-    fprintf("-->q_{%d}:", i);
+
+    fprintf("-->q_{%d} - casera:", i);
     T
+    fprintf("-->q_{%d} - fkine: ", i);
+    T_fkine = robot.fkine(q).T
+
+    % Comparación de los métodos.
+    if abs(T - T_fkine) < tol
+        fprintf("\nLas matrices son iguales con ambos métodos.");
+    end
     totales{i} = T; % Guardamos las transformaciones en un cell array
 end
 
-% CREACIÓN DEL robot
-robot = SerialLink(dh, 'name', 'FANUC');
-
-% REPRESENTACIÓN
+%% REPRESENTACIÓN
 figure(1);
 hold on;   
 
@@ -45,7 +54,6 @@ for i = 1:sz(1)
     R = SerialLink(robot, 'name', 'q' + string(i));
     subplot(2, 2, i);
     R.plot(Q(i,:));
-    %campos([10 15 10]);
     hold on;
     trplot(eye(4),'length', 1.5, 'frame', '0');
     view(views(i,:))
