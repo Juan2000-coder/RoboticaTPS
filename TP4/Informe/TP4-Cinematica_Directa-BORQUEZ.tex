@@ -76,7 +76,10 @@ Coordenadas articulares:
 \end{equation*}
 
 Matriz de transformación total:
-\[\left(\begin{array}{cccc} 1.0 & 0 & 0 & 0.45\\ 0 & -1.0 & 0 & 0\\ 0 & 0 & -1.0 & 0.122\\ 0 & 0 & 0 & 1.0 \end{array}\right)\]
+\begin{equation}
+    \left(\begin{array}{cccc} 1.0 & 0 & 0 & 0.45\\ 0 & -1.0 & 0 & 0\\ 0 & 0 & -1.0 & 0.122\\ 0 & 0 & 0 & 1.0 \end{array}\right)
+    \label{T_q1}
+\end{equation}
 
 \subsection{}
 Coordenadas articulares:
@@ -88,7 +91,10 @@ Coordenadas articulares:
 \end{equation*}
 
 Matriz de transformación total:
-\[\left(\begin{array}{cccc} 0 & 0.7071 & 0.7071 & 0.285\\ 0 & -0.7071 & 0.7071 & 0.285\\ 1.0 & 0 & 0 & 0.825\\ 0 & 0 & 0 & 1.0 \end{array}\right)\]
+\begin{equation}
+    \left(\begin{array}{cccc} 0 & 0.7071 & 0.7071 & 0.285\\ 0 & -0.7071 & 0.7071 & 0.285\\ 1.0 & 0 & 0 & 0.825\\ 0 & 0 & 0 & 1.0 \end{array}\right)
+    \label{T_q2}
+\end{equation}
 
 \subsection{}
 Coordenadas articulares:
@@ -100,7 +106,10 @@ Coordenadas articulares:
 \end{equation*}
 
 Matriz de transformación total:
-\[\left(\begin{array}{cccc} 0 & 1.0 & 0 & 0.3946\\ 0 & 0 & 1.0 & 0.2947\\ 1.0 & 0 & 0 & 0.8103\\ 0 & 0 & 0 & 1.0 \end{array}\right)\]
+\begin{equation}
+    \left(\begin{array}{cccc} 0 & 1.0 & 0 & 0.3946\\ 0 & 0 & 1.0 & 0.2947\\ 1.0 & 0 & 0 & 0.8103\\ 0 & 0 & 0 & 1.0 \end{array}\right)
+    \label{T_q3}
+\end{equation}
 
 \subsection{}
 Coordenadas articulares:
@@ -112,7 +121,10 @@ Coordenadas articulares:
 \end{equation*}
 
 Matriz de transformación total:
-\[\left(\begin{array}{cccc} 0.8941 & 0.3322 & 0.3003 & 0.4764\\ -0.3545 & 0.1156 & 0.9279 & -0.3239\\ 0.2735 & -0.9361 & 0.2211 & 0.2411\\ 0 & 0 & 0 & 1.0 \end{array}\right)\]
+\begin{equation}
+    \left(\begin{array}{cccc} 0.8941 & 0.3322 & 0.3003 & 0.4764\\ -0.3545 & 0.1156 & 0.9279 & -0.3239\\ 0.2735 & -0.9361 & 0.2211 & 0.2411\\ 0 & 0 & 0 & 1.0 \end{array}\right)
+    \label{T_q4}
+\end{equation}
 
 \begin{figure}[H]
     \centering
@@ -124,6 +136,8 @@ Matriz de transformación total:
 
 \section{Ejercicio 2.}
 \subsection{Verificación del robot}
+\label{subsec: verificacion}
+
 Por observación de la matriz DH dada en comparación con la propuesta
 en el TP3 para el mismo tipo de robot se puede identificar que se refieren
 a distintos modelos. La que se confeccionó para el TP3 corresponde al 
@@ -138,7 +152,7 @@ y el sistema 1.
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.8,max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.85,max width=\columnwidth}
         \framebox{\includegraphics{3-SCARA_L.JPG}}
     \end{adjustbox}
     \caption{Indicación del parámetro L.}
@@ -147,7 +161,7 @@ y el sistema 1.
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.72, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
         \framebox{\includegraphics{4-SCARA_lateral.JPG}}
     \end{adjustbox}
     \caption{Vista lateral robot.}
@@ -210,7 +224,147 @@ dada en este TP en lugar de los desplazamientos de los sistemas como se present�
     \caption{teach Robot tp4}
 \end{figure}
 
+\subsection{Comparación de la cinemática directa.}
+Cinemática directa de la definición en el TP3: 
+\[\left(\begin{array}{cccc} 1.0 & 0 & 0 & 0.45\\ 0 & -1.0 & 0 & 0\\ 0 & 0 & -1.0 & 0.221\\ 0 & 0 & 0 & 1.0 \end{array}\right)\]
+
+Cinemática directa de la definición en el TP4: 
+\[\left(\begin{array}{cccc} 1.0 & 0 & 0 & 0.55\\ 0 & -1.0 & 0 & 0\\ 0 & 0 & -1.0 & 0.195\\ 0 & 0 & 0 & 1.0 \end{array}\right)\]
+
+Las diferencias que se presentan en las matrices de cinemática directa es
+debido a las razones mencionadas en \cref{subsec: verificacion}, como se puede ver
+la diferencia está en el vector de traslación, debido a que se tomaron distintas distancias y al ser modelos de
+robot distintos los alcances también lo son. Se ve en cambio que las orientaciones de los sistemas
+transformados sí coinciden.
+
 \subsection{}
+Todos los resultados se validaron con el método $fkine$ de los robots.
+
+\section{Ejercicio 3}
+\subsection{}
+\textbf{¿En cuál de las 4 posturas el eje Z del extremo es paralelo al eje Z de la base?}
+
+En la postura dada por la $\mathbf{\overline{q}_1}$. Se puede observar en \cref{T_q1}
+que la tercera columna de la matriz de transformación (eje Z del extremo) es un vector
+paralelo al eje Z del sistema de la base.
+
+\subsection{}
+\textbf{¿En cuál de las 4 posturas el extremo se encuentra más cerca de la base?}
+
+Se puede determinar comparando las normas euclideas de los vectores de traslación (cuarta columna de la matriz de transformación).
+La menor de las normas corresponde al sistema con el origen más cercano al sistema de la base.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    vector & norma (m)      \\ \hline
+    $q_1$  & $0.4662$   \\ \hline
+    $q_2$  & $0.9182$   \\ \hline
+    $q_3$  & $0.9482$   \\ \hline
+    $q_4$  & $0.6245$   \\ \hline
+    \end{tabular}
+    \caption{Distancias al origen del sistema base.}
+    \label{normas}
+\end{table}
+
+Como se puede ver en la \cref{normas}, la postura dada por $\mathbf{\overline{q}_1}$ es la mas cercana a la base.
+
+\subsection{}
+\textbf{¿En cuál de las 4 posturas el eslabón final está orientado en la dirección del eje “Y” de
+la base?}
+
+En la postura dada por $\mathbf{\overline{q_3}}$ el eje Z del extremo (en la dirección del eslabón final)
+está alineado con el eje Y de la base. Se puede observar en la \cref{T_q3} que la columna
+3 (eje Z del extremo) es un vector alineado con el eje Y de la base.
+
+\subsection{}
+\textbf{¿En cuál de las 4 posturas el extremo no se encuentra en el primer cuadrante del
+sistema de la base?}
+
+Se determina observando las coordenadas del vector de traslación de las matrices de transformación homogénea (cuarta columna).
+\begin{itemize}
+    \item Visto en el plano XY, la postura dada por $\mathbf{\overline{q_1}}$ no cae estrictamente en el primer cuadrante sino sobre el eje X de la base.
+    \item Visto en el plano XY, la postura dada por $\mathbf{\overline{q_4}}$ no cae en el primer cuadrante.
+    \item Visto en el plano XZ, ninguna postura cae fuera del primer cuadrante.
+    \item Visto en el plano YZ, la postura dada por $\mathbf{\overline{q_4}}$ no cae en el primer cuadrante.
+    \item Visto en el plano YZ, la postura dada por $\mathbf{\overline{q_1}}$ no cae estrictamente en el primer cuadrante sino sobre el eje Z de la base.
+\end{itemize}
+
+\subsection{}
+\textbf{¿Qué condición debe cumplirse en la matriz homogénea total del robot para que los
+ejes del sistema del extremo sean paralelos (sin importar orientación ni orden) a los
+del sistema de la base?}
+
+En la sub-matriz de rotación debe habe a lo sumo un 1 o -1 en cada columna y estos encontrarse en distintas filas, esto hace que los ejes del sistema del extremo sean paralelos a los ejes del sistema de la base (en igual sentido o en el opuesto)
+y que además no sean vectores paralelos entre sí.
+Además el determinante de esta sub-matriz debe ser 1 y no -1 (esto garantiza que sea un sistema dextrógiro).
+
+\subsection{}
+\textbf{¿Por qué las siguientes matrices no pueden ser resultado de ningún vector de
+posiciones articulares?}
+
+La siguiente no puede ser una matriz de transformación homogénea dado que,
+como se puede observar en la sub-matriz de rotación, los vectores en la columna 1 y 3 son paralelos entre sí 
+y por lo tanto, esta matriz \textbf{no determina un sistema de referencia ortonormal}.
+
+\begin{equation*}
+    T = 
+    \begin{bmatrix}
+        0 & 1 & 0 & 0.3946\\
+        0 & 0 & 0 & 0.2947\\
+        1 & 0 & 1 & 0.8103\\
+        0 & 0 & 0 & 1     \\
+    \end{bmatrix}
+\end{equation*}
+
+La siguiente no puede ser matriz de transformación para el robot dado ya que \textbf{se exceden
+los límites del espacio de trabajo alcanzable por el extremo del robot}. Cómo se puede observar en la
+\cref{alcance fanuc}, el máximo alcance radial es de $0.704\,m$ mientras que la distancia respecto del sistema base,
+solo en el plano XY (dado por la norma en el plano XY del vector de traslación), es de $2.12\,m$.
+
+\begin{equation*}
+    T = 
+    \begin{bmatrix}
+        0.7071  &  0  & 0.7071 & 1.4971\\
+        -0.7071 &  0  & 0.7071 & 1.4971\\
+        1       & -1  &    0   & 0.5250\\
+        0       &  0  &    0   &    1  \\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{7-Fanuc_alcance.JPG}}
+    \end{adjustbox}
+    \caption{Vista lateral FANUC.}
+    \label{alcance fanuc}
+\end{figure}
+
+La siguiente no es una matriz de transformación para el robot dado que también \textbf{se exceden
+los límites del espacio de trabajo alcanzable por el extremo del robot}. En este caso no es tan evidente como en el caso anterior,
+asi que en la \cref{teach fanuc alcance} se muestra una trayectoria del robot a lo largo de su límite del espacio de trabajo en comparación con la posición
+esperada según la matriz de transformación.
+
+\begin{equation*}
+    T = 
+    \begin{bmatrix}
+        0  &  0   & 1 & 0      \\
+        0  &  -1  & 0 & 0.7030 \\
+        1  &  0   & 0 & 0      \\
+        0  &  0   & 0 & 1      \\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{7-Fanuc_alcance.JPG}}
+    \end{adjustbox}
+    \caption{Vista lateral FANUC.}
+    \label{teach fanuc alcance}
+\end{figure}
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
 %    \begin{bmatrix}
