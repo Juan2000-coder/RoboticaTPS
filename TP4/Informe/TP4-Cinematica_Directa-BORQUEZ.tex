@@ -318,7 +318,7 @@ y por lo tanto, esta matriz \textbf{no determina un sistema de referencia ortono
     \end{bmatrix}
 \end{equation*}
 
-La siguiente no puede ser matriz de transformación para el robot dado ya que \textbf{se exceden
+La siguiente no puede ser matriz de transformación para este robot dado ya que \textbf{se exceden
 los límites del espacio de trabajo alcanzable por el extremo del robot}. Cómo se puede observar en la
 \cref{alcance fanuc}, el máximo alcance radial es de $0.704\,m$ mientras que la distancia respecto del sistema base,
 solo en el plano XY (dado por la norma en el plano XY del vector de traslación), es de $2.12\,m$.
@@ -342,9 +342,9 @@ solo en el plano XY (dado por la norma en el plano XY del vector de traslación)
     \label{alcance fanuc}
 \end{figure}
 
-La siguiente no es una matriz de transformación para el robot dado que también \textbf{se exceden
+La siguiente no es una matriz de transformación para este robot dado que también \textbf{se exceden
 los límites del espacio de trabajo alcanzable por el extremo del robot}. En este caso no es tan evidente como en el caso anterior,
-asi que en la \cref{teach fanuc alcance} se muestra una trayectoria del robot a lo largo de su límite del espacio de trabajo en comparación con la posición
+asi que en las \cref{teach fanuc alcance vista} y \cref{teach fanuc alcance lateral} se muestra una trayectoria del robot a lo largo de su límite del espacio de trabajo en comparación con la posición
 esperada según la matriz de transformación.
 
 \begin{equation*}
@@ -359,12 +359,106 @@ esperada según la matriz de transformación.
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
-        \framebox{\includegraphics{7-Fanuc_alcance.JPG}}
+    \begin{adjustbox}{scale = 0.8, max width=\columnwidth}
+        \framebox{\includegraphics{8-Ejercicio_3_6_T2_1.pdf}}
     \end{adjustbox}
-    \caption{Vista lateral FANUC.}
-    \label{teach fanuc alcance}
+    \caption{Vista alcance FANUC}
+    \label{teach fanuc alcance vista}
 \end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.8, max width=\columnwidth}
+        \framebox{\includegraphics{9-Ejercicio_3_6_T2_2.pdf}}
+    \end{adjustbox}
+    \caption{Vista lateral alcance FANUC.}
+    \label{teach fanuc alcance lateral}
+\end{figure}
+
+Para verificar la siguiente matriz, nuevamente se hace uso del robotic toolbox
+para tratar de alcanzar la postura dada haciendo uso del método teach del robot.
+Como se puede ver en la \cref{verificacion T1}, a priori (no puedo saber con total exactitud),
+\textbf{el extremo del robot sí puede alcanzar la postura dada}.
+
+\begin{equation*}
+    T = 
+    \begin{bmatrix}
+        0  &  0.500   & 0.866 & 0.4971   \\
+        0  &  -0.866  & 0.500 & 0.4971   \\
+        1  &  0.000   & 0.000 & 0.5250   \\
+        0  &  0       & 0     & 1        \\
+    \end{bmatrix}
+\end{equation*}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{10-Ejercicio_3_6_T1.pdf}}
+    \end{adjustbox}
+    \caption{Verificación de la postura dada por T1}
+    \label{verificacion T1}
+\end{figure}
+
+\section{Ejercicio 4}
+\textbf{Calcule el máximo error de posición cartesiana en el extremo final
+que podría tener el LBR iiwa 7 R800 (KUKA). Para hacerlo, asuma que está en
+una postura totalmente vertical y extendida, y que todas sus articulaciones
+tienen un error de posición (delta de posición) de 0,1º}
+
+\subsection{}
+\textbf{¿Cuál es el error en esta situación?}
+
+Se elaboró un código para determinar el error.
+Por un lado se calcula la cinemática directa del robot con las coordenadas articulares exactas correspondientes
+a la posición vertical y luego se calcula la cinemática directa sumando a dicho vector de coordenadas
+un error de 0.1° (positivo) en todas las articulaciones, con el objeto de obtener el maximo error.
+El error de posicionamiento se obtiene como la norma de la diferencia entre los vectores de traslación de las dos transformaciones.
+El error que se obtiene es de $\mathbf{2.1468 mm}$.
+
+\subsection{}
+\textbf{¿El error es el mismo para cualquier posición? (suponiendo constante el error de
+posición articular).}
+
+A priori se puede decir que el error de posicionamiento no será el mismo para distintas posturas
+dado que el mismo error en las sucesivas variables articulares tendrá un efecto
+distinto en el error cartesiano dependiendo de cuál sea la postura.
+
+Se elabora un contraejemplo con otra posición articular genérica y, como en el caso anterior, se obtiene el error de posicionamiento.
+En este caso el error es de $\mathbf{2.0611 mm}$.
+
+\subsection{}
+\textbf{¿La respuesta anterior es válida para todo tipo de robots serie?}
+
+En principio sí.
+
+\section{Ejercicio TF}
+A continuación, se pueden ver curvas características del espacio de trabajo en el plano XY y XZ.
+Luego, puede visualizarse una imagen obtenida de Internet (\href{https://www.universal-robots.com/articles/ur/release-notes/release-note-software-version-512xx/}{espacio de trabajo}) en la cual se
+observa el espacio de trabajo total, lo que se coincide con nuestra estimación.
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{13-Curvas_esp_trabajo.jpeg}}
+    \end{adjustbox}
+    \caption{Curvas del espacio de trabajo otenidas}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{14-Curvas_esp_trabajo_internet.JPG}}
+    \end{adjustbox}
+    \caption{Espacio de trabajo obtenido en internet.}
+\end{figure}
+
+De acuerdo con la matriz de base, la misma está definida en robot.m y corresponde a una
+fundación de 0.1m de altura.
+Aún no contamos con las dimensiones del gripper para poder asignar una dimensión, pero se
+definió una variable ``distancia\_TC'' genérica que corresponde a la distancia que se trasladará
+el TCP (Tool Center Point) desde el origen del último sistema y en base a esta también se definió
+la matriz de ``tool''.
+
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
 %    \begin{bmatrix}
