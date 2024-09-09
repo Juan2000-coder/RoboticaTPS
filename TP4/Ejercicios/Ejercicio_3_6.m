@@ -12,7 +12,7 @@ dh = [0 0.450 0.075 -pi/2 0;
 q2 = [pi/2 pi/2 -pi/2 0 0 0];
 
 % Coordenadas articulares para comprobar la matriz de transformación 1 (T1) 
-q1 = [0 0 0 0 0 0];
+q1 = [0.7714   -0.4189   -0.8126    0.5306   -0.4608   -0.5027];
 
 %% MATRIZ DE TRANSFORMACIÓN 2
 T2 = [  0  0 1 0.000;
@@ -37,6 +37,9 @@ robot.qlim   = deg2rad([-170   170;
                         -120   120;
                         -360   360]);
 
+%% VERIFICACIÓN POR CINEMÁTICA INVERSA DE LA T1
+T1sol = robot.ikine(T1, q1, ones(1, 6))
+
 %% PLOT-TEACH MATRIZ 2
 figure(1);
 robot.plot(q2,'scale', 0.5,'trail', {'r', 'LineWidth', 2}, 'jointdiam', 0.8);
@@ -50,7 +53,7 @@ trplot(T2, 'frame', 'M', 'color', 'red', 'length', 0.5);
 figure(2);
 robot1 = SerialLink(robot, 'name', 'FANUC T1');
 robot1.plot(q1,'scale', 0.5,'jointdiam', 0.8);
-robot1.teach(q1);
+robot1.teach(T1sol);
 
 %% SUPERPOSICIÓN DE LA POSICIÓN A ALCANZAR
 hold on;
