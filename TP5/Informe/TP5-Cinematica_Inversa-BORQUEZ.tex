@@ -79,8 +79,8 @@ que exista solución.
 Las posiciones alcanzables por el extremo del robot quedan definidas por las siguientes condiciones:
 \begin{equation}
     \begin{aligned}
-        x^2 + y^2 &\leqq  a_1 + a_2\,\,\, \text(extension\,completa)\\
-        \left(a_1 > a_2 \right)\rightarrow x^2 + y^2 & \geqq  a_1 - a_2\,\,\, \text(retraccion\,completa)
+        \sqrt[]{x^2 + y^2 }&\leq  a_1 + a_2\,\,\, \text(extension\,maxima)\\
+        \left(a_1 > a_2 \right)\rightarrow \sqrt[]{x^2 + y^2} & \geq  a_1 - a_2\,\,\, \text(extesion\,minima)
     \end{aligned}
     \label{rango}
 \end{equation}
@@ -135,7 +135,7 @@ Entonces se puede obtener $\theta_1$ a partir de las siguientes:
     \begin{cases}
         \cos(\theta_1) &= \frac{Ax + By}{A^2 + B^2}\\
         \sin(\theta_1) &= \frac{Ay - Bx}{A^2 + B^2}\\
-        \theta_1 &= \arctan{\left(\frac{Ay - Bx}{Ax + By}\right)}
+        \theta_1 &= \arctan{\left(\frac{Ay - Bx}{Ax + By}\right) = atan2(Ay-Bx, Ax + By)}
     \end{cases}
     \label{teta1}
 \end{align}
@@ -150,6 +150,7 @@ En resumen, para $\overline{q} = (x, y, \gamma)$ en el rango del robot según \c
     \begin{cases}
         \theta_2 &= arccos\left(\frac{x^2 + y^2 - a_{1}^2 - a_{2}^2}{2a_{1}a_{2}}\right) \rightarrow A = a_1 + a_2\cos(\theta_2); B = a_2\sin(\theta_2)\\
         \theta_1 &=  atan2(Ay-Bx, Ax + By)\\
+        \overline{q} &= (\theta_1, \theta_2)\\
         \text{solo\,si}\,\,\gamma &= \theta_1 + \theta_2
     \end{cases}
 \end{align}
@@ -163,13 +164,34 @@ En los extremos del movimiento del robot se puede obtener a lo sumo una solució
 \begin{equation*}
     \overline{q} = f\left(x,y\right)
 \end{equation*}
+La solución es la misma que en el caso anterior solamente que en este caso la orientación queda determinada por los desplazamientos angulares obtenidos:
+\begin{align}
+    \begin{cases}
+        \theta_2 &= arccos\left(\frac{x^2 + y^2 - a_{1}^2 - a_{2}^2}{2a_{1}a_{2}}\right) \rightarrow A = a_1 + a_2\cos(\theta_2); B = a_2\sin(\theta_2)\\
+        \theta_1 &=  atan2(Ay-Bx, Ax + By)\\
+        \overline{q} &= (\theta_1, \theta_2)
+    \end{cases}
+\end{align}
 
 \subsection{}
 \textbf{Indique la cantidad de soluciones posibles que tendría cada conjunto de ecuaciones anterior, si los límites articulares fueran los siguientes}
-\subsubsection*{$\pm 90^\circ$}
-\subsubsection*{$\pm 180^\circ$}
-\subsubsection*{$\pm 225^\circ$}
-\subsubsection*{$\pm \infty$}
+\subsubsection{$\pm 90^\circ$}
+La mínima extensión alcanzable por el robot se consigue cuando los eslabones forman un ángulo recto. Luego la condición de rango señalada en \cref{rango} es ahora:
+\begin{equation}
+    \begin{aligned}
+        \sqrt{x^2 + y^2}&\leq  a_1 + a_2\,\,\, \text(extension\,maxima)\\
+        x^2 + y^2& \geq a_1^2 + a_2^2\,\,\, \text(extension\,minima)
+    \end{aligned}
+    \label{rango 90}
+\end{equation}
+
+Para los puntos dentro del rango del robot, definido en \cref{rango 90}, y analizando \cref{teta1} vemos que tendremos dos posibles soluciones (codo arriba y codo abajo)
+siempre que para ambos valores de $\theta_2$ en el rango articular sea $Ay-Bx \geq 0$, habrá una única solución cuando solo para uno de los valores de $\theta_2$ la desigualdad de un valor positivo
+y no habrá soluciones cuando para ambos valores de $\theta_2$ la desigualdad de valores negativos.
+
+\subsubsection{$\pm 180^\circ$}
+\subsubsection{$\pm 225^\circ$}
+\subsubsection{$\pm \infty$}
 
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
