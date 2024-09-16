@@ -80,7 +80,7 @@ Las posiciones alcanzables por el extremo del robot quedan definidas por las sig
 \begin{equation}
     \begin{aligned}
         \sqrt[]{x^2 + y^2 }&\leq  a_1 + a_2\,\,\, \text(extension\,maxima)\\
-        \left(a_1 > a_2 \right)\rightarrow \sqrt[]{x^2 + y^2} & \geq  a_1 - a_2\,\,\, \text(extesion\,minima)
+        \sqrt[]{x^2 + y^2} & \geq  |a_1 - a_2|\,\,\, \text(extesion\,minima)
     \end{aligned}
     \label{rango}
 \end{equation}
@@ -145,7 +145,9 @@ La \cref{teta1} se resuleve para cada valor de B (uno por cada valor de $\theta_
 Finalmente, la orientación dada para la postura en la formulación del problema debe ser congruente, y esta dada por:
 \[\gamma = \theta_1 + \theta_2\]
 
-En resumen, para $\overline{q} = (x, y, \gamma)$ en el rango del robot según \cref{rango} se obtiene un par de posibles soluciones (codo arriba y codo abajo) dadas por:
+Esta última condición, cuando se cumple permite acotar la solución a una sola del par obtenido.
+
+En resumen, para $\overline{q} = (x, y, \gamma)$ en el rango del robot según \cref{rango} se obtiene un par de posibles soluciones (codo arriba y codo abajo) que luego se acota a una sola con la orientación:
 \begin{align}
     \begin{cases}
         \theta_2 &= arccos\left(\frac{x^2 + y^2 - a_{1}^2 - a_{2}^2}{2a_{1}a_{2}}\right) \rightarrow A = a_1 + a_2\cos(\theta_2); B = a_2\sin(\theta_2)\\
@@ -154,9 +156,6 @@ En resumen, para $\overline{q} = (x, y, \gamma)$ en el rango del robot según \c
         \text{solo\,si}\,\,\gamma &= \theta_1 + \theta_2
     \end{cases}
 \end{align}
-En los extremos del movimiento del robot se puede obtener a lo sumo una solución (no un par).
-
-
 
 \subsection{}
 \textbf{Utilice el método geométrico para hallar un conjunto de ecuaciones cerradas que resuelvan el siguiente problema}
@@ -185,13 +184,29 @@ La mínima extensión alcanzable por el robot se consigue cuando los eslabones f
     \label{rango 90}
 \end{equation}
 
-Para los puntos dentro del rango del robot, definido en \cref{rango 90}, y analizando \cref{teta1} vemos que tendremos dos posibles soluciones (codo arriba y codo abajo)
-siempre que para ambos valores de $\theta_2$ en el rango articular sea $Ay-Bx \geq 0$, habrá una única solución cuando solo para uno de los valores de $\theta_2$ la desigualdad de un valor positivo
-y no habrá soluciones cuando para ambos valores de $\theta_2$ la desigualdad de valores negativos.
+Para los puntos dentro del rango del robot, definido en \cref{rango 90}, se tendrá:
+\begin{itemize}
+    \item Para la ecuación 1, una sola solución posible para cada $\left(x, y, \gamma\right)$ válido.
+    \item Para la ecuación 2, en general dos soluciones en el cuadrante 1 y 4 (codo arriba y codo abajo), excepto en los extremos del espacio de trabajo del robot cerca del cuadrante 2 y 3 en donde una de las soluciones ponga fuera de límite a la variable $q_1$, en esos casos solo es una sola solución. También hay una sola solución en las extensiones máximas.
+\end{itemize}
 
 \subsubsection{$\pm 180^\circ$}
+
+\begin{itemize}
+    \item Para la ecuación 1, en general, una sola solución posible para cada $\left(x, y, \gamma\right)$ válido. Dos soluciones para cada punto en la mínima extensión ($\theta_2 = \pm 180^\circ$). Dos soluciones cuando el punto está en la máxima extensión a $180^\circ$ del eje x ($q_1 = \pm 180^\circ$). Cuatro soluciones cuado el punto se encuentra en la mínima extensión a $180^\circ$ del eje x ($q_1, q_2 = \pm 180^\circ$).
+    \item Para la ecuación 2, dos soluciones (codo arriba y codo abajo) más el caso particular de cuatro soluciones para la ecuación 1. Una sola solución en las extensines máximas.
+\end{itemize}
+
 \subsubsection{$\pm 225^\circ$}
+
+\begin{itemize}
+    \item Para la ecuación 1 en general una solución para puntos no tan cercanos al límite inferior del rango del robot (puntos en donde el segundo eslabon no se encuentre tan replegado), en zonas entre los $135^\circ$ y $-135^\circ$ respecto del eje x (del lado del eje x positivo), en cambio, se pueden obtener dos soluciones cuando los puntos están entre $135^\circ$ y $-135^\circ$ respecto del eje x (del lado del eje x negativo) dado que son alcanzables con giros positivos y negativos en la primera articulación. Cuando
+    el eslabón 2 está lo suficientemente replegado (puntos cerca del límite inferior del rango del robot) también se puede alcanzar la postura con un giro positivo y un giro negativo en la segunda articulación y abrán dos soluciones. En este último caso, cuando además la posición se encuentra entre $135^\circ$ y $-135^\circ$ respecto del eje x (del lado del eje x negativo) tendremos hasta cuatro soluciones (un giro positivo y negativo por cada articulación).
+    \item Para la ecuación 2 ahora además existen dos posibilidades (codo arriba y codo abajo) para cada caso. Luego existen dos soluciones cuando los puntos no están cerca del límite mínimo del rango y no se encuentran en la región de solapamiento del rango articular de la primera articulación. Cuatro soluciones en los puntos que se encuentran en la región de solapamiento del rango articular de la primera articulación y que no están cerca del mínimo del rango del robot. Cuatro soluciones en puntos que no están en la zona de solapamiento de la primera articulación y están cerca del mínimo del rango del robot. Ocho soluciones cuando los puntos se encuentra cerca el mínimo del rango y en la región de solapamiento articular de la primera articulación. Una única solución en la máxima extensión en la región de no solapamiento. Dos soluciones en la máxima extensión en la región de solapamiento. Dos soluciones en la mínma extensión en la zona de no solapamiento. Cuatro soluciones en la mínima extensión en la zona de solapamiento.
+\end{itemize}
+
 \subsubsection{$\pm \infty$}
+Infinitas soluciones para ambas ecuaciones.
 
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
