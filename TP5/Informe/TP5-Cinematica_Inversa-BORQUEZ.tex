@@ -318,6 +318,13 @@ La siguiente formulación da \textbf{múltiples soluciones} (codo arriba y codo 
     \overline{q} = f(x, y, z)
 \end{equation*}
 
+La siguiente formulación da \textbf{una única solución} a lo sumo:
+\begin{equation*}
+    \overline{q} = f(x, y, z, \gamma)
+\end{equation*}
+
+Acá se toma en cuenta que \textbf{en cualquier postura válida, los ángulos de roll y pitch serán nulos}, con lo cual no se toman en cuenta en la formulación del problema.
+
 \section{Ejercicio 3}
 \textbf{Halle un conjunto de ecuaciones cerradas que resuelvan el problema
 cinemático inverso del robot 2.2 por el método geométrico. Seleccione una formulación con
@@ -326,7 +333,7 @@ contemplar límites finitos en la segunda articulación.}
 
 \begin{figure}[H]
     \centering
-    \begin{adjustbox}{scale = 0.7, max width=\columnwidth}
+    \begin{adjustbox}{scale = 0.55, max width=\columnwidth}
         \framebox{\includegraphics{6-Ejercicio_3_robot_RLR.JPG}}
     \end{adjustbox}
     \caption{Análisis geométrico}
@@ -345,9 +352,9 @@ Por un lado tenemos:
     u_x\mathbf{i} + u_y\mathbf{j} &= x\mathbf{i} + y\mathbf{j} - a_3\cos(\gamma)\mathbf{i} - a_3\sin(\gamma)\mathbf{j}
 \end{align*}
 Y por otro lado:
-\begin{equation}
+\begin{equation*}
     \gamma = \theta_1 + \theta_3
-\end{equation}
+\end{equation*}
 Luego, se puede obtener:
 \begin{align*}
     u_x &= x - a_3\cos(\gamma)\\
@@ -366,6 +373,33 @@ Si, en cambio, se toma el \textbf{rango de la segunda articulación como $0-\inf
         q_2 &= \sqrt{\left[x - a_3\cos(\gamma)\right]^2 + \left[y - a_3\sin(\gamma)\right]^2}
     \end{cases}
 \end{align}
+
+\section{Ejercicio 4}
+\textbf{Trabaje con el robot 2.3 y halle un conjunto de ecuaciones que resuelvan la
+cinemática inversa por el método algebraico. Se recomienda usar un software que permita el
+trabajo simbólico.}
+
+Para este robot consideramos la definición de los sistemas de referencia articulares que se tomó para el \textbf{Ejercicio 2.3} en el \textbf{``Trabajo Práctico 3: Denavit-Hartenberg''} como se muestra a continuación:
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.66, max width=\columnwidth}
+        \framebox{\includegraphics{7-Ejercicio_2_3_DH.JPG}}
+    \end{adjustbox}
+    \caption{Definición de sistemas Ejercicio 2.3 TP N°3}
+\end{figure}
+
+Los parámetros DH correspondientes son:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Sistema & $\theta$  & $d$ & $a$         & $\alpha$ & $\sigma$ \\ \hline
+    1       & $0$       & $d_1$ & $l_{esl1}$  & 0      & 1        \\ \hline
+    2       & $q_2$     & 0   & $l_{esl2}$  & 0        & 0        \\ \hline
+    3       & $q_3$     & 0   & $l_{esl3}$  & 0        & 0        \\ \hline
+    \end{tabular}
+    \caption{Síntesis de la convención DH Ejercicio 2.3 TP N°3.}
+\end{table}
 
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
