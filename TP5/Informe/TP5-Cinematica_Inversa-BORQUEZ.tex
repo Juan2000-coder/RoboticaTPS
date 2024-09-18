@@ -332,6 +332,41 @@ contemplar límites finitos en la segunda articulación.}
     \caption{Análisis geométrico}
 \end{figure}
 
+Se busca:
+\begin{equation*}
+    \overline{q} = f(x, y, \gamma)
+\end{equation*}
+En donde ahora $\gamma$ es el ángulo que forma el eje $X$ de $\{S_3\}$ respecto del eje X del sistema $\{S_O\}$.
+
+Por un lado tenemos:
+\begin{align*}
+    \mathbf{w} &= \mathbf{u} + \mathbf{v}\\
+    \mathbf{u} &= \mathbf{w} - \mathbf{v}\\
+    u_x\mathbf{i} + u_y\mathbf{j} &= x\mathbf{i} + y\mathbf{j} - a_3\cos(\gamma)\mathbf{i} - a_3\sin(\gamma)\mathbf{j}
+\end{align*}
+Y por otro lado:
+\begin{equation}
+    \gamma = \theta_1 + \theta_3
+\end{equation}
+Luego, se puede obtener:
+\begin{align*}
+    u_x &= x - a_3\cos(\gamma)\\
+    u_y &= y - a_3\sin(\gamma)\\
+    \theta_1 &= atan2(u_y, u_x)\\
+    \theta_3 &= \gamma - \theta_1\\
+    |q_2| &= \sqrt{u_x^2 + u_y^2}
+\end{align*}
+Si se considera que el rango en la segunda articulación es $\pm \infty$, en realidad, la solución podría ser $\theta_1$ y su suplemento en el otro sentido y de la misma manera para $\theta_3$, pudiendo además ser $q_2$ el valor calculado y su opuesto.
+Si, en cambio, se toma el \textbf{rango de la segunda articulación como $0-\infty$}, entonces la solución puede expresarse como:
+
+\begin{align}
+    \begin{cases}
+        \theta_1 &= atan2(y - a_3\sin(\gamma), x - a_3\cos(\gamma))\\
+        \theta_3 &= \gamma - \theta_1\\
+        q_2 &= \sqrt{\left[x - a_3\cos(\gamma)\right]^2 + \left[y - a_3\sin(\gamma)\right]^2}
+    \end{cases}
+\end{align}
+
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
 %    \begin{bmatrix}
