@@ -253,6 +253,85 @@ Para los puntos dentro del rango del robot, definido en \cref{rango 90}, se tend
 \subsubsection{$\pm \infty$}
 Infinitas soluciones para ambas ecuaciones.
 
+\section{Ejercicio 2}
+\textbf{Analice los 3 robots que se muestran a continuación y plantee el problema de
+cinemática inversa de la forma $\overline{q} = f(...)$ de una forma que implique infinitas soluciones, y de
+otra que implique un número finito de soluciones. Considere límites de $\pm 180^\circ$ para
+articulaciones rotacionales y $\pm\infty$ para las prismáticas.}
+\subsection{}
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.55, max width=\columnwidth}
+        \framebox{\includegraphics{3-Ejercicio_2_robot_RRR.JPG}}
+    \end{adjustbox}
+    \caption{Ejercicio 2.1}
+\end{figure}
+
+Exceptuando aquellos puntos que se encuentran en los extremos del alcance del robot, la siguiente formulación del problema
+tiene \textbf{infinitas soluciones} para puntos alcanzables:
+
+\begin{equation*}
+    \overline{q} = f(x, y)
+\end{equation*}
+
+La siguiente formulación da un \textbf{número finito de soluciones}, a lo sumo dos (codo arriba y codo abajo).
+\begin{equation*}
+    \overline{q} = f(x, y, \gamma)
+\end{equation*}
+
+\subsection{}
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.55, max width=\columnwidth}
+        \framebox{\includegraphics{4-Ejercicio_2_robot_RLR.JPG}}
+    \end{adjustbox}
+    \caption{Ejercicio 2.2}
+\end{figure}
+
+
+La siguiente formulación del problema da \textbf{infinitas soluciones}:
+\begin{equation*}
+    \overline{q} = f(x, y)
+\end{equation*}
+
+La siguiente formulación a una \textbf{solución única al problema}:
+\begin{equation*}
+    \overline{q} = f(x, y, \gamma)
+\end{equation*}
+
+\subsection{}
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.55, max width=\columnwidth}
+        \framebox{\includegraphics{5-Ejercicio_2_robot_LRR.JPG}}
+    \end{adjustbox}
+    \caption{Ejercicio 2.3}
+\end{figure}
+
+La siguiente formulación del problema da \textbf{infinitas soluciones} dado que se puede alcanzar una misma posición en el plano a diferentes elevaciones:
+\begin{equation*}
+    \overline{q} = f(x, y)
+\end{equation*}
+
+La siguiente formulación da \textbf{múltiples soluciones} (codo arriba y codo abajo en el plano xy):
+\begin{equation*}
+    \overline{q} = f(x, y, z)
+\end{equation*}
+
+\section{Ejercicio 3}
+\textbf{Halle un conjunto de ecuaciones cerradas que resuelvan el problema
+cinemático inverso del robot 2.2 por el método geométrico. Seleccione una formulación con
+cantidad finita de soluciones. Establezca la cantidad de soluciones y analice si es necesario
+contemplar límites finitos en la segunda articulación.}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.7, max width=\columnwidth}
+        \framebox{\includegraphics{6-Ejercicio_3_robot_RLR.JPG}}
+    \end{adjustbox}
+    \caption{Análisis geométrico}
+\end{figure}
+
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
 %    \begin{bmatrix}
