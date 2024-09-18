@@ -157,11 +157,49 @@ En resumen, para $\overline{q} = (x, y, \gamma)$ en el rango del robot según \c
         \overline{q} &= (\theta_1, \theta_2)\\
         \text{solo\,si}\,\,\gamma &= \theta_1 + \theta_2
     \end{cases}
+    \label{solucion ejercicio 1}
 \end{align}
 En este análisis consideramos que la formulación completa del problema debe ser congruente, es decir, $(x, y, \gamma)$ debe ser posible de obtener.
-Sin embargo, otra alternativa podría ser exigir que al menos dos de las variables en la formulación del problema sean congruentes entre sí aunque la tercera no lo sea.
+Sin embargo, \textbf{otra alternativa} podría ser exigir que \textbf{al menos dos de las variables en la formulación del problema sean congruentes} aunque la tercera no lo sea.
 Así, por ejemplo, la posición podría estar fuera del alcance del robot porque la coordenada $y$ es demasiado grande, pero el par $(x, \gamma)$ ser congruente, en ese caso se obtiene una solución para este par y se descarta la restricción dada por $y$.
-Para tomar en cuenta estas otras posibilidades, obtenemos a continuación soluciones del problema a partir de $(x, \gamma)$ o de $(y, \gamma)$ cuando la otra coordenada de la posición se descarta.
+Para tomar en cuenta estas otras posibilidades, obtenemos a continuación soluciones del \textbf{problema a partir de $\mathbf{(x, \gamma)}$ o de $\mathbf{(y, \gamma)}$} cuando la otra coordenada de la posición se descarta.
+
+\subsubsection{Formulación a partir de $(x, \gamma)$ o $(y, \gamma)$ cuando la otra no se toma en cuenta}
+Volviendo a la \cref{geometria 1} tenemos:
+
+\begin{align*}
+    \mathbf{w} &= \mathbf{u} + \mathbf{v}\\
+    \mathbf{w} - \mathbf{v} &= \mathbf{u}\\
+    \left[x - a_2\cos(\gamma)\right]\mathbf{i} + \left[y - a_2\sin(\gamma)\right]\mathbf{j} &= \mathbf{u}\\
+    \left[x - a_2\cos(\gamma)\right]^2 + \left[y - a_2\sin(\gamma)\right]^2 &= a_1^2\\
+    |y - a_2\sin(\gamma)| &= \sqrt{a_1^2 - \left[x - a_2\cos(\gamma)\right]^2}\\
+    ssi\,\,\{\Delta &= a_1^2 - \left[x - a_2\cos(\gamma)\right]^2\} >= 0
+\end{align*}
+
+Entonces, las condiciones para que exista solución del problema son:
+
+\begin{align*}
+    \left(x, \gamma\right)&\rightarrow\{\Delta_y = a_1^2 - \left[x - a_2\cos(\gamma)\right]^2\} >= 0\\
+    \left(y, \gamma\right)&\rightarrow\{\Delta_x = a_1^2 - \left[y - a_2\sin(\gamma)\right]^2\} >= 0
+\end{align*}
+
+Cuando existe solución, se obtiene la coordenada faltante de la posición como:
+\begin{align*}
+    \left(x, \gamma\right)\rightarrow
+    \begin{cases}
+        y_1 &= \sqrt{\Delta_y} + a_2\sin(\gamma)\\
+        y_2 &= -\sqrt{\Delta_y} + a_2\sin(\gamma)
+    \end{cases}
+    \\
+    \left(y, \gamma\right)\rightarrow
+    \begin{cases}
+        x_1 &= \sqrt{\Delta_x} + a_2\cos(\gamma)\\
+        x_2 &= -\sqrt{\Delta_x} + a_2\cos(\gamma)
+    \end{cases}
+\end{align*}
+
+Así se llega a una formulación congruente del problema que se resuelve con la \cref{solucion ejercicio 1} en la que no hace falta verificar la orientación.
+
 
 
 \subsection{}
@@ -208,7 +246,7 @@ Para los puntos dentro del rango del robot, definido en \cref{rango 90}, se tend
 
 \begin{itemize}
     \item Para la ecuación 1 en general una solución para puntos no tan cercanos al límite inferior del rango del robot (puntos en donde el segundo eslabon no se encuentre tan replegado), en zonas entre los $135^\circ$ y $-135^\circ$ respecto del eje x (del lado del eje x positivo), en cambio, se pueden obtener dos soluciones cuando los puntos están entre $135^\circ$ y $-135^\circ$ respecto del eje x (del lado del eje x negativo) dado que son alcanzables con giros positivos y negativos en la primera articulación. Cuando
-    el eslabón 2 está lo suficientemente replegado (puntos cerca del límite inferior del rango del robot) también se puede alcanzar la postura con un giro positivo y un giro negativo en la segunda articulación y abrán dos soluciones. En este último caso, cuando además la posición se encuentra entre $135^\circ$ y $-135^\circ$ respecto del eje x (del lado del eje x negativo) tendremos hasta cuatro soluciones (un giro positivo y negativo por cada articulación).
+    el eslabón 2 está lo suficientemente replegado (puntos cerca del límite inferior del rango del robot) también se puede alcanzar la postura con un giro positivo y un giro negativo en la segunda articulación y habrán dos soluciones. En este último caso, cuando además la posición se encuentra entre $135^\circ$ y $-135^\circ$ respecto del eje x (del lado del eje x negativo) tendremos hasta cuatro soluciones (un giro positivo y negativo por cada articulación).
     \item Para la ecuación 2 ahora además existen dos posibilidades (codo arriba y codo abajo) para cada caso. Luego existen dos soluciones cuando los puntos no están cerca del límite mínimo del rango y no se encuentran en la región de solapamiento del rango articular de la primera articulación. Cuatro soluciones en los puntos que se encuentran en la región de solapamiento del rango articular de la primera articulación y que no están cerca del mínimo del rango del robot. Cuatro soluciones en puntos que no están en la zona de solapamiento de la primera articulación y están cerca del mínimo del rango del robot. Ocho soluciones cuando los puntos se encuentra cerca el mínimo del rango y en la región de solapamiento articular de la primera articulación. Una única solución en la máxima extensión en la región de no solapamiento. Dos soluciones en la máxima extensión en la región de solapamiento. Dos soluciones en la mínma extensión en la zona de no solapamiento. Cuatro soluciones en la mínima extensión en la zona de solapamiento.
 \end{itemize}
 
