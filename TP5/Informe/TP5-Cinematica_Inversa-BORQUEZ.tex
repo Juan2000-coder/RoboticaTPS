@@ -135,12 +135,14 @@ Entonces se puede obtener $\theta_1$ a partir de las siguientes:
     \begin{cases}
         \cos(\theta_1) &= \frac{Ax + By}{A^2 + B^2}\\
         \sin(\theta_1) &= \frac{Ay - Bx}{A^2 + B^2}\\
-        \theta_1 &= \arctan{\left(\frac{Ay - Bx}{Ax + By}\right) = atan2(Ay-Bx, Ax + By)}
+        \theta_1 &= \arctan{\left(\frac{Ay - Bx}{Ax + By}\right)}\\
+        \theta_1 &=atan2(Ay-Bx, Ax + By)
     \end{cases}
     \label{teta1}
 \end{align}
-La última se utiliza para determinar dos posibles soluciones para $\theta_1$ mientras que el signo de las primeras dos determinan el valor correcto (el cuadrante).
-La \cref{teta1} se resuleve para cada valor de B (uno por cada valor de $\theta_2$ dados en la \cref{teta2}).
+La tercera se utiliza para determinar dos posibles soluciones para $\theta_1$ mientras que el signo de las primeras dos determinan el valor correcto (el cuadrante).
+En MATLAB se puede obtener el valor directamente como se indica en la cuarta condición, utilizando la función $atan2$.
+La \cref{teta1} se resuelve para cada valor de B (uno por cada valor de $\theta_2$ dados en la \cref{teta2}).
 
 Finalmente, la orientación dada para la postura en la formulación del problema debe ser congruente, y esta dada por:
 \[\gamma = \theta_1 + \theta_2\]
@@ -156,6 +158,11 @@ En resumen, para $\overline{q} = (x, y, \gamma)$ en el rango del robot según \c
         \text{solo\,si}\,\,\gamma &= \theta_1 + \theta_2
     \end{cases}
 \end{align}
+En este análisis consideramos que la formulación completa del problema debe ser congruente, es decir, $(x, y, \gamma)$ debe ser posible de obtener.
+Sin embargo, otra alternativa podría ser exigir que al menos dos de las variables en la formulación del problema sean congruentes entre sí aunque la tercera no lo sea.
+Así, por ejemplo, la posición podría estar fuera del alcance del robot porque la coordenada $y$ es demasiado grande, pero el par $(x, \gamma)$ ser congruente, en ese caso se obtiene una solución para este par y se descarta la restricción dada por $y$.
+Para tomar en cuenta estas otras posibilidades, obtenemos a continuación soluciones del problema a partir de $(x, \gamma)$ o de $(y, \gamma)$ cuando la otra coordenada de la posición se descarta.
+
 
 \subsection{}
 \textbf{Utilice el método geométrico para hallar un conjunto de ecuaciones cerradas que resuelvan el siguiente problema}
