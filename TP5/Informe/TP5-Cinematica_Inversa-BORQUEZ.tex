@@ -314,9 +314,10 @@ La siguiente formulación del problema da \textbf{infinitas soluciones} dado que
 \end{equation*}
 
 La siguiente formulación da \textbf{múltiples soluciones} (codo arriba y codo abajo en el plano xy):
-\begin{equation*}
+\begin{equation}
     \overline{q} = f(x, y, z)
-\end{equation*}
+    \label{problema robot 3.2}
+\end{equation}
 
 La siguiente formulación da \textbf{una única solución} a lo sumo:
 \begin{equation*}
@@ -394,13 +395,55 @@ Los parámetros DH correspondientes son:
     \begin{tabular}{|c|c|c|c|c|c|}
     \hline
     Sistema & $\theta$  & $d$ & $a$         & $\alpha$ & $\sigma$ \\ \hline
-    1       & $0$       & $d_1$ & $l_{esl1}$  & 0      & 1        \\ \hline
-    2       & $q_2$     & 0   & $l_{esl2}$  & 0        & 0        \\ \hline
-    3       & $q_3$     & 0   & $l_{esl3}$  & 0        & 0        \\ \hline
+    1       & $0$       & $q_1$ & $a_{1}$  & 0      & 1        \\ \hline
+    2       & $q_2$     & 0   & $a_{2}$  & 0        & 0        \\ \hline
+    3       & $q_3$     & 0   & $a_{3}$  & 0        & 0        \\ \hline
     \end{tabular}
     \caption{Síntesis de la convención DH Ejercicio 2.3 TP N°3.}
 \end{table}
 
+Se considera la formulación del problema dada en \cref{problema robot 3.2}.
+
+Se implementa un código en MATLAB en el archivo ``Ejercicio\_4.m'' en donde se obtiene la matriz de transformación homogénea para la cinemática directa del robot dadas coordenadas articulares genéricas como $\overline{q} = \left[q_1\, q_2\, q_3\right]$.
+
+\begin{equation}
+    CD = \left(\begin{array}{cccc} \cos\left(q_{2}+q_{3}\right) & -\sin\left(q_{2}+q_{3}\right) & 0 & a_{1}+a_{3}\,\cos\left(q_{2}+q_{3}\right)+a_{2}\,\cos\left(q_{2}\right)\\ \sin\left(q_{2}+q_{3}\right) & \cos\left(q_{2}+q_{3}\right) & 0 & a_{3}\,\sin\left(q_{2}+q_{3}\right)+a_{2}\,\sin\left(q_{2}\right)\\ 0 & 0 & 1 & q_{1}\\ 0 & 0 & 0 & 1 \end{array}\right)
+    \label{CD generica}
+\end{equation}
+
+La anterior se iguala a una postura problema para la que se quieran obtener las coordenadas articulares, la cual está dada a partir de su matriz de transformación homogénea $T$ como.
+
+\begin{equation}
+    T = \left(\begin{array}{cccc} \cos\left(\mathrm{\gamma}\right) & -\sin\left(\mathrm{\gamma}\right) & 0 & x\\ \sin\left(\mathrm{\gamma}\right) & \cos\left(\mathrm{\gamma}\right) & 0 & y\\ 0 & 0 & 1 & z\\ 0 & 0 & 0 & 1 \end{array}\right)
+    \label{postura}
+\end{equation}
+
+En donde se toma en cuenta que los ángulos de roll y pitch deben ser nulos.
+De la igualdad elemento a elemento de las matrices $CD$ y $T$, eliminando las ecuaciones repetidas y aquellas que implican alguna restricción dada por $\gamma$ (la que no se exige según la formulación considerada del problema), se puede obtener el siguiente sistema de ecuaciones.
+
+\begin{align}
+    \begin{cases}
+        a_1 + a_3cos(q_2 + q_3) + a_2cos(q_2) &= x\\
+        a_3\sin(q_2 + q_3) + a_2\sin(q_2) &= y\\
+        q_1 &= z
+    \end{cases}
+    \label{postura}
+\end{align}
+
+\begin{align*}
+    \begin{cases}
+        q_1 &= z\\
+        q_2 &=  2\,\mathrm{atan}\left(\frac{2\,a_{2}\,y+\sqrt{-{a_{2}}^4+2\,{a_{2}}^2\,{a_{3}}^2+2\,{a_{2}}^2\,x^2+2\,{a_{2}}^2\,y^2-{a_{3}}^4+2\,{a_{3}}^2\,x^2+2\,{a_{3}}^2\,y^2-x^4-2\,x^2\,y^2-y^4}}{{a_{2}}^2+2\,a_{2}\,x-{a_{3}}^2+x^2+y^2}\right)\\
+        q_3 &= -2\,\mathrm{atan}\left(\frac{\sqrt{\left(-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+x^2+y^2\right)\,\left({a_{2}}^2+2\,a_{2}\,a_{3}+{a_{3}}^2-x^2-y^2\right)}}{-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+x^2+y^2}\right)
+    \end{cases}
+\end{align*}
+\begin{align*}
+    \begin{cases}
+        q_1 &= z\\
+        q_2 &= 2\,\mathrm{atan}\left(\frac{2\,a_{2}\,y-\sqrt{-{a_{2}}^4+2\,{a_{2}}^2\,{a_{3}}^2+2\,{a_{2}}^2\,x^2+2\,{a_{2}}^2\,y^2-{a_{3}}^4+2\,{a_{3}}^2\,x^2+2\,{a_{3}}^2\,y^2-x^4-2\,x^2\,y^2-y^4}}{{a_{2}}^2+2\,a_{2}\,x-{a_{3}}^2+x^2+y^2}\right)\\
+        q_3 &= 2\,\mathrm{atan}\left(\frac{\sqrt{\left(-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+x^2+y^2\right)\,\left({a_{2}}^2+2\,a_{2}\,a_{3}+{a_{3}}^2-x^2-y^2\right)}}{-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+x^2+y^2}\right)
+    \end{cases}
+\end{align*}
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
 %    \begin{bmatrix}
