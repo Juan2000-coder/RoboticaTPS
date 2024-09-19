@@ -433,17 +433,32 @@ De la igualdad elemento a elemento de las matrices $CD$ y $T$, eliminando las ec
 \begin{align*}
     \begin{cases}
         q_1 &= z\\
-        q_2 &=  2\,\mathrm{atan}\left(\frac{2\,a_{2}\,y+\sqrt{-{a_{2}}^4+2\,{a_{2}}^2\,{a_{3}}^2+2\,{a_{2}}^2\,x^2+2\,{a_{2}}^2\,y^2-{a_{3}}^4+2\,{a_{3}}^2\,x^2+2\,{a_{3}}^2\,y^2-x^4-2\,x^2\,y^2-y^4}}{{a_{2}}^2+2\,a_{2}\,x-{a_{3}}^2+x^2+y^2}\right)\\
-        q_3 &= -2\,\mathrm{atan}\left(\frac{\sqrt{\left(-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+x^2+y^2\right)\,\left({a_{2}}^2+2\,a_{2}\,a_{3}+{a_{3}}^2-x^2-y^2\right)}}{-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+x^2+y^2}\right)
+        q_2 &=  2\,\mathrm{atan}\left(\frac{2\,a_{2}\,y+\sqrt{-{a_{2}}^4+2\,{a_{2}}^2\,{a_{3}}^2+2\,{a_{2}}^2\,\overline{x}^2+2\,{a_{2}}^2\,y^2-{a_{3}}^4+2\,{a_{3}}^2\,\overline{x}^2+2\,{a_{3}}^2\,y^2-\overline{x}^4-2\,\overline{x}^2\,y^2-y^4}}{{a_{2}}^2+2\,a_{2}\,\overline{x}-{a_{3}}^2+\overline{x}^2+y^2}\right)\\
+        q_3 &= -2\,\mathrm{atan}\left(\frac{\sqrt{\left(-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+\overline{x}^2+y^2\right)\,\left({a_{2}}^2+2\,a_{2}\,a_{3}+{a_{3}}^2-\overline{x}^2-y^2\right)}}{-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+\overline{x}^2+y^2}\right)
     \end{cases}
 \end{align*}
 \begin{align*}
     \begin{cases}
         q_1 &= z\\
-        q_2 &= 2\,\mathrm{atan}\left(\frac{2\,a_{2}\,y-\sqrt{-{a_{2}}^4+2\,{a_{2}}^2\,{a_{3}}^2+2\,{a_{2}}^2\,x^2+2\,{a_{2}}^2\,y^2-{a_{3}}^4+2\,{a_{3}}^2\,x^2+2\,{a_{3}}^2\,y^2-x^4-2\,x^2\,y^2-y^4}}{{a_{2}}^2+2\,a_{2}\,x-{a_{3}}^2+x^2+y^2}\right)\\
-        q_3 &= 2\,\mathrm{atan}\left(\frac{\sqrt{\left(-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+x^2+y^2\right)\,\left({a_{2}}^2+2\,a_{2}\,a_{3}+{a_{3}}^2-x^2-y^2\right)}}{-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+x^2+y^2}\right)
+        q_2 &= 2\,\mathrm{atan}\left(\frac{2\,a_{2}\,y-\sqrt{-{a_{2}}^4+2\,{a_{2}}^2\,{a_{3}}^2+2\,{a_{2}}^2\,\overline{x}^2+2\,{a_{2}}^2\,y^2-{a_{3}}^4+2\,{a_{3}}^2\,\overline{x}^2+2\,{a_{3}}^2\,y^2-\overline{x}^4-2\,\overline{x}^2\,y^2-y^4}}{{a_{2}}^2+2\,a_{2}\,\overline{x}-{a_{3}}^2+\overline{x}^2+y^2}\right)\\
+        q_3 &= 2\,\mathrm{atan}\left(\frac{\sqrt{\left(-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+\overline{x}^2+y^2\right)\,\left({a_{2}}^2+2\,a_{2}\,a_{3}+{a_{3}}^2-\overline{x}^2-y^2\right)}}{-{a_{2}}^2+2\,a_{2}\,a_{3}-{a_{3}}^2+\overline{x}^2+y^2}\right)
     \end{cases}
 \end{align*}
+
+En las que se toma:
+\begin{align*}
+    \overline{x} = x-a_1
+\end{align*}
+
+\section{Ejercicio 5}
+\textbf{Implemente las ecuaciones de cinemática inversa del robot 2.1 en un
+script de Matlab aislado. La implementación debe resolver el problema entregando todos los
+posibles vectores de solución en el espacio articular, considerando límites articulares de
+$\pm180^\circ$.}
+
+\textbf{Considere que el ejercicio será aprobado cuando se puedan obtener resultados correctos al
+variar los parámetros de entrada}
+
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
 %    \begin{bmatrix}
