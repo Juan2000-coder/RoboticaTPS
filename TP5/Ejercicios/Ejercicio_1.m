@@ -39,7 +39,7 @@ fprintf("Problema --> [q1 q2] = f(%f, %f)\n", x, y);
 try
     
     fprintf("\n----------------SOUCIÓN GEOMÉTRICA--------------\n");
-    [q1 q2] = ikine(robot, x, y);
+    [q1 q2] = ikine2(robot, x, y);
     fprintf("\n------------------SOLUCIONES--------------------\n");
     fprintf("\nCodo abajo:");
     fprintf("\nq = [q1 q2] = [%.2f° %.2f°]", rad2deg(q1(1)), rad2deg(q2(1)));
@@ -72,7 +72,10 @@ try
     fprintf('\nPresione Enter para continuar.\n');
 catch ME
     if (strcmp(ME.identifier, "MyException:ikine"))
-        fprintf("\n\nExcepción en la cinemática inversa: ");
+        fprintf("\n\nExcepción en la cinemática inversa de ikine: ");
+        disp(ME.message);
+    elseif (strcmp(ME.identifier, "MyException:ikine2"))
+        fprintf("\n\nExcepción en la cinemática inversa de ikine1: ");
         disp(ME.message);
     else
         throw(ME);
@@ -82,8 +85,8 @@ end
 %% CINEMÁTICA INVERSA MÉTODO GEOMÉTRICO PRIMERA APROXIMACIÓN
 % Se considera la formulación q = [q1 q2] = f(x, y)
 function [q1 q2] = ikine(robot, x, y)
-    if (!isa(class(robot), 'SerialLink'))
-        ME = MException("MyException:ikine:robot", "el primer valor pasado a la función debe ser el robot.");
+    if (~isa(robot, 'SerialLink'))
+        ME = MException("MyException:ikine", "el primer valor pasado a la función debe ser el robot.");
         throw(ME);
     end
 
@@ -112,8 +115,8 @@ end
 %}
 % Se considera la formulación q = [q1 q2] = f(x, y)
 function [q1 q2] = ikine2(robot, x, y)
-    if (!isa(class(robot), 'SerialLink'))
-        ME = MException("MyException:ikine2:robot", "el primer valor pasado a la función debe ser el robot.");
+    if (~isa(robot, 'SerialLink'))
+        ME = MException("MyException:ikine2", "el primer valor pasado a la función debe ser el robot.");
         throw(ME);
     end
     
@@ -134,15 +137,15 @@ function [q1 q2] = ikine2(robot, x, y)
     num = x^2 + y^2 + a1^2 - a2^2   % numerador en el argumento de acos
 
     if (den == 0)                   % punto en el origen del sistema
-        if !(num == 0)              
-            ME = MException("MyException:ikine2:acos", "(x, y) fuera del alcance del robot");
+        if ~(num == 0)              
+            ME = MException("MyException:ikine2", "(x, y) fuera del alcance del robot en acos");
             throw(ME);
         else % es alcanzable en esta situación porque implica un robot con a1 == a2
             alfa = [0; 0];                % en esta siituación podría ser cualquier ángulo en realidad
         end
     else
         if (abs(num/den) > 1)
-            ME = MException("MyException:ikine2:acos", "(x, y) fuera del alcance del robot");
+            ME = MException("MyException:ikine2", "(x, y) fuera del alcance del robot en acos");
             throw(ME);
         else
             alfa = acos(num/den);
@@ -154,7 +157,7 @@ function [q1 q2] = ikine2(robot, x, y)
 
     % calculo para la primera alternativa
     T1      = robot.links(1).A(q1(1)).double   % matriz de transformación directa en la primera articulación
-    p_1     = T1\[x; y; 0]                     % coordenadas de p_o = (x, y, 0) respecto de 1, es decir p_1 = (x_1, y_1, 0)
+    p_1     = T1\[x; y; 0; 1]                  % coordenadas de p_o = (x, y, 0) respecto de 1, es decir p_1 = (x_1, y_1, 0)
 
     % x_1 = p_1(1)
     % y_1 = p_1(2)
@@ -165,6 +168,6 @@ function [q1 q2] = ikine2(robot, x, y)
 
     % calculo para la segunda alternativa
     T1      = robot.links(1).A(q1(2)).double   % matriz de transformación directa en la primera articulación
-    p_1     = T1\[x; y; 0]                     % coordenadas de p_o = (x, y, 0) respecto de 1, es decir p_1 = (x_1, y_1, 0)
-    q2(1)   = atan2(p_1(2), p_1(1));
+    p_1     = T1\[x; y; 0; 1]                  % coordenadas de p_o = (x, y, 0) respecto de 1, es decir p_1 = (x_1, y_1, 0)
+    q2(2)   = atan2(p_1(2), p_1(1));
 end
