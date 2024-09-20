@@ -7,8 +7,13 @@ fprintf('######################################################\n\n');
 %% DEFINICIÓN DEL ROBOT Y PLOT
 fprintf("------------Robot del ejercicio 1------------------\n\n");
 
-a1    = 1; % Dar valores solo positivos
-a2    = 1; % Dar valores solo positivos
+global a1     % Dar valores solo positivos
+global a2     % Dar valores solo positivos
+a1 = 2;
+a2 = 1;
+fprintf("\nLongitud de los eslabones:");
+fprintf("\na1 =  %f", a1);
+fprintf("\na2 =  %f", a2);
 
 DH          =      [0 0 a1 0 0;
                     0 0 a2 0 0];
@@ -16,49 +21,74 @@ robot       = SerialLink(DH, 'name', '2R');
 robot.qlim  = [-pi pi
                -pi pi];
 q = [0 0];
-robot.plot(q, 'scale', 0.5,'trail', {'r', 'LineWidth', 2}, 'jointdiam', 0.5);
-robot.teach(q);
+figure(1);
+robot.plot(q, 'workspace', [-(a1 + a2)*1.2 (a1 + a2)*1.2 -(a1 + a2)*1.2 (a1 + a2)*1.2 -1 1],'scale', 0.5,'trail', {'r', 'LineWidth', 2}, 'jointdiam', 0.5);
 
 %% CINEMÁTICA INVERSA
-fprintf("-----Cinemática inversa por el método geométrico-------------\n\n");
+fprintf("-----------DEFINICIÓN DEL PROBLEMA-------------\n");
 
-x = input('\n\nIndicar la coordenada X: ');
-y = input('\n\nIndicar la coordenada Y: ');
-fprintf("\n\n[q1 q2] = f(%f, %f)", x, y);
+x = input('\nIndicar la coordenada X: ');
+y = input('Indicar la coordenada Y: ');
+fprintf("Problema --> [q1 q2] = f(%f, %f)\n", x, y);
 
 %% Fórmulas indicadas en la resolución del ejercicio
 
 try
     [q1 q2] = ikine(x, y);
-    fprintf("\nCodo arriba:");
-    disp([q1(1) q2(1)]);
+    fprintf("\n------------------SOLUCIONES-------------------\n");
     fprintf("\nCodo abajo:");
-    disp([q1(2) q2(2)]);
-    fprintf('Presione Enter para continuar.\n')
+    fprintf("\nq = [q1 q2] = [%.2f° %.2f°]", rad2deg(q1(1)), rad2deg(q2(1)));
+    fprintf("\n\nCodo arriba:");
+    fprintf("\nq = [q1 q2] = [%.2f° %.2f°]", rad2deg(q1(2)), rad2deg(q2(2)));
+    fprintf("\n\n--------------VERIFICACIÓN CON RTB--------------\n");
+
+    fprintf("Postura del robot codo abajo\n");
+    T = robot.fkine([q1(1) q2(1)]).T;
+    disp(T);
+    fprintf("\nPosición del extremo\n");
+    disp(T(:, 4));
+    robotCU = SerialLink(robot, 'name', 'codo abajo');
+    figure(2);
+    robotCU.plot([q1(1) q2(1)], 'workspace', [-(a1 + a2)*1.2 (a1 + a2)*1.2 -(a1 + a2)*1.2  (a1 + a2)*1.2 -1 1],'scale', 0.5,'trail', {'r', 'LineWidth', 2}, 'jointdiam', 0.5);
+
+    fprintf("Postura del robot codo arriba\n");
+    T       = robot.fkine([q1(2) q2(2)]).T;
+    disp(T);
+    fprintf("\nPosición del extremo\n");
+    disp(T(:, 4));
+    robotCD = SerialLink(robot, 'name','codo arriba');
+    figure(3);
+    robotCD.plot([q1(2) q2(2)], 'workspace', [-(a1 + a2)*1.2 (a1 + a2)*1.2 -(a1 + a2)*1.2 (a1 + a2)*1.2 -1 1],'scale', 0.5,'trail', {'r', 'LineWidth', 2}, 'jointdiam', 0.5);
+
+    fprintf("\n----------------------------------------------\n");
+    fprintf('\nPresione Enter para continuar.\n');
     pause
 catch ME
-    if (strcmp(ME.identifier, "MyException: ikine"))
+    if (strcmp(ME.identifier, "MyException:ikine"))
         fprintf("\n\nExcepción en la cinemática inversa: ");
-        disp(ME.msgtext);
+        disp(ME.message);
+    else
+        throw(ME);
     end
 end
 
-%% CINEMÁTICA INVERSA MÉTODO geométrico
+%% CINEMÁTICA INVERSA MÉTODO geométrico 1
 % Se considera la formulación q = [q1 q2] = f(x, y)
 function [q1 q2] = ikine(x, y)
-    global a1;
-    global a2;
-    acosArg = (x^2 + y^2 - (a1^2 + a2^2))/(2*a1*a2) % argumento del acos
+    global a1
+    global a2
+
+    acosArg = (x^2 + y^2 - (a1^2 + a2^2))/(2*a1*a2); % argumento del acos
+
     if (abs(acosArg) > 1)
-        ME = MException("MyException: ikine", "(x, y) fuera del alcance del robot");
+        ME = MException("MyException:ikine", "(x, y) fuera del alcance del robot");
         throw(ME);
     end
 
     q2 = acos(acosArg);
-    A  = a_1 + a_2*cos(q2);
-
+    A  = a1 + a2*cos(q2);
     q2 = [q2; -q2];                   % Ambos valores de q2
 
-    B  = a_2*sin(q2);
+    B  = a2*sin(q2);
     q1 = atan2(A*y - B*x, A*x + B*y); % Ambos valores de q1
 end
