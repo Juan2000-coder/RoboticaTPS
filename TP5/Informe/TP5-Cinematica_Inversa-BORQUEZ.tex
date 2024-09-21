@@ -13,10 +13,27 @@
 \usepackage{cleveref}
 %\usepackage[none]{hyphenat}
 \usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
 
 \usepackage{multirow}
 \usepackage{textcomp}
 \usepackage[left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+
+\lstset{ 
+    language=Matlab,                     % El lenguaje del código
+    basicstyle=\ttfamily,                % Tipo de letra
+    keywordstyle=\color{blue},           % Color para palabras clave
+    commentstyle=\color{green!60!black}, % Color para comentarios
+    numbers=left,                        % Numeración de las líneas
+    numberstyle=\tiny\color{gray},       % Estilo para los números
+    stepnumber=1,                        % Mostrar número en cada línea
+    tabsize=4,                           % Tamaño de tabulación
+    breaklines=true,                     % Partir líneas largas
+    showspaces=false,                    % No mostrar los espacios en blanco
+    showstringspaces=false,              % No mostrar espacios dentro de strings
+    showtabs=false,                      % No mostrar tabs
+}
 
 \graphicspath{{Imagenes/}}
 
@@ -520,6 +537,47 @@ para la siguiente posición y orientación del extremo final}
         0 & 0 & 0 & 1
     \end{bmatrix}
 \end{equation*}
+
+A continuación el plot ddel robot con la postura problema.
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.85, max width=\columnwidth}
+        \framebox{\includegraphics{9-ikine_iiwa.pdf}}
+    \end{adjustbox}
+    \caption{Postura problema}
+\end{figure}
+
+La porción del código en donde se obtienen las soluciones:
+\begin{lstlisting}
+    q1 = robot.ikine(T, 'ilimit', 1000,'tol', 1e-12, 'mask', ones(6, 1))
+    q2 = robot.ikine(T, 'ilimit', 1000, 'rlimit', 500, 'tol', 1e-12, 'q0', [1.2363   0    0   -0.4363    0.2473   -0.1  -0.3818], 'mask', ones(6, 1))
+    q3 = robot.ikine(T, 'ilimit', 500, 'tol', 1e-12, 'q0', [1.2363  0   -0.3   0   0.2473   -0.4363   -0.3818], 'mask', ones(6, 1))
+\end{lstlisting}
+
+Las soluciones obtenidas:
+\begin{align*}
+    q1 &= 
+    \begin{bmatrix}
+        1.2475 & -1.4783  & -0.0237  &  0.4693  &  0.0279  &  1.0091  & -1.2602
+    \end{bmatrix}\\
+    q2 &= 
+    \begin{bmatrix}
+        1.2678  &-1.0094 &  -0.0591  & -0.4693  &  0.0503  &  1.4780  & -1.2410
+    \end{bmatrix}\\
+    q3 &=
+    \begin{bmatrix}
+        1.2064  & -1.4738  & -0.1921 &   0.4693  &  0.2258   & 1.0143  & -1.3083
+    \end{bmatrix}
+\end{align*}
+
+Las soluciones superpuestas en el espacio:
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.85, max width=\columnwidth}
+        \framebox{\includegraphics{10-ikine_iiwa_q1_q2_q3.pdf}}
+    \end{adjustbox}
+    \caption{Soluciones superpuestas}
+\end{figure}
 
 
 
