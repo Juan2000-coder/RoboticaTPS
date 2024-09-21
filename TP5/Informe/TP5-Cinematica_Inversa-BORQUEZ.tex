@@ -140,7 +140,7 @@ Sobre el eje Y:
     y &= \underline{\left[a_1 + a_2\cos(\theta_2)\right]}\sin(\theta_1) + \underline{a_2\sin(\theta_2)}\cos(\theta_1)\\
     y &= \underline{A}\sin(\theta_1) + \underline{B}\cos(\theta_1)
 \end{align*}
-Se obtiene el siguiente sistema de ecuaciones lineales:
+Se obtiene el siguiente sistema de ecuaciones lineales en $\cos(\theta_1)$ y $\sin(\theta_1)$:
 \begin{align*}
     \begin{cases}
         x &= A\cos(\theta_1) - B\sin(\theta_1)\\
@@ -161,12 +161,12 @@ La tercera se utiliza para determinar dos posibles soluciones para $\theta_1$ mi
 En MATLAB se puede obtener el valor directamente como se indica en la cuarta condición, utilizando la función $atan2$.
 La \cref{teta1} se resuelve para cada valor de B (uno por cada valor de $\theta_2$ dados en la \cref{teta2}).
 
-Finalmente, la orientación dada para la postura en la formulación del problema debe ser congruente, y esta dada por:
+Finalmente, la orientación dada en la formulación del problema debe ser congruente, y esta dada por:
 \[\gamma = \theta_1 + \theta_2\]
 
-Esta última condición, cuando se cumple permite acotar la solución a una sola del par obtenido.
+Esta última condición, cuando se cumple, permite acotar la solución a una sola del par obtenido.
 
-En resumen, para $\overline{q} = (x, y, \gamma)$ en el rango del robot según \cref{rango} se obtiene un par de posibles soluciones (codo arriba y codo abajo) que luego se acota a una sola con la orientación:
+En resumen, para $\overline{q} = (x, y, \gamma)$ en el rango del robot según \cref{rango}, se obtiene un par de posibles soluciones (codo arriba y codo abajo) que luego se acota a una sola con la orientación:
 \begin{align}
     \begin{cases}
         \theta_2 &= arccos\left(\frac{x^2 + y^2 - a_{1}^2 - a_{2}^2}{2a_{1}a_{2}}\right) \rightarrow A = a_1 + a_2\cos(\theta_2); B = a_2\sin(\theta_2)\\
@@ -194,7 +194,6 @@ Volviendo a la \cref{geometria 1} tenemos:
 \end{align*}
 
 Entonces, las condiciones para que exista solución del problema son:
-
 \begin{align*}
     \left(x, \gamma\right)&\rightarrow\{\Delta_y = a_1^2 - \left[x - a_2\cos(\gamma)\right]^2\} >= 0\\
     \left(y, \gamma\right)&\rightarrow\{\Delta_x = a_1^2 - \left[y - a_2\sin(\gamma)\right]^2\} >= 0
@@ -234,6 +233,8 @@ La solución es la misma que en el caso anterior solamente que en este caso la o
     \end{cases}
 \end{align}
 
+Nota: Para esta formulación del problema se exploran otras alternativas en el código elaborado para el ejercicio.
+
 \subsection{}
 \textbf{Indique la cantidad de soluciones posibles que tendría cada conjunto de ecuaciones anterior, si los límites articulares fueran los siguientes}
 \subsubsection{$\pm 90^\circ$}
@@ -267,6 +268,7 @@ Para los puntos dentro del rango del robot, definido en \cref{rango 90}, se tend
     \item Para la ecuación 2 ahora además existen dos posibilidades (codo arriba y codo abajo) para cada caso. Luego existen dos soluciones cuando los puntos no están cerca del límite mínimo del rango y no se encuentran en la región de solapamiento del rango articular de la primera articulación. Cuatro soluciones en los puntos que se encuentran en la región de solapamiento del rango articular de la primera articulación y que no están cerca del mínimo del rango del robot. Cuatro soluciones en puntos que no están en la zona de solapamiento de la primera articulación y están cerca del mínimo del rango del robot. Ocho soluciones cuando los puntos se encuentra cerca el mínimo del rango y en la región de solapamiento articular de la primera articulación. Una única solución en la máxima extensión en la región de no solapamiento. Dos soluciones en la máxima extensión en la región de solapamiento. Dos soluciones en la mínma extensión en la zona de no solapamiento. Cuatro soluciones en la mínima extensión en la zona de solapamiento.
 \end{itemize}
 
+En las regiones cercanas a los límites articulares se pueden obtener 3 o 6 soluciones.
 \subsubsection{$\pm \infty$}
 Infinitas soluciones para ambas ecuaciones.
 
@@ -448,6 +450,7 @@ De la igualdad elemento a elemento de las matrices $CD$ y $T$, eliminando las ec
     \label{postura}
 \end{align}
 
+Cuyas posibles soluciones son:
 \begin{align*}
     \begin{cases}
         q_1 &= z\\
@@ -503,11 +506,20 @@ El problema se formula como en \cref{problema RRR}.
 
 La cinemática inversa de este robot \textbf{se puede resolver aplicando algo similar al paso inicial en el método del desacople cinemático de Pieper}.
 
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.58, max width=\columnwidth}
+        \framebox{\includegraphics{10-Ejercicio_5_vectores.JPG}}
+    \end{adjustbox}
+    \caption{Análisis geométrico vectorial}
+\end{figure}
+
 Como se conoce la posición del extremo y la orientación del último eslabón , \textbf{se puede determinar la posición del extremo del segundo eslabón} $\prescript{O}{}{p_2} = (\prescript{O}{}{x_2}, \prescript{O}{}{y_2})$ como:
 \begin{align*}
     \prescript{O}{}{p_2} &= \prescript{O}{}{p_3} - \mathbf{w}\\
     \prescript{O}{}{x_2}\mathbf{i} + \prescript{O}{}{y_2}\mathbf{j} &= \prescript{O}{}{x_3}\mathbf{i} + \prescript{O}{}{y_3}\mathbf{j} - \left(a_3\cos(\gamma)\mathbf{i} + a_3\sin(\gamma)\mathbf{i}\right)\\
 \end{align*}
+
 Luego
 \begin{align*}
     \begin{cases}
