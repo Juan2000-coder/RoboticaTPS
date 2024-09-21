@@ -9,6 +9,7 @@ fprintf("------------Robot del ejercicio 1------------------\n\n");
 
 a1 = 2;
 a2 = 1;
+R  = a1 + a2;
 
 fprintf("\nLongitud de los eslabones:");
 fprintf("\na1 =  %f", a1);
@@ -24,7 +25,8 @@ q = [0 0];
 
 % Plot del robot
 figure(1);
-robot.plot(q, 'workspace', [-(a1 + a2)*1.2 (a1 + a2)*1.2 -(a1 + a2)*1.2 (a1 + a2)*1.2 -1 1],'scale', 0.5,'trail', {'r', 'LineWidth', 2}, 'jointdiam', 0.5);
+robot.plot(q, 'workspace', [-R*1.5 R*1.5 -R*1.5 R*1.5 -1 1], 'scale', 0.5, 'trail', {'r', 'LineWidth', 2},'jointdiam', 0.5, 'top');
+hold on;
 
 %% CINEMÁTICA INVERSA
 fprintf("-----------DEFINICIÓN DEL PROBLEMA-------------\n");
@@ -33,12 +35,17 @@ x = input('\nIndicar la coordenada X: ');
 y = input('Indicar la coordenada Y: ');
 fprintf("Problema --> [q1 q2] = f(%f, %f)\n", x, y);
 
+fprintf("\n-------------POSTURA OBJETIVO------------------\n");
+syms yaw
+pose = transl([x; y; 0])*trotz(yaw);
+disp(pose);
+
+% Se mustra la postura objetivo con una rotación de cero(arbitrario).
+trplot(eval(subs(pose, yaw, 0)), 'frame', 'E', 'color', 'red', 'length', 1.5);
 
 %% Fórmulas indicadas en la resolución del ejercicio
 
 try
-    
-    fprintf("\n----------------SOUCIÓN GEOMÉTRICA--------------\n");
     [q1 q2] = ikine2(robot, x, y);
     fprintf("\n------------------SOLUCIONES--------------------\n");
     fprintf("\nCodo abajo:");
@@ -54,7 +61,7 @@ try
     disp(T(1:2, 4));
     robotCU = SerialLink(robot, 'name', 'codo abajo');
     figure(2);
-    robotCU.plot([q1(1) q2(1)], 'workspace', [-(a1 + a2)*1.2 (a1 + a2)*1.2 -(a1 + a2)*1.2  (a1 + a2)*1.2 -1 1],'scale', 0.5,'trail', {'r', 'LineWidth', 2}, 'jointdiam', 0.5);
+    robotCU.plot(q, 'workspace', [-R*1.5 R*1.5 -R*1.5 R*1.5 -1 1], 'scale', 0.5, 'trail', {'r', 'LineWidth', 2},'jointdiam', 0.5, 'top');
 
     fprintf("\n------------------------------------------------\n");
     fprintf("Postura del robot codo arriba\n");
@@ -64,19 +71,18 @@ try
     disp(T(1:2, 4));
     robotCD = SerialLink(robot, 'name','codo arriba');
     figure(3);
-    robotCD.plot([q1(2) q2(2)], 'workspace', [-(a1 + a2)*1.2 (a1 + a2)*1.2 -(a1 + a2)*1.2 (a1 + a2)*1.2 -1 1],'scale', 0.5,'trail', {'r', 'LineWidth', 2}, 'jointdiam', 0.5);
-    
-
-    fprintf("\n------------------------------------------------\n");
+    robotCD.plot(q, 'workspace', [-R*1.5 R*1.5 -R*1.5 R*1.5 -1 1], 'scale', 0.5, 'trail', {'r', 'LineWidth', 2},'jointdiam', 0.5, 'top');
 
     pause
+    fprintf("\n------------------------------------------------\n");
     fprintf('\nPresione Enter para continuar.\n');
 catch ME
+    fprintf("\n------------------------------------------------\n");
     if (strcmp(ME.identifier, "MyException:ikine"))
-        fprintf("\n\nExcepción en la cinemática inversa de ikine: ");
+        fprintf("\nExcepción en la cinemática inversa de ikine: ");
         disp(ME.message);
     elseif (strcmp(ME.identifier, "MyException:ikine2"))
-        fprintf("\n\nExcepción en la cinemática inversa de ikine1: ");
+        fprintf("\nExcepción en la cinemática inversa de ikine1: ");
         disp(ME.message);
     else
         throw(ME);
