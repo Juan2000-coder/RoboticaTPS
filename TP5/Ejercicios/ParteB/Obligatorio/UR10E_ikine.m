@@ -1,5 +1,5 @@
 %function Q = UR10E_ikine(R, T, q0, q_mejor)
-function Q=UR10E_ikine(R,T)
+function Q = UR10E_ikine(R, T)
     % Verificacion que sea robot
 
     
