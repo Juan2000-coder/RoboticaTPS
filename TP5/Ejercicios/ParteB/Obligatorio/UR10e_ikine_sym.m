@@ -55,12 +55,12 @@ eq_lhs = subs(eq_lhs, sin(q23), S23);
 eq_lhs = subs(eq_lhs, cos(q23), C23);
 
 eq_lhs = subs(eq_lhs, sin(q2), S2);
-eq_lhs = subs(eq_lhs, sin(q2), C2);
+eq_lhs = subs(eq_lhs, cos(q2), C2);
 
 eq_lhs = subs(eq_lhs, sin(q3), S3);
 eq_lhs = subs(eq_lhs, cos(q3), C3);
 
-eq_lhs = subs(eq_lhs, sin(q5), S4);
+eq_lhs = subs(eq_lhs, sin(q4), S4);
 eq_lhs = subs(eq_lhs, cos(q4), C4);
 
 eq_lhs = subs(eq_lhs, sin(q5), S5);
@@ -69,6 +69,9 @@ eq_lhs = subs(eq_lhs, cos(q5), C5);
 eq_lhs = subs(eq_lhs, sin(q6), S6);
 eq_lhs = subs(eq_lhs, cos(q6), C6);
 eq_lhs = simplify(eq_lhs);
+
+eq_lhs = subs(eq_lhs, cos(q5), C5);
+eq_lhs = subs(eq_lhs, cos(q6), C6);
 eq_lhs_latex = latex(eq_lhs);
 
 % rhs equation. inv(1T0)*T
