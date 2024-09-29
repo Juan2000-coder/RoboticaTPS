@@ -63,7 +63,7 @@ function qq = UR10e_ikine(R, T)
     C1    = cos(q1);
     
     %% Cálculo de q5
-    q5(1:2) = atan2(sqrt((nx*S1 - ny*C1).^2 + (ox*S1 - oy*C1).^2), ax*S1 - ay*C1);
+    q5(1:2) = atan2(sqrt((nx*S1 - ny*C1).^2 + (ox*S1 - oy*C1).^2), -ax*S1 + ay*C1);
     q5(3:4) = -q5(1:2);
 
     % Actualizaicón de q1
@@ -79,10 +79,10 @@ function qq = UR10e_ikine(R, T)
         warning('UR10e_ikine: q5 == 0 o n*pi', 'Singularidad');
         % En este caso q6 y q234defaults to 45°
     end
-    q6    = atan2((-ox*S1 - oy*C1) ./ S5, (nx*S1 - ny*C1) ./ S5);
+    q6    = atan2((-ox*S1 + oy*C1) ./ S5, (nx*S1 - ny*C1) ./ S5);
     
     %% Cálculo de q2
-    q234  = atan2((-az ./ S5), (-ax*C1 + ay*S1) ./ S5);
+    q234  = atan2((az ./ S5), (ax*C1 + ay*S1) ./ S5);
 
     S234  = sin(q234);
     C234  = cos(q234);

@@ -2,10 +2,10 @@ clear all;
 syms d1 d4 d5 d6 a2 a3
 syms q1 q2 q3 q4 q5 q6 q234 q23
 syms S1 S2 S3 S4 S5 S6 S23 S234 C1 C2 C3 C4 C5 C6 C23 C234
-syms nx ny nz
-syms ox oy oz
-syms ax ay az
-syms px py pz
+syms n_x n_y n_z
+syms o_x o_y o_z
+syms a_x a_y a_z
+syms p_x p_y p_z
 
 % parámetros de Denavit-Hartenberg
 dh = [0.0   d1   0     pi/2    0   ;
@@ -28,10 +28,10 @@ assume(q6, 'real')
 R = SerialLink(dh, 'name', 'UR10e');
 
 % postura
-n           = [nx; ny; nz];
-o           = [ox; oy; oz];
-a           = [ax; ay; az];
-p           = [px; py; pz];
+n           = [n_x; n_y; n_z];
+o           = [o_x; o_y; o_z];
+a           = [a_x; a_y; a_z];
+p           = [p_x; p_y; p_z];
 T           = [n o a p];
 T(4, :)     = [0 0 0 1];
 T           = SE3(T);
