@@ -47,6 +47,8 @@ RHS = RHS.T;
 
 RHS = subs(RHS, q2 + q3 + q4, q234);
 RHS = subs(RHS, q2 + q3, q23);
+RHS = simplify(RHS);
+RHS = subs(RHS, q4 + q23, q234);
 
 RHS = subs(RHS, sin(q234), S234);
 RHS = subs(RHS, cos(q234), C234);
@@ -68,10 +70,8 @@ RHS = subs(RHS, cos(q5), C5);
 
 RHS = subs(RHS, sin(q6), S6);
 RHS = subs(RHS, cos(q6), C6);
-RHS = simplify(RHS);
 
-RHS = subs(RHS, cos(q5), C5);
-RHS = subs(RHS, cos(q6), C6);
+RHS = simplify(RHS);
 RHS_latex = latex(RHS);
 
 % rhs equation. inv(1T0)*T
