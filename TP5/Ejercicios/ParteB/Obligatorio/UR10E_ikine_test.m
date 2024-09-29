@@ -7,14 +7,14 @@ T = [0.866 -0.500 0.000 0.800;
      0.000  0.000 1.000 0.400;
      0.000  0.000 0.000 1.000];
 
-% Resolución analítica
-qq = UR10e_ikine(R, T);
-
 % Posición en la postura inicial
 figure(1);
-hold on;
 R.plot(q, 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
+
+% Resolución analítica
+qq = UR10e_ikine(R, T);
 
 % Robots para cada una de las soluciones
 R1 = SerialLink(R, 'name','q1');
@@ -27,42 +27,44 @@ R7 = SerialLink(R, 'name','q7');
 R8 = SerialLink(R, 'name','q8');
 
 % Solución inicial
+
 figure(2);
-hold on;
 R1.plot(qq(:, 1)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
 figure(3);
-hold on;
 R2.plot(qq(:, 2)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
 figure(4);
-hold on;
 R3.plot(qq(:, 3)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
 figure(5);
-hold on;
 R4.plot(qq(:, 4)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
 figure(6);
-hold on;
 R5.plot(qq(:, 5)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
 figure(7);
-hold on;
 R6.plot(qq(:, 6)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
 figure(8);
-hold on;
 R7.plot(qq(:, 7)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
 figure(9);
-hold on;
 R8.plot(qq(:, 8)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
+hold on;
