@@ -37,7 +37,7 @@ pitch_tool  = 0;
 yawn_tool   = 0;
 
 % workspace
-workspace = [-1 1 -0.6 1 -transl_base(3) 1.8];
+workspace   = [-1.5 1.5 -1.5 1.5 0 1.8];
 
 % transformación de la base
 R.base = transl(transl_base)*trotx(roll_base)*troty(pitch_base)*trotz(yawn_base);

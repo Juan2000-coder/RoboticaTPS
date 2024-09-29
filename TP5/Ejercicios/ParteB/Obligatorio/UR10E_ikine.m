@@ -1,5 +1,5 @@
 %function Q = UR10e_ikine(R, T, q0, q_mejor)
-function Q = UR10e_ikine(R, T)
+function qq = UR10e_ikine(R, T)
     %% Verificacion de parámetros
 
     % Verificación del robot
@@ -125,6 +125,7 @@ function Q = UR10e_ikine(R, T)
     q4          = q234 - q23;
 
     %% Solucion final
-    qq = [q1; q2; q3; q4; q5; q6];
-    Q  = qq;
+    qq          = [q1; q2; q3; q4; q5; q6];
+    qq          = qq - offsets'*ones(1, 8);
+    R.offset    = offsets;
 end
