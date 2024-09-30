@@ -90,9 +90,8 @@ function qq = UR10e_ikine(R, T)
     A     = px*C1 + py*S1 - d(5)*S234 - d(6)*S5.*C234;
     B     = pz - d(1) + d(5)*C234 - d(6)*S5.*S234;
 
-
     %  Verificación del discriminante de la raiz
-    disc = (4*a(2)^2 - 1)*(A.^2 + B.^2) - a(2)^2 + a(3)^2;
+    disc = 4*a(2)^2*(A.^2 + B.^2) - (A.^2 + B.^2 + a(2)^2-a(3)^2).^2;
 
     if (any(disc) < 0)
         warning('UR10e_ikine: q2 complejo', 'El punto está fuera del alcance de robot. Conservando la parte real...');
