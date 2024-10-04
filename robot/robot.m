@@ -34,7 +34,7 @@ yawn_base   = 0;
 transl_tool = [0 0 0];
 roll_tool   = 0;
 pitch_tool  = 0;
-yawn_tool   = 0;
+yawn_tool   = 0;matlabl
 
 % workspace
 workspace   = [-1.5 1.5 -1.5 1.5 -2 2];
