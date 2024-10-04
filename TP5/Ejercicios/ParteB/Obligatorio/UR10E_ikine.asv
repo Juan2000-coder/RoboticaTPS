@@ -1,4 +1,4 @@
-function qq = UR10E_ikine(R, T, q0, mejor)
+function Q = UR10e_ikine(R, T, q0, mejor)
 
     %% Verificacion de parámetros
 
@@ -135,12 +135,12 @@ function qq = UR10E_ikine(R, T, q0, mejor)
 
     if(mejor)
         Qaux = qq - q0' * ones(1,8);
-        normas = zeros(1,8);
-            for i=1:8
-                normas(i) = norm(Qaux(:,i));
-            end
-        [~,pos] = min(normas);
-        qq = qq(:, pos);
+    normas = zeros(1,8);
+    for i=1:8
+    normas(i) = norm(Qaux(:,i));
+    end
+    [~,pos] = min(normas);
+    qq = qq(:, pos);
     end
 
 end

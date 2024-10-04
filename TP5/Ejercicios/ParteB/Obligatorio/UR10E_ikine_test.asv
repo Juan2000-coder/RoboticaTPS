@@ -15,10 +15,21 @@ R.plot(q, 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r',
 hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
-mejor=true;
-
 % Resolución analítica
-qq = UR10E_ikine(R, T, zeros(1,6), mejor);
+qq = UR10E_ikine(R, T, zeros(1,6), true);
+
+% % Robots para cada una de las soluciones
+% R1 = SerialLink(R, 'name','q1');
+% R2 = SerialLink(R, 'name','q2');
+% R3 = SerialLink(R, 'name','q3');
+% R4 = SerialLink(R, 'name','q4');
+% R5 = SerialLink(R, 'name','q5');
+% R6 = SerialLink(R, 'name','q6');
+% R7 = SerialLink(R, 'name','q7');
+% R8 = SerialLink(R, 'name','q8');
+% 
+% % Solución inicial
+% 
 
 if(mejor)
     figure(1);
@@ -27,17 +38,6 @@ if(mejor)
     trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
 else
-
-    % Robots para cada una de las soluciones
-    R1 = SerialLink(R, 'name','q1');
-    R2 = SerialLink(R, 'name','q2');
-    R3 = SerialLink(R, 'name','q3');
-    R4 = SerialLink(R, 'name','q4');
-    R5 = SerialLink(R, 'name','q5');
-    R6 = SerialLink(R, 'name','q6');
-    R7 = SerialLink(R, 'name','q7');
-    R8 = SerialLink(R, 'name','q8');
-    
     figure(2);
     R1.plot(qq(:, 1)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
     hold on;
