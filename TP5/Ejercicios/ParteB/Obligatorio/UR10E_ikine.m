@@ -1,5 +1,7 @@
 function qq = UR10E_ikine(R, T, q0, mejor)
 
+eps=0.001;
+
     %% Verificacion de parámetros
 
     % Verificación del robot
@@ -78,7 +80,7 @@ function qq = UR10E_ikine(R, T, q0, mejor)
     S5    = sin(q5);
 
     %% Cálculo de q6
-    if any(S5 == 0)        % Para 0 y npi se tiene singularidad
+    if any(abs(S5) < eps)        % Para 0 y npi se tiene singularidad
         warning('UR10e:q5_singularidad','Hay una singularidad debida a q5');
         % En este caso q6 y q234defaults to 45°
     end
