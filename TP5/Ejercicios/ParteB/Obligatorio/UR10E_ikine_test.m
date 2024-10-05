@@ -4,10 +4,18 @@ robotFile = fullfile(fileparts(mfilename('fullpath')), '../../../../robot/robot'
 run(robotFile);
 
 % Postura problema
-T = [0.866 -0.500 0.000 0.800;
-     0.500  0.866 0.000 0.300;
-     0.000  0.000 1.000 0.400;
-     0.000  0.000 0.000 1.000];
+T = [0.866  -0.500 0.000 0.800;
+     0.500   0.866 0.000 0.300;
+     0.000   0.000 1.000 0.400;
+     0.000   0.000 0.000 1.000];
+
+% Caso con soluciones singulares
+%{
+T = [0.0000    0.0000   1.0000    0.2907;
+    -0.7071    0.7071   0.0000    0.4459;
+    -0.7071   -0.7071   0.0000    0.6306;
+     0.0000    0.0000   0.0000    1.0000];
+%}
 
 % Posición en la postura inicial
 figure(1);
@@ -15,13 +23,13 @@ R.plot(q, 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r',
 hold on;
 trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
 
-mejor=true;
+mejor = true;
 
 % Resolución analítica
 qq = UR10E_ikine(R, T, zeros(1,6), mejor);
 
 if(mejor)
-    figure(1);
+    figure(2);
     R.plot(qq(:, 1)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
     hold on;
     trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
