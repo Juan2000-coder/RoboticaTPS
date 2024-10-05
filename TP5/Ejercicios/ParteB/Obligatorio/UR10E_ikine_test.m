@@ -1,7 +1,7 @@
 clc;clear;close all;
 
-robotFile = fullfile(fileparts(mfilename('fullpath')), '../../../../robot/robot');
-run(robotFile);
+% robotFile = fullfile(fileparts(mfilename('fullpath')), '../../../../robot/robot');
+run("robot.m");
 
 % % Postura problema
 % T = [0.866  -0.500 0.000 0.800;
