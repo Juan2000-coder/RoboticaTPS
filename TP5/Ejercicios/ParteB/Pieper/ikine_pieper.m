@@ -22,12 +22,21 @@ function qq = ikine_pieper(R, T, q0, q_mejor)
 
     T          = R.base.inv()*T*R.tool.inv();
 
+    %  Rescatar los offsets
+    offsets    = R.offset;
+    R.offset   = zeros(1, 6);
+
     %% VARIABLES
     d          = R.d;
+    a          = R.a;
 
     %% DESACOPLE CINEMÁTICO
     p          = T.t;            % Posición del extremo respecto a la base
     pc         = p - d(6)*T.a;   % Centro de la muñeca
+
+    % Verificación centro de la muñeca
+    fprintf("\nCentro de la muñeca original\n");
+    R.base*pc
 
     %% CALCULO DE q1
     q1(1)      = atan2(pc(2), pc(1));
@@ -37,11 +46,72 @@ function qq = ikine_pieper(R, T, q0, q_mejor)
         q1(2)  = q1(1) - pi;
     end
 
-    %% CALCULO DE q2
-    p1c = R.links(1).A(q1(1)).inv()*pc; % Centro de la muñeca respecto del sistema {1} para q1_1
-    p1c
-    trplot(eye(4),'frame', '1', "#D95319" , 'length', 1.5, 'thick', 1);
-    hold on;
-    frames(R, q0, [0 0 1 1 1 0 0 0], false, 2);
-    qq = q1;
+    %% ITERACIÓN EN q1
+    sol = 1;
+    for (q1_val = q1)                       % Para cada valor de q1
+        p1c = R.links(1).A(q1_val).inv()*pc; % Centro de la muñeca respecto del sistema {1}
+
+        %% PLOT PARCIAL
+        % trplot(eye(4),'frame', '1', "#D95319" , 'length', 1.5, 'thick', 1);
+        % hold on;
+        % frames(R, q0, [0 0 1 1 1 0 0 0], false, 2);
+        
+        %% CALCULO DE q2 q3 RR planar
+        phi = atan2(p1c(2), p1c(1));              % angulo entre vector posición y eje X1
+
+        % Análisis geométrico vectorial
+        % w = u + v
+        % w - u = v
+        % w^2               + u^2  - 2*w \cdot u                                = v^2
+        % xp1c^2 + yp1c^2   + a2^2 - 2*sqrt(xp1c^2 + yp1c^2)*a2*cos(alpha)      = d4^2
+        % (xp1c^2 + yp1c^2  + a2^2 - d4^2)/(2*sqrt(xp1c^2 + yp1c^2)*a2)         = cos(alpha)
+        % acos((xp1c^2 + yp1c^2  + a2^2 - d4^2)/(2*sqrt(xp1c^2 + yp1c^2)*a2))   = alpha; Lo que da dos soluciones posibles
+
+        % Verificamos denominador
+        den = 2*sqrt(p1c(1)^2 + p1c(2)^2)*a(2);        % denominador en el argumento de acos
+        num = p1c(1)^2 + p1c(2)^2 + a(2)^2 - d(4)^2;   % numerador en el argumento de acos
+
+        if (den == 0)                                  % punto en el origen del sistema
+            if ~(num == 0)              
+                ME = MException("ikine_pieper:q2", "centro de muñeca fuera del alcance del robot en acos");
+                throw(ME);
+            else % es alcanzable en esta situación porque implica un robot con a2 == a3
+                alfa = [0 0];                % en esta situación podría ser cualquier ángulo en realidad
+            end
+        else
+            if (abs(num/den) > 1)
+                num/den
+                ME = MException("ikine_pieper:q2", "centro de muñeca fuera del alcance del robot en acos");
+                throw(ME);
+            else
+                alfa = acos(num/den);
+                alfa = [alfa -alfa];
+            end
+        end
+
+        q2          = phi - alfa;                          % angulo en la primera articulación RR
+
+        for (q2_val = q2)
+            % coordenadas de pc = (xc, yc, zc) respecto de 2, es decir p2c = (x2c, y2c, 0)
+            p2c          = R.links(2).A(q2_val).inv()*p1c;
+
+            % x2c        = p2(1)
+            % y2c        = p2(2)
+            % q3(prima)  = atan2(y2c, x2c)
+            % q3         = pi/2 + q3(prima)
+
+            q3           = pi/2 + atan2(p2c(2), p2c(1));
+            
+            % Actualizacion de las variables.
+            qq(1, sol) = q1_val;
+            qq(2, sol) = q2_val;
+            qq(3, sol) = q3;
+
+            % Actualización del contador de soluciones.
+            sol        = sol + 1;
+        end
+    end
+    qq(4:6, :)  = 0;
+    qq          = qq - offsets'*ones(1, 4);
+    R.offset = offsets;
 end

@@ -23,3 +23,9 @@ q = [0.4398    -0.3770    0.3770    0.3142    0.6912    0.6912];
 
 % desplazamiento del rango articular
 R.offset = [pi/2 pi/2 0 pi pi/2  0];
+
+% base genérica;
+% R.base   = trotx(pi/4)*troty(pi/4)*trotz(pi/4)*transl([0.1 0.1 0.1]);
+
+% tool genérica;
+% R.base   = trotx(pi/12)*troty(-pi/4)*trotz(pi/4)*transl([0.1 -0.1 0.1]);
