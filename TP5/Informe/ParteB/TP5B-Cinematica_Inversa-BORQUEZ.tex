@@ -92,7 +92,7 @@ La definición de los sistemas en el robot es la que se indica en \cref{sistemas
 \end{figure}
 
 La matriz de DH que resulta es \cref{matriz DH}. Para el caso, se utilizaran solamente
-valores unitarios para los parámetros de longitud de DH ($a_i$ y$d_i$).
+valores unitarios para los parámetros de longitud de DH ($a_i$ y $d_i$).
 
 \begin{table}[H]
     \centering
@@ -117,11 +117,58 @@ valores unitarios para los parámetros de longitud de DH ($a_i$ y$d_i$).
         \framebox{\includegraphics{14-Spong2.JPG}}
     \end{adjustbox}
     \caption{Robot 6gdl - Primer problema de Pieper}
+    \label{primer problema pieper}
 \end{figure}
 
 Como se puede observar en el esquema cinemático de la \cref{robot 6gdl} los eslabones
 1, 2, 3 y 4 se mueven siempre en un mismo plano que contiene al eje $Z_0$ y el ángulo que
-el mismo forma con respecto al plano $X_0Z_0$ es el ángulo $\theta_1$.
+el mismo forma con respecto al plano $X_0Z_0$ es el ángulo $\theta_1$. En la \cref{plano q1} se muestra en otra perspectiva
+en donde se muestran los dos posibles valores para el ángulo.
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{16-q1.JPG}}
+    \end{adjustbox}
+    \caption{Plano $q_1$}
+    \label{plano q1}
+\end{figure}
+
+Luego se obtiene $q_1$ como en la \cref{q1}
+\begin{align}
+    \begin{cases}
+        (q_1)_1 = atan2(y_c, x_c)\\
+        (q_1)_1 < 0 \Rightarrow (q_1)_2 = (q_1)_1 + \pi\\
+        (q_1)_1 > 0 \Rightarrow (q_1)_2 = (q_1)_1 - \pi\\
+    \end{cases}
+    \label{q1}
+\end{align}
+
+Para cada valor de $q_1$ se tiene la transformación
+$\prescript{0}{}{T_1}$ y con la misma se obtiene $\prescript{1}{}{\overline{p_c}}$ como
+$\prescript{1}{}{\overline{p}_c} = \left(\prescript{0}{}{T_1}\right)^{-1}\prescript{0}{}{\overline{p}_c}$.
+El problema queda entonces formulado como se muestra en \cref{q23}. Se puede ver que  
+es equivalente al de la cinemática inversa de un robot RR planar que se vió en la ``parte A'' de este trabajo, tal como 
+queda denotado por los eslabones pintados en negro y las articulaciones con círculos rojos. Luego, para obtener $q_2$ y $q_3$ se sigue 
+el procedimiento utilizado en ese caso, con la salvedad de que lo que se obtiene directamente es $q_3\prime$. Luego hay que utilizar la \cref{q3 q3prima} para obtener $q_3$.
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{17-q2.JPG}}
+    \end{adjustbox}
+    \caption{Plano $q_{23}$}
+    \label{q23}
+\end{figure}
+
+\begin{equation}
+    q_3= \frac{\pi}{2} - q_3^{\prime}
+    \label{q3 q3prima}
+\end{equation}
+
+
+
+
 
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 

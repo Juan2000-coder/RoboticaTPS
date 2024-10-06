@@ -1,7 +1,4 @@
 function qq = UR10E_ikine(R, T, q0, mejor)
-
-eps=0.001;
-
     %% Verificacion de parámetros
 
     % Verificación del robot
