@@ -168,8 +168,75 @@ Luego, $q_2$ y $q_3^{\prime}$ se obtienen siguiendo el procedimiento para el RR 
     \label{q3 q3prima}
 \end{equation}
 
+\section{Ejercicio 2: Segundo Problema de Pieper}
+Dado que se conocen los valores de $q_1$, $q_2$ y $q_3$ se obtiene 
+$\prescript{0}{}{T_3}$ (para cada terna). Con esta, se determina $\prescript{3}{}{T_6}$ 
+como $\prescript{3}{}{T_6} = \prescript{0}{}{T_3}^{-1}\prescript{0}{}{T_6}$.
 
+El problema hasta aquí queda formulado gráficamente como se indica en \cref{plano q4}.
+Se puede observar en \cref{sistemas DH} que el $Z_6$ siempre se mueve en el plano determinado por
+$Z_3$ y $X_4$, de manera que su proyección en el plano $X_3Y_3$ coincide que la de $X_4$ sobre el mismo plano.
+Así, se puede determinar $q_4$ como el ángulo entre el $Z_3X_4$ (señallado en negro en la figura) y el eje $X_3$, existiendo
+los dos posibles valores indicados en la figura.
 
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{18-q4.JPG}}
+    \end{adjustbox}
+    \caption{Plano $q_{4}$}
+    \label{plano q4}
+\end{figure}
+
+Sean $\prescript{3}{}{n_6}$, $\prescript{3}{}{o_6}$ y $\prescript{3}{}{a_6}$ los 
+versores del sistema dado por $\prescript{3}{}{T_6}$. El $\prescript{3}{}{a_6}$ da la dirección de $Z_6$. Luego se determina
+$q_4$ a partir de sus componentes 1 y 2 como:
+
+\begin{align}
+    \begin{cases}
+        (q_4)_1 = atan2\left(\left(\prescript{3}{}{a_6}\right)_2, \left(\prescript{3}{}{a_6}\right)_1\right)\\
+        (q_4)_1 < 0 \Rightarrow (q_4)_2 = (q_4)_1 + \pi\\
+        (q_4)_1 > 0 \Rightarrow (q_4)_2 = (q_4)_1 - \pi\\
+    \end{cases}
+    \label{q4}
+\end{align}
+
+Obtenido $q_4$, se determina ahora $\prescript{4}{}{T_6}$ como $\prescript{4}{}{T_6} = \prescript{3}{}{T_4}^{-1}\prescript{3}{}{T_6}$ y el problema
+queda como se indica en \cref{plano q5}. Luego se obtiene 
+
+\begin{align}
+    \begin{cases}
+        \alpha = atan2\left(\left(\prescript{4}{}{a_6}\right)_2, \left(\prescript{4}{}{a_6}\right)_1\right)\\
+        q_5    = \frac{\pi}{2} + \alpha
+    \end{cases}
+    \label{q5}
+\end{align}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{19-q5.JPG}}
+    \end{adjustbox}
+    \caption{Plano $q_{5}$}
+    \label{plano q5}
+\end{figure}
+
+Finalmente se obtiene $\prescript{5}{}{T_6}$ como $\prescript{5}{}{T_6} = \prescript{4}{}{T_5}^{-1}\prescript{4}{}{T_6}$ y el problema
+queda como en \cref{plano q6}. De donde se obtiene facilmente:
+
+\begin{align}
+    q_6 = atan2\left(\left(\prescript{5}{}{n_6}\right)_2, \left(\prescript{5}{}{n_6}\right)_1\right)\\
+    \label{q6}
+\end{align}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{max width=\columnwidth}
+        \framebox{\includegraphics{20-q6.pdf}}
+    \end{adjustbox}
+    \caption{Plano $q_{6}$}
+    \label{plano q6}
+\end{figure}
 
 
 %\begin{equation*}

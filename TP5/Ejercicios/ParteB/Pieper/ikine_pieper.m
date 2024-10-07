@@ -34,9 +34,11 @@ function qq = ikine_pieper(R, T, q0, q_mejor)
     p          = T.t;            % Posición del extremo respecto a la base
     pc         = p - d(6)*T.a;   % Centro de la muñeca
 
-    % Verificación centro de la muñeca
-    fprintf("\nCentro de la muñeca original\n");
-    R.base*pc
+    % Verificación centro de la muñeca primer problema Pieper
+    % fprintf("\nCentro de la muñeca original\n");
+    % R.base*pc
+
+    %% PRIMER PROBLEMA DE PIEPER
 
     %% CALCULO DE q1
     q1(1)      = atan2(pc(2), pc(1));
@@ -51,11 +53,6 @@ function qq = ikine_pieper(R, T, q0, q_mejor)
     for (q1_val = q1)                       % Para cada valor de q1
         p1c = R.links(1).A(q1_val).inv()*pc; % Centro de la muñeca respecto del sistema {1}
 
-        %% PLOT PARCIAL
-        % trplot(eye(4),'frame', '1', "#D95319" , 'length', 1.5, 'thick', 1);
-        % hold on;
-        % frames(R, q0, [0 0 1 1 1 0 0 0], false, 2);
-        
         %% CALCULO DE q2 q3 RR planar
         phi = atan2(p1c(2), p1c(1));              % angulo entre vector posición y eje X1
 
@@ -101,17 +98,39 @@ function qq = ikine_pieper(R, T, q0, q_mejor)
             % q3         = pi/2 + q3(prima)
 
             q3           = pi/2 + atan2(p2c(2), p2c(1));
-            
-            % Actualizacion de las variables.
-            qq(1, sol) = q1_val;
-            qq(2, sol) = q2_val;
-            qq(3, sol) = q3;
 
-            % Actualización del contador de soluciones.
-            sol        = sol + 1;
+            %% SEGUNDO PROBLEMA DE PIEPER
+
+            % Obtenemos T de 6 respecto a 3
+            T36        = R.A(1:3, [q1_val q2_val q3 0 0 0]).inv()*T;            
+            
+            %% CÁLCULO DE q4
+            a36        = T36.a;      % Eje Z6
+            q4(1)      = atan2(a36(2), a36(1));
+
+            if (q4 < 0)
+                q4(2)  = q4(1) + pi;
+            else
+                q4(2)  = q4(1) - pi;
+            end
+            
+            for (q4_val = q4)
+                T46 = R.links(4).A(q4_val).inv()*T36;
+                a46 = T46.a;
+                q5  = atan2(a46(2), a46(1)) + pi/2;
+
+                T56 = R.links(5).A(q5).inv()*T46;
+                n56 = T56.n;
+                q6  = atan2(n56(2), n56(1));
+
+                % Actualización de soluciones
+                qq(:, sol) = [q1_val; q2_val; q3; q4_val; q5; q6];
+
+                % Actualización del contador de soluciones.
+                sol        = sol + 1;
+            end
         end
     end
-    qq(4:6, :)  = 0;
-    qq          = qq - offsets'*ones(1, 4);
-    R.offset = offsets;
+    qq          = qq - offsets'*ones(1, 8);
+    R.offset    = offsets;
 end

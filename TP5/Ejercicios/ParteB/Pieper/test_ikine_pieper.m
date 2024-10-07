@@ -1,15 +1,15 @@
 clc;clear all;
 robot;
+pause;
 
-
-%% VERIFICACIÓN DEL PRIMER PROBLEMA DE PIEPER
-pause
 T           = R.fkine(q);
 qq          = ikine_pieper(R, T, q, true);
 sz          = size(qq);
 cols        = sz(2);
-sistemas    = [0 0 0 0 1 0 0 0];
+sistemas    = [1 1 1 1 1 1 1 1];
 
+%% VERIFICACIÓN DEL PRIMER PROBLEMA DE PIEPER
+%{
 R1 = SerialLink(R, 'name', '1');
 R2 = SerialLink(R, 'name', '2');
 R3 = SerialLink(R, 'name', '3');
@@ -24,3 +24,13 @@ for (i = 1:cols)
     Taux  = robots{i}.base*robots{i}.A(1:5, transpose(qq(:, i)))*robots{i}.tool;
     Taux.t
 end
+%}
+
+figure;
+for (i = 1:cols)
+    trplot(eye(4));
+    frames(R, transpose(qq(:, i)), sistemas, true, 0);
+    %R.plot(transpose(qq(:, i)), 'scale', 0.5, 'jointdiam', 0.85, 'notiles', 'nobase', 'noname', 'trail',{'r', 'LineWidth', 0.1})
+    pause;
+end
+fprintf("listo chau");
