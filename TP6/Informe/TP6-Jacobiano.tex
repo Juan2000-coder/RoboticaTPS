@@ -1,0 +1,340 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{adjustbox}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage[spanish, es-nodecimaldot]{babel} 
+\usepackage{lastpage}
+\usepackage{amssymb} % Para símbolos matemáticos adicionales
+\usepackage{hyperref}
+\usepackage{cleveref}
+%\usepackage[none]{hyphenat}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{multirow}
+\usepackage{textcomp}
+\usepackage[left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+
+\lstset{ 
+    language=Matlab,                     % El lenguaje del código
+    basicstyle=\ttfamily,                % Tipo de letra
+    keywordstyle=\color{blue},           % Color para palabras clave
+    commentstyle=\color{green!60!black}, % Color para comentarios
+    numbers=left,                        % Numeración de las líneas
+    numberstyle=\tiny\color{gray},       % Estilo para los números
+    stepnumber=1,                        % Mostrar número en cada línea
+    tabsize=4,                           % Tamaño de tabulación
+    breaklines=true,                     % Partir líneas largas
+    showspaces=false,                    % No mostrar los espacios en blanco
+    showstringspaces=false,              % No mostrar espacios dentro de strings
+    showtabs=false,                      % No mostrar tabs
+}
+
+\graphicspath{{Imagenes/}}
+
+% Encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{30 pt}
+\renewcommand{\headrulewidth}{0.2pt}
+\fancyhead[R]{\begin{tabular}{@{}l@{}}\includegraphics[scale=0.4]{escudo.PNG}\end{tabular}}
+\fancyhead[L]{\begin{tabular}{@{}c@{}} \textbf{Robótica I - Año: 2024} \\ Trabajo Práctico 6: Jacobiano \end{tabular}}
+
+
+\fancyfoot[R]{\thepage}
+\fancyfoot[C]{\begin{tabular}{@{}c@{}}\textbf{BORQUEZ PEREZ Juan Manuel}\\ \textbf{Legajo 13567}\end{tabular}}
+\renewcommand{\footrulewidth}{0.2pt}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{5cm}
+    {\Huge\bfseries Informe de Trabajo Práctico N°6}\\
+    \vspace{0.2cm}
+    {\Large \textbf{Jacobiano}}\\
+    \vspace{0.5cm}
+    {\Large Robótica I}\\
+    \vspace{0.5 cm}
+    {\Large Ingeniería en Mecatrónica}\\
+    \vspace{0.2 cm}
+    {\Large Facultad de Ingeniería - UNCUYO}\\
+    \vspace{1.5cm}
+    Alumno: Juan Manuel BORQUEZ PEREZ\\
+    Legajo: 13567\\
+    \vfill
+    {\begin{tabular}{@{}c@{}}\includegraphics[scale=0.4]{escudo.PNG}\end{tabular}}\hspace{10pt}
+    %Año 2023
+\end{titlepage}
+
+\section{Ejercicio 1}
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.55, max width=\columnwidth}
+        \framebox{\includegraphics{1-Ejercicio_1.JPG}}
+    \end{adjustbox}
+    \caption{Robot planar RR Ejercicio 1.}
+\end{figure}
+
+\subsection{Mediante derivación respecto del tiempo obtenga el Jacobiano del robot}
+Se tiene:
+
+\begin{equation}
+    \left\{
+    \begin{aligned}
+    x &= a_1 \cos(\theta_1) + a_2 \cos(\theta_1 + \theta_2) \\
+    y &= a_1 \sin(\theta_1) + a_2 \sin(\theta_1 + \theta_2) \\
+    z &= 0 \\
+    \alpha &= 0 \\
+    \beta &= 0 \\
+    \gamma &= \theta_1 + \theta_2
+    \end{aligned}
+    \right.
+    \label{directa RR}
+\end{equation}
+
+Cada fila en el Jacobiano se puede obtener como el gradiente de la función en esa fila
+respecto de las variables $q_1\equiv\theta_1$ y $q_2\equiv\theta_2$. Se obtiene:
+
+\begin{equation}
+    J(q) = 
+    \begin{bmatrix}
+        -a_1\sin(\theta_1) - a_2\sin(\theta_1 + \theta_2) & -a_2\sin(\theta_1 + \theta_2)\\
+        a_1\cos(\theta_1) + a_2\cos(\theta_1 + \theta_2)  & a_2\cos(\theta_1 + \theta_2)\\
+        0                                                 & 0\\
+        0                                                 & 0\\
+        0                                                 & 0\\
+        1                                                 & 1
+    \end{bmatrix}
+    \label{jacobiano RR}
+\end{equation}
+
+\subsection{Calcule la velocidad del extremo $\dot{p}$ , en m/s para $q = [\pi/6, \pi/6]$, en rad y $\dot{q}=
+[0, -1]$ en rad/s. Suponga longitud de eslabón unitaria. Observe el gráfico del robot
+e interprete los resultados}
+
+Las velocidades en el extremo se calculan a partir de las velocidades articulares como:
+\begin{equation}
+    \dot{p} = J(q)\dot{q}
+\end{equation}
+
+Para los valores dados se obtiene:
+\begin{equation*}
+    \dot{p} = 
+    \begin{bmatrix}
+        -\sin(\pi/6) - \sin(\pi/3) & -\sin(\pi/3)\\
+        \cos(\pi/6) + \cos(\pi/3)  & \cos(\pi/3)\\
+        0                          & 0\\
+        0                          & 0\\
+        0                          & 0\\
+        1                          & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+        0\\
+        -1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \sqrt{3}/2\\
+        -1/2\\
+        0\\
+        0\\
+        0\\
+        -1
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        0.866\\
+        -0.500\\
+        0.000\\
+        0.000\\
+        0.000\\
+        -1.000
+    \end{bmatrix}
+\end{equation*}
+
+En donde las primeras 3 componentes están en $m/s$ y las últimas 3 en $rad/s$.
+
+\subsection{Trabaje solo con las coordenadas X-Y (primeras 2 filas del J) y verifique mediante la
+inversa algebraica que $\dot{q} = J^{-1}(q)\dot{p}$ se cumple}
+
+Conservando solo las filas del plano X-Y nos queda:
+
+\begin{equation}
+    J(q) = 
+    \begin{bmatrix}
+        -a_1\sin(\theta_1) - a_2\sin(\theta_1 + \theta_2) & -a_2\sin(\theta_1 + \theta_2)\\
+        a_1\cos(\theta_1) + a_2\cos(\theta_1 + \theta_2)  & a_2\cos(\theta_1 + \theta_2)
+    \end{bmatrix}
+\end{equation}
+
+Luego $J^{-1}(q)$ es:
+\begin{equation}
+    J^{-1}(q) =
+    \begin{bmatrix}
+        \frac{\cos(\theta_1 + \theta_2)}{a_1 \sin(\theta_2)} & \frac{\sin(\theta_1 + \theta_2)}{a_1 \sin(\theta_2)} \\
+        -\frac{a_1 \cos(\theta_1) + a_2 \cos(\theta_1 + \theta_2)}{a_1 a_2 \sin(\theta_2)} & -\frac{a_1 \sin(\theta_1) + a_2 \sin(\theta_1 + \theta_2)}{a_1 a_2 \sin(\theta_2)}
+    \end{bmatrix}
+\end{equation}
+
+Para los valores del inciso anterior verificamos:
+\begin{equation*}
+    J^{-1}(q)\dot{p} =
+    \begin{bmatrix}
+        \frac{\cos(\pi/3)}{\sin(\pi/6)} & \frac{\sin(\pi/3)}{\sin(\pi/6)} \\
+        -\frac{\cos(\pi/6) + \cos(\pi/3)}{\sin(\pi/6)} & -\frac{\sin(\pi/6) + \sin(\pi/3)}{\sin(\pi/6)}
+    \end{bmatrix}
+    \begin{bmatrix}
+        \sqrt{3}/2\\
+        -1/2
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+        0\\
+        -1
+    \end{bmatrix}
+    = \dot{q}
+\end{equation*}
+
+\section{Ejercicio 3}
+\textbf{halle el Jacobiano en forma general de los 3 robots siguientes}
+\subsection{}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.55, max width=\columnwidth}
+        \framebox{\includegraphics{2-Ejercicio_2_1_RR_DH.JPG}}
+    \end{adjustbox}
+    \caption{Convención DH utilizada para robot RRR planar.}
+\end{figure}
+
+Las ecuaciones de la cinemática directa se obtienen extendiendo las indicadas en \cref{directa RR} y se obtiene
+\begin{equation}
+    \left\{
+    \begin{aligned}
+    x &= a_1 \cos(\theta_1) + a_2 \cos(\theta_1 + \theta_2) + a_3 \cos(\theta_1 + \theta_2 + \theta_3)\\
+    y &= a_1 \sin(\theta_1) + a_2 \sin(\theta_1 + \theta_2) + a_3 \sin(\theta_1 + \theta_2 + \theta_3)\\
+    z &= 0 \\
+    \alpha &= 0 \\
+    \beta &= 0 \\
+    \gamma &= \theta_1 + \theta_2 + \theta_3
+    \end{aligned}
+    \right.
+    \label{directa RRR}
+\end{equation}
+
+El jacobiano se obtiene también por extensión de \cref{jacobiano RR}
+\begin{equation}
+    J(q) = 
+    \begin{bmatrix}
+        -a_1S_1 - a_2S_{12} - a_3S_{123}& -a_2S_{12} - a_3S_{123} & - a_3S_{123}\\
+        a_1C_1 + a_2C_{12} + a_3C_{123}& a_2C_{12} + a_3C_{123}  &  a_3C_{123}\\
+        0                               & 0                       & 0\\
+        0                               & 0                       & 0\\
+        0                               & 0                       & 0\\
+        1                               & 1                       & 1
+    \end{bmatrix}
+    \label{jacobiano RRR}
+\end{equation}
+
+\subsection{}
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.55, max width=\columnwidth}
+        \framebox{\includegraphics{3-Ejercicio_2_1_RLR_DH.JPG}}
+    \end{adjustbox}
+    \caption{Convención DH utilizada para robot RLR planar.}
+\end{figure}
+
+Los parámetros de DH del robot son:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Sistema & $\theta$          & $d$         & $a$         & $\alpha$     & $\sigma$ \\ \hline
+    1       & $q_1$             & 0           & $0$         & $\pi/2$   & 0        \\ \hline
+    2       & $0$               & $q_2$       & $0$         & $-\pi/2$  & 1        \\ \hline
+    3       & $q_3$             & 0           & $a_3$  & $0$          & 0        \\ \hline
+    \end{tabular}
+    \caption{Parámetros DH RLR planar.}
+\end{table}
+
+Las ecuaciones de la cinemática directa se obtienen aplicando ``fkine'' de forma simbólica
+en MATLAB:
+
+\begin{equation*}
+    \left[\begin{array}{cccc}
+        \cos\left(q_{1}+q_{3}\right) & -\sin\left(q_{1}+q_{3}\right) & 0 & a_{3}\,\cos\left(q_{1}+q_{3}\right)+q_{2}\,\sin\left(q_{1}\right)\\
+        \sin\left(q_{1}+q_{3}\right) & \cos\left(q_{1}+q_{3}\right) & 0 & a_{3}\,\sin\left(q_{1}+q_{3}\right)-q_{2}\,\cos\left(q_{1}\right)\\
+        0 & 0 & 1 & 0\\
+        0 & 0 & 0 & 1
+    \end{array}
+    \right]
+\end{equation*}
+
+Luego tenemos:
+\begin{equation}
+    \left\{
+    \begin{aligned}
+    x &= a_{3}\,\cos\left(q_{1}+q_{3}\right)+q_{2}\,\sin\left(q_{1}\right)\\
+    y &= a_{3}\,\sin\left(q_{1}+q_{3}\right)-q_{2}\,\cos\left(q_{1}\right)\\
+    z &= 0 \\
+    \alpha &= 0 \\
+    \beta &= 0 \\
+    \gamma &= q_1 + q_3
+    \end{aligned}
+    \right.
+    \label{directa RRR}
+\end{equation}
+
+Finalmente el jacobiano es:
+
+\begin{equation}
+    J(q) = 
+    \begin{bmatrix}
+        -a_3\sin(q_1 + q_3) + q_2\cos(q_1) & \sin(q_1)  & -a_3\sin(q_1 + q_3)\\
+        a_3\cos(q_1 + q_3)  + q_2\sin(q_1) & -\cos(q_1) & a_3\cos(q_1 + q_3)\\
+        0 & 0 & 0\\
+        0 & 0 & 0\\
+        0 & 0 & 0\\
+        1 & 0 & 1
+    \end{bmatrix}
+\end{equation}
+
+%\begin{equation*}
+%    \prescript{O}{}{Rot_M} = 
+%    \begin{bmatrix}
+%        0.500 & -0.866\\
+%        0.866 & 0.500
+%    \end{bmatrix}
+%\end{equation*}
+
+%\begin{figure}[H]
+%    \centering
+%    \begin{adjustbox}{scale = 0.85, max width=\columnwidth}
+%        \framebox{\includegraphics{1-Ejercicio_1_a.pdf}}
+%    \end{adjustbox}
+%    \caption{Sistema O y Sistema M superpuestos con indicación de ángulo de rotación.}
+%\end{figure}
+
+
+%\begin{table}[H]
+%    \centering
+%    \begin{tabular}{|c|c|c|c|c|c|}
+%    \hline
+%    Sistema & $\theta$  & $d$           & $a$    & $\alpha$ & $\sigma$ \\ \hline
+%    1       & $q_1$     & $199.2$       & $200$  & 0        & 0        \\ \hline
+%    2       & $q_2$     & $59.5$        & $250$  & 0        & 0        \\ \hline
+%    3       & $0$       & $q_3$         & $0$    & 180°     & 1        \\ \hline
+%    4       & $q_4$     & $37.5$        & $0$    & 0        & 0        \\ \hline
+%    \end{tabular}
+%    \caption{Parámetros DH alternativos.}
+%    \label{parametros DH2}
+%\end{table}
+
+\end{document}
