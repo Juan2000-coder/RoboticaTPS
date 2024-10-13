@@ -214,7 +214,7 @@ Para los valores del inciso anterior verificamos:
 \end{figure}
 
 Las ecuaciones de la cinemática directa se obtienen extendiendo las indicadas en \cref{directa RR} y se obtiene
-\begin{equation}
+\begin{equation*}
     \left\{
     \begin{aligned}
     x &= a_1 \cos(\theta_1) + a_2 \cos(\theta_1 + \theta_2) + a_3 \cos(\theta_1 + \theta_2 + \theta_3)\\
@@ -226,7 +226,7 @@ Las ecuaciones de la cinemática directa se obtienen extendiendo las indicadas e
     \end{aligned}
     \right.
     \label{directa RRR}
-\end{equation}
+\end{equation*}
 
 El jacobiano se obtiene también por extensión de \cref{jacobiano RR}
 \begin{equation}
@@ -268,6 +268,7 @@ Las ecuaciones de la cinemática directa se obtienen aplicando ``fkine'' de form
 en MATLAB:
 
 \begin{equation*}
+    CD = 
     \left[\begin{array}{cccc}
         \cos\left(q_{1}+q_{3}\right) & -\sin\left(q_{1}+q_{3}\right) & 0 & a_{3}\,\cos\left(q_{1}+q_{3}\right)+q_{2}\,\sin\left(q_{1}\right)\\
         \sin\left(q_{1}+q_{3}\right) & \cos\left(q_{1}+q_{3}\right) & 0 & a_{3}\,\sin\left(q_{1}+q_{3}\right)-q_{2}\,\cos\left(q_{1}\right)\\
@@ -278,7 +279,7 @@ en MATLAB:
 \end{equation*}
 
 Luego tenemos:
-\begin{equation}
+\begin{equation*}
     \left\{
     \begin{aligned}
     x &= a_{3}\,\cos\left(q_{1}+q_{3}\right)+q_{2}\,\sin\left(q_{1}\right)\\
@@ -289,8 +290,7 @@ Luego tenemos:
     \gamma &= q_1 + q_3
     \end{aligned}
     \right.
-    \label{directa RRR}
-\end{equation}
+\end{equation*}
 
 Finalmente el jacobiano es:
 
@@ -306,6 +306,61 @@ Finalmente el jacobiano es:
     \end{bmatrix}
 \end{equation}
 
+\subsection{}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.55, max width=\columnwidth}
+        \framebox{\includegraphics{4-Ejercicio_2_2_LRR_DH.JPG}}
+    \end{adjustbox}
+    \caption{Convención DH utilizada para robot LRR}
+\end{figure}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Sistema & $\theta$  & $d$ & $a$         & $\alpha$ & $\sigma$ \\ \hline
+    1       & $0$       & $q_1$ & $a_{1}$  & 0      & 1        \\ \hline
+    2       & $q_2$     & 0   & $a_{2}$  & 0        & 0        \\ \hline
+    3       & $q_3$     & 0   & $a_{3}$  & 0        & 0        \\ \hline
+    \end{tabular}
+    \caption{Parámetros DH robot LRR}
+\end{table}
+
+La cinemática directa obtenida de forma simbólica con MATLAB es:
+\begin{equation*}
+    CD = \left[\begin{array}{cccc} \cos\left(q_{2}+q_{3}\right) & -\sin\left(q_{2}+q_{3}\right) & 0 & a_{1}+a_{3}\,\cos\left(q_{2}+q_{3}\right)+a_{2}\,\cos\left(q_{2}\right)\\ \sin\left(q_{2}+q_{3}\right) & \cos\left(q_{2}+q_{3}\right) & 0 & a_{3}\,\sin\left(q_{2}+q_{3}\right)+a_{2}\,\sin\left(q_{2}\right)\\ 0 & 0 & 1 & q_{1}\\ 0 & 0 & 0 & 1 \end{array}\right]
+\end{equation*}
+
+De donde se obtiene
+\begin{equation*}
+    \left\{
+        \begin{aligned}
+            x &= a_1 +  a_2\,\cos(q_2) + a_3\,\cos(q_2 + q_3)\\
+            y &= a_2\,\sin(q_2) + a_3\,\sin(q_2 + q_3)\\
+            z &= q_1\\
+            \alpha &= 0\\
+            \beta  &= 0\\
+            \gamma &= q_2 + q_3
+        \end{aligned}
+    \right.
+\end{equation*}
+
+Luego el Jacobiano es:
+\begin{equation}
+    J(q) = 
+    \begin{bmatrix}
+        0 & -a_2\,\sin(q_2) - a_3\,\sin(q_2 + q_3) & -a_3\,\sin(q_2 + q_3)\\
+        0 & a_2\,\cos(q_2) + a_3\,\cos(q_2 + q_3)  & a_3\,\cos(q_2 + q_3)\\
+        1 & 0 & 0 \\
+        0 & 0 & 0 \\
+        0 & 0 & 0 \\
+        0 & 1 & 1
+    \end{bmatrix}
+\end{equation}
+
+\section{Ejercicio 3}
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
 %    \begin{bmatrix}
