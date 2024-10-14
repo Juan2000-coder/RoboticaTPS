@@ -361,6 +361,154 @@ Luego el Jacobiano es:
 \end{equation}
 
 \section{Ejercicio 3}
+La implementación en código en ``Ejercicio\_3.m''
+
+\section{Ejercicio 4}
+\textbf{Análisis de los puntos singulares en base al determinante del Jacobiano.}
+
+\subsection{Determine para qué valores de $q = \left[\theta_1\,\,\theta_2\right]^T$ será cero el determinante}
+
+\subsubsection{RR planar}
+\begin{align*}
+    det(J(q)) &= a_1a_2\sin(q_2)\\
+    det(J(q)) &= 0 \leftrightarrow
+    q = 
+    \begin{bmatrix}
+        q_1\\
+        n\pi
+    \end{bmatrix}
+    \,\,\,\,;n\,\epsilon\,\mathbb{Z}
+\end{align*}
+
+\subsubsection{RRR planar}
+\begin{align*}
+    det(J(q)) &= a_1a_2\sin(q_2)\\
+    det(J(q)) &= 0 \leftrightarrow
+    q = 
+    \begin{bmatrix}
+        q_1\\
+        n\pi\\
+        q_3
+    \end{bmatrix}
+    \,\,\,\,;n\,\epsilon\,\mathbb{Z}
+\end{align*}
+
+\subsubsection{RLR planar}
+\begin{align*}
+    det(J(q)) &= -q_2\\
+    det(J(q)) &= 0 \leftrightarrow
+    q = 
+    \begin{bmatrix}
+        q_1\\
+        0\\
+        q_3
+    \end{bmatrix}
+\end{align*}
+
+\subsubsection{LRR}
+\begin{align*}
+    det(J(q)) &= a_2a_3\sin(q_3)\\
+    det(J(q)) &= 0 \leftrightarrow
+    q = 
+    \begin{bmatrix}
+        q_1\\
+        q_2\\
+        n\pi
+    \end{bmatrix}
+    \,\,\,\,;n\,\epsilon\,\mathbb{Z}
+\end{align*}
+
+\subsection{Interprete qué tienen de particular las soluciones del punto anterior}
+\subsubsection{RR planar}
+En este caso, cuando se cumple la condición indicada el extremo del robot se encuentra en el circulo de extensión
+máxima o en el círculo de mínima extensión. En esos puntos las velocidades $\dot{x}$ y $\dot{y}$ no son independientes
+entre sí, sino que deben ser un vector tangente al círculo en cuestión (se pierde un grado de libertad al controlar la velocidad del extremo).
+
+\subsubsection{RRR}
+Similarmente al caso anterior cuando $q_2 = 0$ se pierde un grado de libertad del robot.
+El vector de velocidad cartesiana en el extremo del segundo eslabon tiene que ser tangente a un circulo
+y con $\dot{q_3}$ no se puede controlar los gdl restante.
+
+\subsubsection{RLR}
+En esta condición las articulaciones 1 y 3 coinciden y por lo tanto el efecto sobre la velocidad
+del efector final de $q_1$ y $q_3$ es el mismo, es decir, no actúan de forma independiente de modo que se pierde un grado de libertad.
+
+\subsubsection{LRR}
+Este caso es esencialmente equivalente al caso del robot RR planar.
+
+\section{Ejercicio 5}
+\textbf{Trabajando con el robot RRR planar.}
+
+\subsection{}
+\textbf{Adapte el código anterior para analizar el Jacobiano simbólico y halle la expresión del
+determinante. ¿Puede aplicar los puntos 1 y 2 del ejercicio anterior?}
+
+Analizado en el ejercicio anterior.
+\subsection{}
+\textbf{Trabaje numéricamente con longitud de eslabón 1m, 0.8m y 0.6m. Calcule el Jacobiano
+y su determinante para $ q = \left[\pi/6\,\,0\,\,\pi/6\right]$, en rad. Verifique que el determinante
+es cero. Verifique que el rango de la matriz es menor que los g.d.l. del robot (función
+“rank”). Ejecute la función “jsingu(J)” e interprete y relacione el resultado con el robot
+del ejercicio 1}
+
+La implementación en código en ``Ejercicio\_5.m'' indica que el determinante del Jacobiano es cero,
+el rango de la matriz es 2. Y la función ``jsingu(J)'' indica que hay una dependencia lineal por la que
+$q_3$ depende de $q_1$ y $q_2$.
+
+\subsection{}
+\textbf{Para la posición articular anterior:}
+\subsubsection{Calcule la velocidad articular requerida para lograr las siguientes velocidades
+cartesianas en el extremo operativo: $v = \left[1\,0\,0\right] m/s$. Use el jacobiano
+reducido}
+
+\begin{equation*}
+    \dot{q} =
+    \begin{bmatrix}
+        -1.31\\
+        2.96\\
+        -1.64
+    \end{bmatrix}*10^{15}
+\end{equation*}
+
+\subsubsection{¿Por qué existe inversa?}
+En realidad la inversa no existe, pero dado que se obtiene la misma de forma numérica, en realidad
+el determinante de la misma da como resultado un número muy cercano a cero con
+el que todavía se puede obtener la inversa pero dando como resultado valores muy grandes.
+
+\subsubsection{¿Cuál es el número de condición del jacobiano reducido?}
+El número de condición que se obtiene es $1.81*10^{16}$
+
+\subsubsection{Asuma que $q_2$ no es cero, sino que está cerca: $q_2\,=\,0.001$. ¿Cuánto valen las
+velocidades articulares para lograr el mismo v?}
+
+\begin{equation*}
+    \dot{q} =
+    \begin{bmatrix}
+        0.8655\\
+        -1.948\\
+        1.0825\\
+    \end{bmatrix}*10^{3}
+\end{equation*}
+
+\subsubsection{¿Cuánto valen el determinante y el número de condición del jacobiano en este
+caso?}
+
+\begin{align*}
+    det(J)  &= 8.0000*10^{-4}\\
+    cond(J) &= 9.1798*10^{3}
+\end{align*}
+
+\subsubsection{¿Qué conclusión puede sacar sobre la proximidad del punto singular?
+}
+Incluso en las cercanías de un punto singular, para velocidades
+no demasiado elevadas en el extremo del robot, las velocidades articulares requeridas
+son excesivas, luego las acciones de control necesarias para lograr esas consignas de velocidad también 
+serían muy grandes, se exigiría demasiado a los controladores de las articulaciones, el consumo de corriente
+sería elevado y demás.
+
+\section{Ejercicio 6}
+
+
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
 %    \begin{bmatrix}
