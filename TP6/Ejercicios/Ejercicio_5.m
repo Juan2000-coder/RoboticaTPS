@@ -13,53 +13,46 @@ dh = [0.0 0.0 1.0 0.0 0;
 R  = SerialLink(dh);
 J  = R.jacob0(q);
 
-fprintf("\n Jacobiano robot RRR planar del ejercio 2_1");
-J = J([1 2 6], :)
-pause;
+fprintf("\nJacobiano robot RRR planar:\n");
+J = J([1 2 6], :);
+disp(J);
 
-fprintf("\n Determinante Jacobiano robot RRR planar");
-det(J)
-pause;
+fprintf("\nDeterminante Jacobiano robot RRR planar:\n");
+disp(det(J));
 
 if (det(J) < eps)
-    fprintf("\n det(J) < eps\n");
+    fprintf("\n-->det(J) < eps\n");
 else
-    fprintf("\n det(J) > eps\n");
+    fprintf("\n-->det(J) > eps\n");
 end
 
-fprintf("\n Rango del Jacobiano");
-rank(J)
-pause;
+fprintf("\nRango del Jacobiano:\n");
+disp(rank(J));
 
-fprintf("\n Linear dependencies\n")
-jsingu(J)
-pause;
+fprintf("\nLinear dependencies:\n");
+jsingu(J);
 
 %5.3.a
 v     = [1; 0; 0];
 q1    = J\v;
-fprintf("\nVelocidades articulares para v = [dx dy dyaw] = [1 0 0]");
+fprintf("\n5.3.a Velocidades articulares para v = [dx dy dyaw] = [1 0 0]:\n");
 disp(q1);
-pause;
 
 %5.3.c
 condJ = cond(J);
-fprintf("\nEl número de condición del Jacobiano es:")
+fprintf("\n5.3.c Número de condición del Jacobiano:\n");
 disp(condJ);
-pause;
 
 %5.3.d
 q  = [pi/6 0.001 pi/6];
 J  =  R.jacob0(q);
 J  = J([1 2 6],:);
 q2 = J\v;
-fprintf("\nVelocidades articulares para v = [dx dy dyaw] = [1 0 0]");
+fprintf("\n5.3.d. Velocidades articulares para v = [dx dy dyaw] = [1 0 0]:\n");
 disp(q2);
-pause;
 
 %5.3.e
-fprintf("\n Determinante Jacobiano robot RRR planar");
+fprintf("\nDeterminante Jacobiano robot RRR planar:\n");
 disp(det(J));
-fprintf("\nEl número de condición del Jacobiano es:")
+fprintf("\n5.3.e.Numero de condición del jacobiano:\n")
 disp(cond(J));
-pause;

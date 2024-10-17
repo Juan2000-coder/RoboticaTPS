@@ -20,7 +20,7 @@ q  = [q1 q2 q3];
 
 % Construcción del robot
 robot      = SerialLink(DH, 'name', '3 gdl RLR');
-T = robot.fkine(q)
 
-%robot.plot(q, 'workspace', [-2.5 2.5 -2.5 2.5 -1 1], 'trail', {'r', 'LineWidth', 2}, 'top');
-%robot.teach();
+fprintf("\nCinemática directa simbólica del robot RLR:\n"),
+T          = robot.fkine(q);
+disp(T.T);
