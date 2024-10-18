@@ -1,0 +1,344 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{adjustbox}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage[spanish, es-nodecimaldot]{babel} 
+\usepackage{lastpage}
+\usepackage{amssymb} % Para símbolos matemáticos adicionales
+\usepackage{hyperref}
+\usepackage{cleveref}
+%\usepackage[none]{hyphenat}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{multirow}
+\usepackage{textcomp}
+\usepackage[left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+
+\lstset{ 
+    language=Matlab,                     % El lenguaje del código
+    basicstyle=\ttfamily,                % Tipo de letra
+    keywordstyle=\color{blue},           % Color para palabras clave
+    commentstyle=\color{green!60!black}, % Color para comentarios
+    numbers=left,                        % Numeración de las líneas
+    numberstyle=\tiny\color{gray},       % Estilo para los números
+    stepnumber=1,                        % Mostrar número en cada línea
+    tabsize=4,                           % Tamaño de tabulación
+    breaklines=true,                     % Partir líneas largas
+    showspaces=false,                    % No mostrar los espacios en blanco
+    showstringspaces=false,              % No mostrar espacios dentro de strings
+    showtabs=false,                      % No mostrar tabs
+}
+
+\graphicspath{{Imagenes/}}
+
+% Encabezado y pie de página
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{30 pt}
+\renewcommand{\headrulewidth}{0.2pt}
+\fancyhead[R]{\begin{tabular}{@{}l@{}}\includegraphics[scale=0.4]{escudo.PNG}\end{tabular}}
+\fancyhead[L]{\begin{tabular}{@{}c@{}} \textbf{Robótica I - Año: 2024} \\ Trabajo Práctico 6: Jacobiano \end{tabular}}
+
+
+\fancyfoot[R]{\thepage}
+\fancyfoot[C]{\begin{tabular}{@{}c@{}}\textbf{BORQUEZ PEREZ Juan Manuel}\\ \textbf{Legajo 13567}\end{tabular}}
+\renewcommand{\footrulewidth}{0.2pt}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{5cm}
+    {\Huge\bfseries Informe de Trabajo Práctico N°6}\\
+    \vspace{0.2cm}
+    {\Large \textbf{Jacobiano}}\\
+    \vspace{0.5cm}
+    {\Large Robótica I}\\
+    \vspace{0.5 cm}
+    {\Large Ingeniería en Mecatrónica}\\
+    \vspace{0.2 cm}
+    {\Large Facultad de Ingeniería - UNCUYO}\\
+    \vspace{1.5cm}
+    Alumno: Juan Manuel BORQUEZ PEREZ\\
+    Legajo: 13567\\
+    \vfill
+    {\begin{tabular}{@{}c@{}}\includegraphics[scale=0.4]{escudo.PNG}\end{tabular}}\hspace{10pt}
+    %Año 2023
+\end{titlepage}
+
+\section{Ejercicio 6}
+
+
+\[
+    A = d_{5}\,C\left(2\,q_{3}+q_{4}\right)-d_{5}\,C_4-a_{3}+a_{3}\,C\left(2\,q_{3}\right)
+\]
+\[
+    B = d_{5}\,S_4-2\,a_{2}\,S_3-a_{3}\,S\left(2\,q_{3}\right)-d_{5}\,S\left(2\,q_{3}+q_{4}\right)
+\]
+\[ 
+    A = C\left(2\,q_{3}\right)-C_{a}\,C_4+C_a\,C\left(2\,q_{3}+q_{4}\right)-1
+\]
+\[
+    B = S_g\,S_4-2\,S_3-S_g\,S\left(2\,q_{3}+q_{4}\right)-S_b\,S\left(2\,q_{3}\right)
+\]
+Vamos a descomponer paso a paso el problema que planteaste:
+
+Expresión Original:
+\[
+A = \cos(2q_3) - C_a \cos(q_4) + C_a \cos(2q_3 + q_4) - 1
+\]
+
+Paso 1: Expansión de \(\cos(2q_3 + q_4)\)
+
+Usamos la identidad de suma de ángulos:
+\[
+\cos(2q_3 + q_4) = \cos(2q_3)\cos(q_4) - \sin(2q_3)\sin(q_4)
+\]
+
+Entonces, la ecuación queda:
+\[
+A = \cos(2q_3) - C_a \cos(q_4) + C_a (\cos(2q_3)\cos(q_4) - \sin(2q_3)\sin(q_4)) - 1
+\]
+
+Paso 2: Agrupación de términos con \(\cos(q_4)\)
+
+Reagrupamos los términos que tienen \(\cos(q_4)\):
+\[
+A = (\cos(2q_3) - 1) + C_a (\cos(2q_3)\cos(q_4) - \sin(2q_3)\sin(q_4)) - C_a \cos(q_4)
+\]
+
+Agrupamos \(C_a \cos(q_4)\):
+\[
+A = (\cos(2q_3) - 1) + C_a \cos(q_4)(\cos(2q_3) - 1) - C_a \sin(2q_3)\sin(q_4)
+\]
+
+Paso 3: Reemplazo de \(1 - \cos(2q_3)\) por \(2\sin^2(q_3)\)
+
+Aplicamos la identidad trigonométrica:
+\[
+1 - \cos(2q_3) = 2\sin^2(q_3)
+\]
+
+Reemplazamos en la ecuación:
+\[
+A = -2\sin^2(q_3) + C_a \cos(q_4)(-2\sin^2(q_3)) - C_a \sin(2q_3)\sin(q_4)
+\]
+
+Resultado Final:
+\[
+A = -2\sin^2(q_3) - 2C_a \cos(q_4)\sin^2(q_3) - C_a \sin(2q_3)\sin(q_4)
+\]
+
+Este sería el resultado final con los términos correctamente agrupados y el reemplazo realizado.
+
+Vamos a seguir los pasos que indicaste, comenzando desde la expresión final que obtuvimos anteriormente.
+
+Expresión Original:
+
+\[
+A = -2\sin^2(q_3) - 2C_a \cos(q_4)\sin^2(q_3) - C_a \sin(2q_3)\sin(q_4)
+\]
+
+Paso 1: Expansión de \(\sin(2q_3)\)
+
+Usamos la identidad de doble ángulo para el seno:
+\[
+\sin(2q_3) = 2\sin(q_3)\cos(q_3)
+\]
+
+Sustituyendo en la ecuación:
+\[
+A = -2\sin^2(q_3) - 2C_a \cos(q_4)\sin^2(q_3) - C_a (2\sin(q_3)\cos(q_3))\sin(q_4)
+\]
+
+Paso 2: Dividir toda la expresión por \(\sin(q_3)\)
+
+Dividimos cada término entre \(\sin(q_3)\):
+\[
+\frac{A}{\sin(q_3)} = -2\sin(q_3) - 2C_a \cos(q_4)\sin(q_3) - 2C_a \cos(q_3)\sin(q_4)
+\]
+
+Paso 3: Factorizar \(\sin(q_3)\) y \(\cos(q_3)\)
+
+Reagrupamos para factorizar:
+
+- Agrupamos términos con \(\sin(q_3)\):
+\[
+\frac{A}{\sin(q_3)} = \sin(q_3)(-2 - 2C_a \cos(q_4)) - 2C_a \cos(q_3)\sin(q_4)
+\]
+
+- Ahora factorizamos \(\sin(q_3)\) y \(\cos(q_3)\) por separado:
+
+\[
+\frac{A}{\sin(q_3)} = \sin(q_3)(-2 - 2C_a \cos(q_4)) + \cos(q_3)(-2C_a \sin(q_4))
+\]
+
+Resultado Final:
+
+La expresión final es:
+\[
+A = S_3(1 + C_a C_4) + C_3(C_a S_4)
+\]
+
+Este sería el resultado con los términos factorizados en función de \(\sin(q_3)\) y \(\cos(q_3)\), dividiendo la expresión por \(\sin(q_3)\) como solicitaste.
+Eso tiene que ser cero, y se puede expresar como;
+
+\begin{equation}
+    u =
+    \begin{bmatrix}
+        C_3\\
+        S_3
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    v =
+    \begin{bmatrix}
+        1 + 2C_aC_4\\
+        C_aS_4
+    \end{bmatrix}
+\end{equation}
+
+La expresión se reduce a:
+\[u \cdot v = 0\]
+Pero $\mathbf{v}$ depende solamente de $q_4$. Para cada valor del mismo
+se pueden encontrar el vector $\mathbf{u}$ que indica la dirección normal.
+
+Para B por otro lado.
+Vamos a desarrollar los pasos que mencionaste para la expresión \( B \).
+
+ Expresión original:
+
+\[
+B = S_g \sin(q_4) - 2\sin(q_3) - S_g \sin(2q_3 + q_4) - S_b \sin(2q_3)
+\]
+
+ Paso 1: Expandir \(\sin(2q_3 + q_4)\)
+
+Usamos la identidad de suma de ángulos para el seno:
+
+\[
+\sin(2q_3 + q_4) = \sin(2q_3)\cos(q_4) + \cos(2q_3)\sin(q_4)
+\]
+
+Sustituyendo en la expresión:
+
+\[
+B = S_g \sin(q_4) - 2\sin(q_3) - S_g (\sin(2q_3)\cos(q_4) + \cos(2q_3)\sin(q_4)) - S_b \sin(2q_3)
+\]
+
+ Paso 2: Agrupar los términos con \( S_g \sin(q_4) \)
+
+Reagrupamos los términos que tienen \( \sin(q_4) \):
+
+\[
+B = S_g \sin(q_4) - S_g \cos(2q_3)\sin(q_4) - 2\sin(q_3) - S_g \sin(2q_3)\cos(q_4) - S_b \sin(2q_3)
+\]
+
+Factorizamos \( S_g \sin(q_4) \):
+
+\[
+B = S_g \sin(q_4)(1 - \cos(2q_3)) - 2\sin(q_3) - S_g \sin(2q_3)\cos(q_4) - S_b \sin(2q_3)
+\]
+
+ Paso 3: Agrupar los términos con \( \sin(2q_3) \)
+
+Reagrupamos los términos que contienen \( \sin(2q_3) \):
+
+\[
+B = S_g \sin(q_4)(1 - \cos(2q_3)) - 2\sin(q_3) - (\sin(2q_3))(S_g \cos(q_4) + S_b)
+\]
+
+ Paso 4: Reemplazar \( 1 - \cos(2q_3) \) por \( 2\sin^2(q_3) \)
+
+Usamos la identidad trigonométrica \( 1 - \cos(2q_3) = 2\sin^2(q_3) \) en el primer término:
+
+\[
+B = S_g \sin(q_4)(2\sin^2(q_3)) - 2\sin(q_3) - (\sin(2q_3))(S_g \cos(q_4) + S_b)
+\]
+
+ Paso 5: Expandir \( \sin(2q_3) \)
+
+Usamos la identidad \( \sin(2q_3) = 2\sin(q_3)\cos(q_3) \):
+
+\[
+B = S_g \sin(q_4)(2\sin^2(q_3)) - 2\sin(q_3) - 2\sin(q_3)\cos(q_3)(S_g \cos(q_4) + S_b)
+\]
+
+ Paso 6: Dividir toda la expresión por \( \sin(q_3) \)
+
+Dividimos cada término entre \( \sin(q_3) \):
+
+\[
+\frac{B}{\sin(q_3)} = S_g \sin(q_4)(2\sin(q_3)) - 2 - 2\cos(q_3)(S_g \cos(q_4) + S_b)
+\]
+
+ Resultado final:
+
+La expresión final es:
+
+\[
+B= S_g S_3S_4 - 1 - C_3(S_g C_4 + S_b)
+\]
+
+Ahora: 
+\begin{equation}
+    w =
+    \begin{bmatrix}
+        -S_gC_4 - S_b\\
+        S_gS_4
+    \end{bmatrix}
+\end{equation}
+
+La expresión se reduce a:
+\[u \cdot w = 1\]
+
+Esto es $\parallel u \parallel \parallel w \parallel \cos(\zeta) = 1$
+Pero $\parallel u \parallel  = 1$. Luego
+\[
+    \cos(\zeta) = \frac{1}{\parallel w \parallel}
+\]
+Eso implica que debe ser:
+\[
+    \parallel(w) \parallel > 1
+\]
+
+\[
+\|w\|^2 = S_g^2 + 2S_g S_b C_4 + S_b^2 > 1
+\]
+
+Esta es la expresión del cuadrado del módulo del vector \( w \).
+Para los valores de q4 que se cumple a desigualdad anterior se obtienen
+el vector $v$ y el vector $w$ que necesariamente deben estar alineados para que
+determinen un único valor de $u$ y por lo tanto de $q_3$.
+
+Eso último todavía hay que verificarlo.
+
+
+Otra forma de hacerlo mas rápido es:
+Dado que los vectores \( w \) y \( v \) son:
+
+\[
+w = \begin{bmatrix} -S_g C_4 - S_b \\ S_g S_4 \end{bmatrix}
+\]
+\[
+v = \begin{bmatrix} 1 + 2C_a C_4 \\ C_a S_4 \end{bmatrix}
+\]
+
+Queremos formar la matriz del sistema de ecuaciones \( T \) usando estos vectores como filas:
+
+\[
+\begin{bmatrix} C_a S_4 & 1 + C_a C_4 \\ -S_g C_4 - S_b & S_g S_4 \end{bmatrix}
+\cdot
+\begin{bmatrix}C_3\\S_3\end{bmatrix}
+=
+\begin{bmatrix}0\\1\end{bmatrix}
+\]
+
+\end{document}

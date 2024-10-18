@@ -31,20 +31,24 @@ fprintf("\nSe obtiene el mismo resultado para q3 = n*pi\n");
 eq = expand(eq);
 fprintf("\nEcuación expandida:\n");
 disp(eq);
+%latex(eq)
 
 fprintf("\nEs posible expresarla como A*C2 + B*S2.\n");
 fprintf("\nEn donde A = f(q3, q4) y B = g(q3, q4)\n");
 eq    = collect(eq, [cos(q2) sin(q2)]);
 disp(eq);
+%latex(eq)
 
 terms = children(lhs(eq)); %Términos en el lado izquierdo de la ecuación.
 fprintf("\nA = f(q3, q4):\n");
 A = simplify(terms(1)/cos(q2));
 disp(A);
+%latex(A)
 
 fprintf("\nB = g(q3, q4):\n");
 B = simplify(terms(2)/sin(q2));
 disp(B);
+%latex(B)
 
 fprintf("\nLuego la ecuación se puede poner como [A, B].[C2; S2].\n");
 fprintf("\nAsí, cada par de valores A y B, determinan un vector en el plano.\n");
@@ -68,6 +72,7 @@ A       = simplify(expand(A));
 A       = subs(A, d5/a3, Ca);
 fprintf("\nA Luego de los reemplazos:\n");
 disp(A)
+%latex(A)
 
 B       = expand(B/a2);
 B       = subs(B, d5/a2, Sg);
@@ -75,5 +80,10 @@ B       = subs(B, a3/a2, Sb);
 B       = simplify(B);
 fprintf("\nB Luego de los reemplazos: \n");
 disp(B)
+%latex(B)
 
+%{
+    Se llega hasta aca la deducción en Matlab debido a las limitaciones de la
+    herramienta. Se continua la deducción en papel.
+%}
 
