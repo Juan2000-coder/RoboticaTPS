@@ -507,6 +507,125 @@ serían muy grandes, se exigiría demasiado a los controladores de las articulac
 sería elevado y demás.
 
 \section{Ejercicio 6}
+Vamos a descomponer paso a paso el problema que planteaste:
+
+Expresión Original:
+\[
+A = \cos(2q_3) - C_a \cos(q_4) + C_a \cos(2q_3 + q_4) - 1
+\]
+
+Paso 1: Expansión de \(\cos(2q_3 + q_4)\)
+
+Usamos la identidad de suma de ángulos:
+\[
+\cos(2q_3 + q_4) = \cos(2q_3)\cos(q_4) - \sin(2q_3)\sin(q_4)
+\]
+
+Entonces, la ecuación queda:
+\[
+A = \cos(2q_3) - C_a \cos(q_4) + C_a (\cos(2q_3)\cos(q_4) - \sin(2q_3)\sin(q_4)) - 1
+\]
+
+Paso 2: Agrupación de términos con \(\cos(q_4)\)
+
+Reagrupamos los términos que tienen \(\cos(q_4)\):
+\[
+A = (\cos(2q_3) - 1) + C_a (\cos(2q_3)\cos(q_4) - \sin(2q_3)\sin(q_4)) - C_a \cos(q_4)
+\]
+
+Agrupamos \(C_a \cos(q_4)\):
+\[
+A = (\cos(2q_3) - 1) + C_a \cos(q_4)(\cos(2q_3) - 1) - C_a \sin(2q_3)\sin(q_4)
+\]
+
+Paso 3: Reemplazo de \(1 - \cos(2q_3)\) por \(2\sin^2(q_3)\)
+
+Aplicamos la identidad trigonométrica:
+\[
+1 - \cos(2q_3) = 2\sin^2(q_3)
+\]
+
+Reemplazamos en la ecuación:
+\[
+A = -2\sin^2(q_3) + C_a \cos(q_4)(-2\sin^2(q_3)) - C_a \sin(2q_3)\sin(q_4)
+\]
+
+Resultado Final:
+\[
+A = -2\sin^2(q_3) - 2C_a \cos(q_4)\sin^2(q_3) - C_a \sin(2q_3)\sin(q_4)
+\]
+
+Este sería el resultado final con los términos correctamente agrupados y el reemplazo realizado.
+
+Vamos a seguir los pasos que indicaste, comenzando desde la expresión final que obtuvimos anteriormente.
+
+Expresión Original:
+
+\[
+A = -2\sin^2(q_3) - 2C_a \cos(q_4)\sin^2(q_3) - C_a \sin(2q_3)\sin(q_4)
+\]
+
+Paso 1: Expansión de \(\sin(2q_3)\)
+
+Usamos la identidad de doble ángulo para el seno:
+\[
+\sin(2q_3) = 2\sin(q_3)\cos(q_3)
+\]
+
+Sustituyendo en la ecuación:
+\[
+A = -2\sin^2(q_3) - 2C_a \cos(q_4)\sin^2(q_3) - C_a (2\sin(q_3)\cos(q_3))\sin(q_4)
+\]
+
+Paso 2: Dividir toda la expresión por \(\sin(q_3)\)
+
+Dividimos cada término entre \(\sin(q_3)\):
+\[
+\frac{A}{\sin(q_3)} = -2\sin(q_3) - 2C_a \cos(q_4)\sin(q_3) - 2C_a \cos(q_3)\sin(q_4)
+\]
+
+Paso 3: Factorizar \(\sin(q_3)\) y \(\cos(q_3)\)
+
+Reagrupamos para factorizar:
+
+- Agrupamos términos con \(\sin(q_3)\):
+\[
+\frac{A}{\sin(q_3)} = \sin(q_3)(-2 - 2C_a \cos(q_4)) - 2C_a \cos(q_3)\sin(q_4)
+\]
+
+- Ahora factorizamos \(\sin(q_3)\) y \(\cos(q_3)\) por separado:
+
+\[
+\frac{A}{\sin(q_3)} = \sin(q_3)(-2 - 2C_a \cos(q_4)) + \cos(q_3)(-2C_a \sin(q_4))
+\]
+
+Resultado Final:
+
+La expresión final es:
+\[
+\frac{A}{-2\sin(q_3)} = \sin(q_3)(1 + 2C_a \cos(q_4)) + \cos(q_3)(C_a \sin(q_4))
+\]
+
+Este sería el resultado con los términos factorizados en función de \(\sin(q_3)\) y \(\cos(q_3)\), dividiendo la expresión por \(\sin(q_3)\) como solicitaste.
+Eso tiene que ser cero, y se puede expresar como;
+
+\begin{equation}
+    u =
+    \begin{bmatrix}
+        C_3 & S_3
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    v =
+    \begin{bmatrix}
+        1 + 2C_aC_4 & C_aS_4
+    \end{bmatrix}
+\end{equation}
+
+\[u \cdot v = 0\]
+Pero $\mathbf{v}$ depende solamente de $q_4$. Para cada valor del mismo
+se pueden encontrar el vector $\mathbf{u}$ que indica la dirección normal.
 
 
 %\begin{equation*}
