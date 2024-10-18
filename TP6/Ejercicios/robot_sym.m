@@ -1,6 +1,13 @@
 % parámetros de Denavit-Hartenberg
 
 syms d1 d4 d5 d6 a2 a3 real
+assume(d1 > 0);
+assume(d4 > 0);
+assume(d5 > 0);
+assume(d6 > 0);
+assume(a2 > 0);
+assume(a3 > 0);
+
 dh = [0.0   d1   0     pi/2    0   ;
       0.0   0    a2    0       0   ;
       0.0   0    a3    0       0   ;
