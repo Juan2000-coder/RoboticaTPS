@@ -111,8 +111,8 @@ else
         q3_2 = atan2(S3_alt, C3);
 
         disp('Los valores correspondientes de q3 son:');
-        disp(['q3_1 (para S4_1): ', num2str(q3_1)]);
-        disp(['q3_2 (para S4_2): ', num2str(q3_2)]);
+        disp(['q3_1 (para q4_1): ', num2str(q3_1)]);
+        disp(['q3_2 (para q4_2): ', num2str(q3_2)]);
 
         % Verificación de las singularidades
         disp('Verificación de las singularidades');
