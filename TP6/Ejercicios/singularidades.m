@@ -147,6 +147,6 @@ function [q2_1, q2_2] = f_q2(q3, q4)
     B = Sg*sin(q4) - 2*sin(q3) - Sg*sin(2*q3 + q4) - Sb*sin(2*q3);
 
     % Calcular q2 usando la función atan2
-    q2_1 = atan2(B, A) + pi/2;
+    q2_1 = atan2(B, A*Sb) + pi/2;
     q2_2 = q2_1 - pi;
 end
