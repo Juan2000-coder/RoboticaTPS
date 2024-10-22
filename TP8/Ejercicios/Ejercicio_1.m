@@ -13,6 +13,7 @@ dt  = 0.1;                              % Paso de tiempo
 t   = ti:dt:tf;                         % 3 seg. y una decima de paso
 Q   = jtraj(q0, q1, t);                 % Trayectoria interpolada
 
+
 fprintf("\nInterpolación entre puntos articulares:\n");
 fprintf("\nq0: \n");disp(q0);
 fprintf("\nq1: \n");disp(q1);

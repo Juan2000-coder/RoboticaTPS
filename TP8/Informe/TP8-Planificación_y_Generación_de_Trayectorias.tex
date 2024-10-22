@@ -74,6 +74,12 @@
 
 \section{Ejercicio 1:  Generación de trayectoria entre 2 puntos articulares}
 \subsection{Interpolación.}
+La interpolación con ``jtraj'' es interpolación quintuple en el espacio articular.
+Se indica la posición articular inicial y final y un vector de tiempos (como en este caso) o 
+un número de puntos en la discretización (como en el ejercicio siguiente). Cuando se da un vector de tiempos,
+la trayectoria se da evaluada en esos instántes y cuando 
+se indica un número de puntos, la trayectoria se da evaluada en intervalos equi-espaciados en un tiempo unitario.
+
 \begin{lstlisting}
     % Inciso 1
     q0  = [0     -pi/2     0    0    0 0];  % Posicion inicial
@@ -82,16 +88,20 @@
     tf  = 3;                                % Instante final
     dt  = 0.1;                              % Paso de tiempo
     t   = ti:dt:tf;                         % 3 seg. y una decima de paso
-    Q   = jtraj(q0, q1, t);                 % Trayectoria interpolada
+    [Q, QD, QDD]  = jtraj(q0, q1, t);       % Trayectoria interpolada
 \end{lstlisting}
 
-Se obtiene una matriz de (31, 6) que tiene en filas
-la sucesión de posiciones articulares entre la posiciones inicial
-y final dadas, incluyéndolas.
+La trayectoria interpolada ``Q'' es de 31 X 6 y tiene en filas
+la sucesión de posiciones articulares entre la inicial
+y la final, incluyéndolas.
 Concuerda con el límite y paso de tiempo. Esto es, en 3 segundos
-hay 30 decimas de segundo y al considerar el instante inicial se tienen 31 puntos.
+hay 30 decimas y al considerar el instante inicial se tienen 31 puntos.
+
+Las matrices ``QD'' y ``QDD'' son de velocidad y aceleración articular respectivamente 
+y tienen las mismas dimensiones que ``Q''.
 
 \subsection{Animación}
+Se muestra la trayectoria trazada en \cref{animacion fanuc 1}
 \begin{lstlisting}
     % Inciso 2
     figure(1);
@@ -100,14 +110,6 @@ hay 30 decimas de segundo y al considerar el instante inicial se tienen 31 punto
         pause(dt);
     end
 \end{lstlisting}
-
-\begin{figure}[H]
-    \centering
-    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
-        \framebox{\includegraphics{1-Animacion_Fanuc.pdf}}
-    \end{adjustbox}
-    \caption{Animación Fanuc.}
-\end{figure}
 
 \subsection{Grafico de las variables articulares.}
 \begin{lstlisting}
@@ -119,6 +121,15 @@ hay 30 decimas de segundo y al considerar el instante inicial se tienen 31 punto
 Se puede ver en \cref{qplot fanuc} que el movimiento de los ejes es simultáneo
 y síncrono, es decir, que los ejes comienzan su movimiento en el mismo instánte de tiempo
 y también lo terminan en el mismo instante de tiempo.
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{1-Animacion_Fanuc.pdf}}
+    \end{adjustbox}
+    \caption{Animación Fanuc.}
+    \label{animacion fanuc 1}
+\end{figure}
 
 \begin{figure}[H]
     \centering
@@ -147,11 +158,12 @@ y también lo terminan en el mismo instante de tiempo.
     Q  = jtraj(q1, q2, 100);
 \end{lstlisting}
 
-Como se puede ver en el código, para definir la postura inicial y final
-de la trayectoria se hace la cienemática directa del robot. De la matriz obtenida,
-se cambia el vector de traslación y se conserva la sub-matriz de rotación.
+Primero se hace la cinemática directa con ``qq'' . De la matriz ``R'' obtenida,
+solo se cambia el vector de traslación por ``p1'' para dar ``T1'' (postura inicial) y por ``p2'' para dar ``T2'' (postura final)
+conservando la sub-matriz de rotación.
+Luego se usa cinemática inversa para obtener las posiciones articulares correspondientes ``q1'' y ``q2'', con las que se interpola.
 
-\subsection{Animación}
+\subsection{Animación y qplot}
 \begin{lstlisting}
     %% Inciso 2
     figure(1);
@@ -180,6 +192,70 @@ se cambia el vector de traslación y se conserva la sub-matriz de rotación.
     \end{adjustbox}
     \caption{qplot Fanuc.}
     \label{qplot fanuc}
+\end{figure}
+
+\section{Ejercicio 3:  Generación de trayectorias entre 2 puntos cartesianos, interpolación cartesiana}
+\subsection{Interpolación con ctraj}
+La interpolación con ``ctraj'' es interpolación cartesiana entre dos posturas en una trayectoria recta siguiendo un perfil de velocidad trapezoidal.
+Se indican la postura inicial y final con las matrices de transformación homogénea correspondientes y un número de puntos
+en la discretización o un vector con fracciones de segmento.
+Cuando se indica un vector de fracciones, la interpolación es evaluada 
+en esas fracciones a lo largo de la trayectoria.
+El resultado de la interpolación es la secuencia de matrices de transformación homogenea.
+
+\begin{lstlisting}
+    %% Inciso 1
+    p1 = [0.0 0.0 0.95];            % Posicion incial
+    p2 = [0.4 0.0 0.95];            % Posicion final
+    qq = [0 -pi/2 -pi/4 0 pi/4 0];  % Posicion articular que da la Orientacion
+    R  = fanuc.fkine(qq);           % Matriz homog. que da la Orientacion
+
+    T1 = R; T1.t = p1;              % Postura inicial
+    T2 = R; T2.t = p2;              % Postura final
+    M  = 100;                       % Numero de puntos en la interpolacion
+
+    T  = ctraj(T1, T2, M);          % Trayectoria interpolada
+
+    % Trayectoria en coordenadas articulares
+    Q   = fanuc.ikine(T, 'q0', qq, 'mask', ones(1, 6));
+\end{lstlisting}
+
+\subsection{Animación y qplot}
+\begin{lstlisting}
+    %% Inciso 2
+    % Trayectoria en coordenadas articulares
+    Q   = fanuc.ikine(T, 'q0', qq, 'mask', ones(1, 6));
+
+    figure(1);
+    fanuc.plot(Q(1, :), 'scale', 0.65,'jointdiam', 0.65, 'trail', {'r', 'LineWidth', 0.1});
+    fprintf("\nPresione ENTER para visualizar la animacion del robot.\n");
+    pause;
+
+    dt = 0.1;
+    for q = Q'
+        fanuc.animate(q');
+        pause(dt);
+    end
+
+    figure(2);
+    qplot(Q);
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{5-Animacion_Fanuc_3.pdf}}
+    \end{adjustbox}
+    \caption{Animación Fanuc.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{6-qplot_Fanuc_3.pdf}}
+    \end{adjustbox}
+    \caption{qplot Fanuc.}
+    \label{qplot fanucm 3}
 \end{figure}
 
 %\begin{equation*}
