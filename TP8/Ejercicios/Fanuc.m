@@ -15,10 +15,10 @@ dh = [0 0.450 0.075 -pi/2 0;
 q  = [0 0 0 0 0 0];
 
 % Construcción del robot
-fanuc      = SerialLink(DH, 'name', 'FANUC Paint Mate 200iA');
+fanuc      = SerialLink(dh, 'name', 'FANUC Paint Mate 200iA');
 
 % Offsets iniciales
-fanuc.offset = [0.0 pi/2 0.0 0.0 0.0 0.0];
+fanuc.offset = [0.0 0.0 0.0 0.0 0.0 0.0];
 
 % Límites obtenidos del datasheet del robot
 fanuc.qlim   = deg2rad([-170   170;

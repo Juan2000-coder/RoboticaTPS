@@ -22,7 +22,7 @@
 
 \lstset{ 
     language=Matlab,                     % El lenguaje del código
-    basicstyle=\ttfamily,                % Tipo de letra
+    basicstyle=\ttfamily\footnotesize,                % Tipo de letra
     keywordstyle=\color{blue},           % Color para palabras clave
     commentstyle=\color{green!60!black}, % Color para comentarios
     numbers=left,                        % Numeración de las líneas
@@ -73,7 +73,114 @@
 \end{titlepage}
 
 \section{Ejercicio 1:  Generación de trayectoria entre 2 puntos articulares}
+\subsection{Interpolación.}
+\begin{lstlisting}
+    % Inciso 1
+    q0  = [0     -pi/2     0    0    0 0];  % Posicion inicial
+    q1  = [-pi/3 pi/10 -pi/5 pi/2 pi/4 0];  % Posicion final
+    ti  = 0;                                % Instante inicial
+    tf  = 3;                                % Instante final
+    dt  = 0.1;                              % Paso de tiempo
+    t   = ti:dt:tf;                         % 3 seg. y una decima de paso
+    Q   = jtraj(q0, q1, t);                 % Trayectoria interpolada
+\end{lstlisting}
 
+Se obtiene una matriz de (31, 6) que tiene en filas
+la sucesión de posiciones articulares entre la posiciones inicial
+y final dadas, incluyéndolas.
+Concuerda con el límite y paso de tiempo. Esto es, en 3 segundos
+hay 30 decimas de segundo y al considerar el instante inicial se tienen 31 puntos.
+
+\subsection{Animación}
+\begin{lstlisting}
+    % Inciso 2
+    figure(1);
+    for q = Q'
+        fanuc.animate(q');
+        pause(dt);
+    end
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{1-Animacion_Fanuc.pdf}}
+    \end{adjustbox}
+    \caption{Animación Fanuc.}
+\end{figure}
+
+\subsection{Grafico de las variables articulares.}
+\begin{lstlisting}
+    %% Inciso 3
+    figure(2);
+    qplot(t', Q);
+\end{lstlisting}
+
+Se puede ver en \cref{qplot fanuc} que el movimiento de los ejes es simultáneo
+y síncrono, es decir, que los ejes comienzan su movimiento en el mismo instánte de tiempo
+y también lo terminan en el mismo instante de tiempo.
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{2-qplot_Fanuc.pdf}}
+    \end{adjustbox}
+    \caption{qplot Fanuc.}
+    \label{qplot fanuc}
+\end{figure}
+
+\section{Ejercicio 2: Generación de Trayectorias entre puntos cartesianos. Interpolación articular.}
+\subsection{Generación}
+\begin{lstlisting}
+    %% Inciso 1
+    p1 = [0.0 0.0 0.95];            % Posicion incial
+    p2 = [0.4 0.0 0.95];            % Posicion final
+    qq = [0 -pi/2 -pi/4 0 pi/4 0];  % Posicion articular que da la Orientacion
+    R  = fanuc.fkine(qq);           % Matriz homog. que da la Orientacion
+
+    T1 = R; T1.t = p1;              % Postura inicial
+    T2 = R; T2.t = p2;              % Postura final
+
+    q1   = fanuc.ikine(T1, 'q0', qq, 'mask', ones(1, 6));
+    q2   = fanuc.ikine(T2, 'q0', qq, 'mask', ones(1, 6));
+
+    Q  = jtraj(q1, q2, 100);
+\end{lstlisting}
+
+Como se puede ver en el código, para definir la postura inicial y final
+de la trayectoria se hace la cienemática directa del robot. De la matriz obtenida,
+se cambia el vector de traslación y se conserva la sub-matriz de rotación.
+
+\subsection{Animación}
+\begin{lstlisting}
+    %% Inciso 2
+    figure(1);
+    dt = 0.1;
+    for q = Q'
+        fanuc.animate(q');
+        pause(dt);
+    end
+
+    figure(2);
+    qplot(Q);
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{3-Animacion_Fanuc_2.pdf}}
+    \end{adjustbox}
+    \caption{Animación Fanuc.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{4-qplot_Fanuc_2.pdf}}
+    \end{adjustbox}
+    \caption{qplot Fanuc.}
+    \label{qplot fanuc}
+\end{figure}
 
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
