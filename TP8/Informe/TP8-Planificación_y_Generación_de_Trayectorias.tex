@@ -194,6 +194,9 @@ Luego se usa cinemática inversa para obtener las posiciones articulares corresp
     \label{qplot fanuc}
 \end{figure}
 
+\textbf{NOTA}: El eje de abscisas no está verdaderamente en unidades de tiempo (s)
+solamente representa el índice del paso en la interpolación.
+
 \section{Ejercicio 3:  Generación de trayectorias entre 2 puntos cartesianos, interpolación cartesiana}
 \subsection{Interpolación con ctraj}
 La interpolación con ``ctraj'' es interpolación cartesiana entre dos posturas en una trayectoria recta siguiendo un perfil de velocidad trapezoidal.
@@ -257,6 +260,45 @@ El resultado de la interpolación es la secuencia de matrices de transformación
     \caption{qplot Fanuc.}
     \label{qplot fanucm 3}
 \end{figure}
+
+\textbf{NOTA}: El eje de abscisas no está verdaderamente en unidades de tiempo (s)
+solamente representa el índice del paso en la interpolación.
+
+\section{Ejercicio 4}
+\subsection{QD y QDD.}
+Como se indicó en el ejercicio 1, la función ``jtraj'' devuelve
+``QD'' y ``QDD''.
+Las gráficas obtenidas se muestran en \cref{qplot Q fanuc}, \cref{qplot QD fanuc} y \cref{qplot QDD fanuc}, para la ```Q'', ``QD'' y ``QDD'' respectivamente.
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{7-qplot_Q_Fanuc_4.pdf}}
+    \end{adjustbox}
+    \caption{qplot Q Fanuc.}
+    \label{qplot Q fanuc}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{8-qplot_QD_Fanuc_4.pdf}}
+    \end{adjustbox}
+    \caption{qplot QD Fanuc.}
+    \label{qplot QD fanuc}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{9-qplot_QDD_Fanuc_4.pdf}}
+    \end{adjustbox}
+    \caption{qplot QDD Fanuc.}
+    \label{qplot QDD fanuc}
+\end{figure}
+
+\textbf{NOTA}: El eje de abscisas no está verdaderamente en unidades de tiempo (s)
+solamente representa el índice del paso en la interpolación.
+
+\subsection{Comparación ``QD''y ``QDD'' entre ``jtraj'' vs ``ctraj''}
 
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
