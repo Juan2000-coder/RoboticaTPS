@@ -22,48 +22,63 @@ q2 = fanuc.ikine(T2, 'q0', qq, 'mask', ones(1, 6));
 
 T               = ctraj(T1, T2, M);   % Interpolación ctraj
 
-Qc   = fanuc.ikine(T, 'q0', qq, 'mask', ones(1, 6)); % Q con ctraj
-QcD  = dq(Qc);                        % Aproximación numérica QD  de ctraj
-mQcD  = M*diff(Qc);
-QcDD = dq(QcD);                       % Aproximación numérica QDD de ctraj
-mQcDD = M*diff(QcD);
+x_traj          = zeros(length(T));   % Trayectoria interpolada en X
+for i = 1:length(T)
+    Ti        = T(i).double;
+    x_traj(i) = Ti(1, 4);
+end
+%xd_traj       = dq(x_traj);            % Velocidad de la traj en X
+xd_traj       = M*diff(x_traj);            % Velocidad de la traj en X
+%xdd_traj      = dq(xd_traj);           % Aceleración de la traj en X 
+xdd_traj      = M*diff(xd_traj);           % Aceleración de la traj en X
+
+Qc    = fanuc.ikine(T, 'q0', qq, 'mask', ones(1, 6)); % Q con ctraj
+QcD   = dq(Qc);                       % Aproximación numérica QD  de ctraj
+%QcD   = M*diff(Qc);                       % Aproximación numérica QD  de ctraj
+QcDD  = dq(QcD);                      % Aproximación numérica QDD de ctraj
+%QcDD  = M*diff(QcD);                      % Aproximación numérica QDD de ctraj
 
 fprintf("\nGeneración entre puntos cartesianos:\n");
 fprintf("\np1: \n");disp(p1);
 fprintf("\np2: \n");disp(p2);
-fprintf("\nR (orientación) : \n");disp(R.R());
+fprintf("\nR (orientación) : \n");  disp(R.R());
 
 fprintf("\nResultados de interpolación con jtraj: \n");
-fprintf("\nDimensión Qj: \n"); disp(size(Qj));
-fprintf("\nDimensión QjD: \n"); disp(size(QjD));
-fprintf("\nDimensión QjDD: \n"); disp(size(QjDD));
+fprintf("\nDimensión Qj: \n");      disp(size(Qj));
+fprintf("\nDimensión QjD: \n");     disp(size(QjD));
+fprintf("\nDimensión QjDD: \n");    disp(size(QjDD));
 
 fprintf("\nResultados de la interpolación con ctraj y derivada numérica: \n");
-fprintf("\nDimensión Qc: \n"); disp(size(Qc));
-fprintf("\nDimensión QcD: \n"); disp(size(QcD));
-fprintf("\nDimensión QcDD: \n"); disp(size(QcDD));
+fprintf("\nDimensión Qc: \n");      disp(size(Qc));
+fprintf("\nDimensión QcD: \n");     disp(size(QcD));
+fprintf("\nDimensión QcDD: \n");    disp(size(QcDD));
 
 
 %% Comparaciones gráficas.
 figure(1);
+hold on;
 my_qplot(Qj, 0.8);
-my_qplot(Qc, 1.5);
+my_qplot(Qc, 2.0);
 legend('qj1','qj2','qj3','qj4','qj5','qj6','qc1','qc2','qc3','qc4','qc5','qc6');
-
 
 figure(2);
 hold on;
-%my_qplot(QjD, 0.8);
-my_qplot(QcD,  0.8);
-my_qplot(mQcD, 2.0);
+my_qplot(QjD,  0.8);
+my_qplot(QcD,  2.0);
 legend('qjd1','qjd2','qjd3','qjd4','qjd5','qjd6','qcd1','qcd2','qcd3','qcd4','qcd5','qcd6');
 
 figure(3);
 hold on;
-%my_qplot(QjDD, 0.8);
-my_qplot(QcDD, 0.8);
-my_qplot(mQcDD, 2.0);
+my_qplot(QjDD, 0.8);
+my_qplot(QcDD, 2.0);
 legend('qjdd1','qjdd2','qjdd3','qjdd4','qjdd5','qjdd6','qcdd1','qcdd2','qcdd3','qcdd4','qcdd5','qcdd6');
+
+figure(4);
+hold on;
+my_qplot(x_traj,   0.8);
+my_qplot(xd_traj,  0.8);
+my_qplot(xdd_traj, 0.8);
+legend('x','xD','XDD');
 
 %% Derivada numérica
 function d = dq(Q)
@@ -72,7 +87,7 @@ function d = dq(Q)
     % El paso entre valores consecutivos en el vector es 1.
     
     n = length(Q);       % número de puntos (número de filas)
-    h = 1/n;             % paso para tiempo unitario.        
+    h = 1/(n - 1);       % paso para tiempo unitario.        
     d = zeros(size(Q));  % vector para almacenar la derivada
     
     % Iterar por los puntos intermedios (no incluidos bordes)
@@ -92,7 +107,7 @@ function d = dq(Q)
         d(i, :) = (4 * D_h - D_2h) / 3;
     end
     
-    % Para los bordes, usamos diferencias centradas simples
+    % Para los bordes, usamos diferencias simples
     d(1, :) = (Q(2, :) - Q(1, :))/h;    % Aproximación hacia adelante
     d(n, :) = (Q(n, :) - Q(n-1, :))/h;  % Aproximación hacia atrás
 end

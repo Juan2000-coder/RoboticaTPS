@@ -265,7 +265,7 @@ El resultado de la interpolación es la secuencia de matrices de transformación
 solamente representa el índice del paso en la interpolación.
 
 \section{Ejercicio 4}
-\subsection{QD y QDD.}
+\subsection{QD y QDD con jtraj.}
 Como se indicó en el ejercicio 1, la función ``jtraj'' devuelve
 ``QD'' y ``QDD''.
 Las gráficas obtenidas se muestran en \cref{qplot Q fanuc}, \cref{qplot QD fanuc} y \cref{qplot QDD fanuc}, para la ```Q'', ``QD'' y ``QDD'' respectivamente.
@@ -299,7 +299,37 @@ Las gráficas obtenidas se muestran en \cref{qplot Q fanuc}, \cref{qplot QD fanu
 solamente representa el índice del paso en la interpolación.
 
 \subsection{Comparación ``QD''y ``QDD'' entre ``jtraj'' vs ``ctraj''}
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{10-qplot_Qc_Qj_Fanuc_4.pdf}}
+    \end{adjustbox}
+    \caption{qplot Qc(ctraj) vs Qj(jtraj).}
+\end{figure}
 
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{11-qplot_Qcd_Qjd_Fanuc_4.pdf}}
+    \end{adjustbox}
+    \caption{qplot QcD(vel. ctraj) vs QjD(vel. jtraj).}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{12-qplot_Qcdd_Qjddd_Fanuc_4.pdf}}
+    \end{adjustbox}
+    \caption{qplot QcDD(acel. ctraj) vs QjDD(acel. jtraj)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{adjustbox}{scale = 0.65, max width=\columnwidth}
+        \framebox{\includegraphics{13-qplot_xtraj_Fanuc_4.pdf}}
+    \end{adjustbox}
+    \caption{qplot x, xD, xDD.}
+\end{figure}
 %\begin{equation*}
 %    \prescript{O}{}{Rot_M} = 
 %    \begin{bmatrix}
