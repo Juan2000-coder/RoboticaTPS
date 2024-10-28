@@ -88,7 +88,7 @@ T16         = T7;  % Volver de la cámara, punto intermedio 1
 T17         = T1;  % Ir a la mesa
 
 %% APROXXIMACIÓN A PASTILLA
-T18         = T2
+T18         = T2;
 
 %% TRAYECTORIA MESA CÁMARA DIRECTA
 T19         = T1; % Alejamiento con la pastilla
