@@ -24,7 +24,7 @@ qMC_traj   = mstraj([q7; q8; q9], [], segundos*ones(1, 3), q6, dt, 0.2);
 disp('size de qMC_traj');
 disp(size(qMC_traj));
 
-qMC_trajD  = diff(qMC_traj)/dt;  qMC_trajD(end + 1, :)  = qMC_trajD(end,:);
+qMC_trajD  = diff(qMC_traj)/dt;  qMC_trajD(end + 1, :) = qMC_trajD(end,:);
 qMC_trajDD = diff(qMC_trajD)/dt; qMC_trajDD(end + 1,:) = qMC_trajDD(end,:);
 
 %%
@@ -62,8 +62,10 @@ for q = Qj_all'
 end
 
 figure(2)
-%my_qplot(Qj_all, 0.5);
+my_qplot(Qj_all, 0.5);
+figure(3)
 my_qplot(QjD_all, 0.5);
+figure(4)
 my_qplot(QjDD_all, 2);
 
 %% CTRAJ

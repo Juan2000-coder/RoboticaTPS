@@ -21,17 +21,19 @@ q2(6)       = 0;                               % q6 = 0
 %% T3 - APERTURA DE LA TAPA q6 = -2pi
 T3          = T2;
 q3          = q2;
-q3(6)       = 2*pi;
+q3(6)       = -2*pi;
 
 %% T4 - ALEJAMIENTO Y q6 = 0
 T4          = T1;
-q4          = UR10E_ikine(R, T4, q3, true);
+%q4         = UR10E_ikine(R, T4, q3, true);
+q4          = q1;
+q4(6)       = -2*pi;
 
 %% T5 - DEJAR TAPA EN LA MESA
 P5          = [-755.00 425.00 483.60]*1/1000;
 T5          = troty(pi);
 T5(1:3, 4)  = P5';
-q5          = UR10E_ikine(R, T5, q4, true);
+q5          = UR10E_ikine(R, T5, q1, true);
 
 %% TRAYECTORIA MESA CÁMARA DIRECTA
 
@@ -67,16 +69,17 @@ q10(6)      = 0;            % q6 = 0
 %% T11 - APERTURA TAPA DE LA CÁMARA q6 = -2pi
 T11         = T10;
 q11         = q10;
-q11(6)      = 2*pi;
+q11(6)      = -2*pi;
 
 %% T12 - ALEJAMIENTO q6 = 0 Y CON BRIDA HACIA EL SUELO
-T12         = troty(pi);
-T12(1:3, 4) = P9';
-q12         = UR10E_ikine(R, T12, q11, true);
+T12         = T9;
+%q12        = UR10E_ikine(R, T12, q11, true);
+q12         = q9;
+q12(6)      = -2*pi;
 
 %% T13 - DEJAR TAPA EN EL SUELO
 P13         = [925.00 250.00 0.00]*1/1000;
-T13         = T12;
+T13         = troty(pi);
 T13(1:3, 4) = P13';
 q13         = UR10E_ikine(R, T13, q12, true);
 
