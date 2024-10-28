@@ -25,13 +25,13 @@ q = [0 0 0 0 0 0];
 R.offset = [pi/2 pi/2 0 pi/2 -pi 0];
 
 % traslación y rotación de la base
-transl_base = [0 0 0.1]; %Base
+transl_base = [0 0 0]; %Base
 roll_base   = 0;
 pitch_base  = 0;
 yawn_base   = 0;
 
 % traslación y rotación de la herramienta
-transl_tool = [0 0 0.153]; %TCP (Tool Center Point)
+transl_tool = [0 0 0]; %TCP (Tool Center Point)
 roll_tool   = 0;
 pitch_tool  = 0;
 yawn_tool   = 0;
