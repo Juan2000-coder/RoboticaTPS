@@ -1,5 +1,5 @@
-definir_puntos;
-definir_tiempos;
+puntos;
+tiempos;
 
 %% JTRAJ
 % Trayectoria 1
