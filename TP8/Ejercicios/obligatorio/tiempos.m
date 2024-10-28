@@ -67,9 +67,4 @@ t35 = t34(end):dt:t34(end)+segundos; %Alejamiento de la tapa (mismo punto que t4
 
 t36 = t35(end):dt:t35(end)+segundos; %Ir a la cámara, punto intermedio 1
 t37 = t36(end):dt:t36(end)+segundos; %Ir a la cámara, punto intermedio 2
-t38 = t37(end):dt:t37(end)+segundos; %Ir a la cámara, punto intermedio 3 y final
-
-t39 = t38(end):dt:t38(end)+segundos; %Aproximacion a la tapa de la camara (mismo punto que t9)
-
-t40 = t39(end):dt:t39(end)+segundos; %Apertura de tapa de la camara (giro de 360° antihorario)
-t = [t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19 t20 t21 t22 t23 t24 t25 t26 t27 t28 t29 t30 t31 t32 t33 t34 t35 t36 t37 t38 t39 t40];
+t = [t1 t2 t3 t4 t5 t6 t7 t8 t9 t10 t11 t12 t13 t14 t15 t16 t17 t18 t19 t20 t21 t22 t23 t24 t25 t26 t27 t28 t29 t30 t31 t32 t33 t34 t35 t36 t37];
