@@ -1,7 +1,4 @@
 function qq = UR10E_ikine(R, T, q0, mejor)
-    %% Devuelve qq(1 x 6) cuando mejor =  true
-    %% Devuelve qq(8 x 6) cuando mejor = false
-    
     %% Verificacion de parámetros
 
     % Verificación del robot
@@ -144,5 +141,5 @@ function qq = UR10E_ikine(R, T, q0, mejor)
         [~,pos] = min(normas);
         qq = qq(:, pos);
     end
-    qq = transpose(qq);
+
 end
