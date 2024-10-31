@@ -31,25 +31,9 @@ Qj_all   = [Qj1; Qj2; Qj3; Qj4; Qj5; Qj6; qMC_traj; Qj10; Qj11; Qj12; Qj13];
 QjD_all  = [Qj1D; Qj2D; Qj3D; Qj4D; Qj5D; Qj6D; qMC_trajD; Qj10D; Qj11D; Qj12D; Qj13D];
 QjDD_all = [Qj1DD; Qj2DD; Qj3DD; Qj4DD; Qj5DD; Qj6DD; qMC_trajDD; Qj10DD; Qj11DD; Qj12DD; Qj13DD];
 
-% figure(1);
-% R.plot(q_home, 'scale', 0.65,'jointdiam', 0.65, 'trail', {'r', 'LineWidth', 0.1});
-% fprintf("\nPresione ENTER para visualizar la animación del robot.\n");
-% pause;
-% 
-% i = 0; % home
-% for q = Qj_all'
-%     R.animate(q');
-%     for i = 1:13
-%         if (q' == eval(['q', num2str(i)]))
-%             disp(['en q', num2str(i)])
-%         end
-%     end
-%     %pause(dt);
-% end
-
 figure;
 R.plot(Qj_all, 'trail', 'r', 'scale', 0.5);  % Traza la trayectoria en rojo
-title('Animación de la Interpolación Cartesiana entre P1 y P2');
+title('Animación de la interpolación entre puntos');
 
 figure;
 subplot(3,1,1)

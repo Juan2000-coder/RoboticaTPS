@@ -69,21 +69,9 @@ time = linspace(0, dt*(size(Qc_all, 1)-1), size(Qc_all, 1));
 time_velocity = linspace(0, dt*(size(vel_cartesianas, 1)-1), size(vel_cartesianas, 1));
 time_acceleration = linspace(0, dt*(size(acc_cartesianas, 1)-1), size(acc_cartesianas, 1));
 
-figure(1);
-R.plot(q_home, 'scale', 0.65,'jointdiam', 0.65, 'trail', {'r', 'LineWidth', 0.1});
-fprintf("\nPresione ENTER para visualizar la animación del robot.\n");
-pause;
-
-i = 0; % home
-for q = Qc_all'
-    R.animate(q');
-    for i = 1:13
-        if (q' == eval(['q', num2str(i)]))
-            disp(['en q', num2str(i)])
-        end
-    end
-    pause(dt);
-end
+figure;
+R.plot(Qc_all, 'trail', 'r', 'scale', 0.5);  % Traza la trayectoria en rojo
+title('Animación de la interpolación entre puntos');
 
 % Graficar coordenadas cartesianas
 figure;
