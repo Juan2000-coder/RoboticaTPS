@@ -11,3 +11,4 @@
 *.sat
 *.igs
 *.SLDPRT
+.vscode/settings.json

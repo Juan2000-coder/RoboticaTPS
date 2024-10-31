@@ -1,3 +1,4 @@
 {
-    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click"
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+    "github.copilot.advanced": {}
 }
