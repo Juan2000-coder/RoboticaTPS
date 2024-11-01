@@ -1,9 +1,6 @@
-clc; clear all; close all;
-robot;
-
 %% HOME
 q_home      = [0 45 -100 0 0 0]*pi/180;        % Home articular
-T_home      = R.fkine(q_home);                 % Home cartesiano
+T_home      = R.fkine(q_home).T;               % Home cartesiano
 
 %% T1 - ACERCAMIENTO PREVIO AL DEPOSITO DE PASTILLA
 T1          = troty(-160*pi/180);              % Inclinacion al deposito
@@ -82,6 +79,9 @@ P13         = [925.00 250.00 0.00]*1/1000;
 T13         = troty(pi);
 T13(1:3, 4) = P13';
 q13         = UR10e_ikine(R, T13, q12, true);
+
+% juntas las matrices de transformación en un arreglo de la forma (4, 4, 13)
+posiciones  = cat(3, T_home, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13);
 
 % De acá en adelante todos los puntos, matrices y vectores articulares e repiten.
 %% TRAYECTORIA MESA CÁMARA INVERSA
