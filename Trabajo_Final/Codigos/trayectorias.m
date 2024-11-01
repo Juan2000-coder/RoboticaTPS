@@ -2,11 +2,11 @@
 M      = 30;
 
 %% Generación de Trayectorias
-for i = 1:length(posiciones) - 1
+for i = 1:length(posicionesC) - 1
     if i == 1
-        trajs = ctraj(posiciones(:, :, i), posiciones(:, :, i + 1), M);
+        trajs = ctraj(posicionesC(:, :, i), posicionesC(:, :, i + 1), M);
     else
-        trajs = cat(3, trajs, ctraj(posiciones(:, : ,i), posiciones(:, :, i + 1), M));
+        trajs = cat(3, trajs, ctraj(posicionesC(:, : ,i), posicionesC(:, :, i + 1), M));
     end
 end
 

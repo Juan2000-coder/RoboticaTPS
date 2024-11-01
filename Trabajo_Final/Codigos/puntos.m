@@ -1,15 +1,15 @@
 %% HOME
-q_home      = [0 45 -100 0 0 0]*pi/180;        % Home articular
+q_home      = [180 45 80 0 0 0]*pi/180;        % Home articular
 T_home      = R.fkine(q_home).T;               % Home cartesiano
 
 %% T1 - ACERCAMIENTO PREVIO AL DEPOSITO DE PASTILLA
 T1          = troty(-160*pi/180);              % Inclinacion al deposito
-P1          = [-798.70 425.00 622.76]*1/1000;  % Lejos de la mesa
+P1          = [-507.590 750.000 598.323]*1/1000;  % Lejos de la mesa
 T1(1:3, 4)  = P1';
 q1          = UR10e_ikine(R, T1, q_home, true);
 
 %% T2 - PUNTO DE AGARRE DE LA PASTILLA
-P2          = [-843.16 425.00 500.60]*1/1000;  % TCP en el centro de la tapa
+P2          = [-541.792 750.000 504.354]*1/1000;  % TCP en el centro de la tapa
 T2          = T1;
 T2(1:3, 4)  = P2';
 q2          = UR10e_ikine(R, T2, q1, true);
@@ -26,62 +26,74 @@ T4          = T1;
 q4          = q1;
 q4(6)       = -2*pi;
 
-%% T5 - DEJAR TAPA EN LA MESA
-P5          = [-755.00 425.00 483.60]*1/1000;
+%% T5 - PREVIO A DEJAR LA TAPA EN LA MESA
+P5          = [-455.000 750.000 500.000]*1/1000;
 T5          = troty(pi);
 T5(1:3, 4)  = P5';
 q5          = UR10e_ikine(R, T5, q1, true);
 
+%% T6 - DEJAR TAPA EN LA MESA
+P6          = [-455.000 750.000 477.603]*1/1000;
+T6          = T5;
+T6(1:3, 4)  = P6';
+q6          = UR10e_ikine(R, T5, q5, true);
+
 %% TRAYECTORIA MESA CÁMARA DIRECTA
 
-% T6 - Punto inicial trayectoria
-T6          = T1;
-q6          = UR10e_ikine(R, T6, q5, true);
-
-% T7 - Punto intermedio 1 de la trayectoria
-T7          = T6;
-P7          = [-708.40 455.73 650.69]*1/1000;
-T7(1:3, 4)  = P7';
+% T7 - Punto inicial trayectoria
+T7          = T1;
 q7          = UR10e_ikine(R, T7, q6, true);
 
-% T8 - Punto intermedio 2 de la trayectoria
-P8          = [34.17 350.00 362.35]*1/1000;
+% T8 - Punto intermedio 1 de la trayectoria
 T8          = T7;
+P8          = [-239.901 519.583 542.846]*1/1000;
 T8(1:3, 4)  = P8';
 q8          = UR10e_ikine(R, T8, q7, true);
 
-% T9 - Punto final trayectoria con q6 = 0°
-P9          = [800.00 350.00 100.00]*1/1000;
-T9          = trotx(-pi/2);
+% T9 - Punto intermedio 2 de la trayectoria
+P9          = [260.526 408.133 212.831]*1/1000;
+T9          = T8;
 T9(1:3, 4)  = P9';
 q9          = UR10e_ikine(R, T9, q8, true);
 
-%% T10 - APROXIMACIÓN A LA TAPA DE LA CÁMARA
-P10         = [800.00 380.00 100.00]*1/1000;
-T10         = T9;
-T10(1:3, 4) = P10';
-q10         = UR10e_ikine(R, T10, q9, true);
+% T10 - Punto final trayectoria con q6 = 0°
+P10          = [500.000 395.000 215.000]*1/1000;
+T10          = trotx(-pi/2);
+T10(1:3, 4)  = P10';
+q10          = UR10e_ikine(R, T10, q9, true);
 q10(6)      = 0;            % q6 = 0
 
-%% T11 - APERTURA TAPA DE LA CÁMARA q6 = -2pi
+%% T11 - APROXIMACIÓN A LA TAPA DE LA CÁMARA
+P11         = [500.000 495.000 215.000]*1/1000;
 T11         = T10;
-q11         = q10;
-q11(6)      = -2*pi;
+T11(1:3, 4) = P11';
+q11         = UR10e_ikine(R, T11, q10, true);
 
-%% T12 - ALEJAMIENTO q6 = 0 Y CON BRIDA HACIA EL SUELO
-T12         = T9;
-%q12        = UR10e_ikine(R, T12, q11, true);
-q12         = q9;
+%% T12 - APERTURA TAPA DE LA CÁMARA q6 = -2pi
+T12         = T11;
+q12         = q11;
 q12(6)      = -2*pi;
 
-%% T13 - DEJAR TAPA EN EL SUELO
-P13         = [925.00 250.00 0.00]*1/1000;
-T13         = troty(pi);
-T13(1:3, 4) = P13';
-q13         = UR10e_ikine(R, T13, q12, true);
+%% T13 - ALEJAMIENTO q6 = 0 Y CON BRIDA HACIA EL SUELO
+T13         = T10;
+%q12        = UR10e_ikine(R, T12, q11, true);
+q13         = q10;
+
+%% T13 - PREVIO A DEJAR LA TAPA EN EL SUELO
+P14         = [721.847 546.464 50.000]*1/1000;
+T14         = troty(pi);
+T14(1:3, 4) = P14';
+q14         = UR10e_ikine(R, T14, q13, true);
+
+%% T14 - DEJAR TAPA EN EL SUELO
+P15         = [721.847 546.464 10.000]*1/1000;
+T15         = T14;
+T15(1:3, 4) = P15';
+q15         = UR10e_ikine(R, T15, q13, true);
 
 % juntas las matrices de transformación en un arreglo de la forma (4, 4, 13)
-posiciones  = cat(3, T_home, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13);
+posicionesC  = cat(3, T_home, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15);
+posicionesQ  = [q_home; q1; q2; q3; q4; q5; q6; q7; q8; q9; q10; q11; q12; q13; q14; q15];
 
 % De acá en adelante todos los puntos, matrices y vectores articulares e repiten.
 %% TRAYECTORIA MESA CÁMARA INVERSA
