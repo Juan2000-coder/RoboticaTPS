@@ -1,5 +1,7 @@
 %% Ejecuta la simulación solamente a partir del Q previamente calculado
 clc; clear; close all;
+p = fileparts(mfilename('fullpath'));  % ruta al directorio de este archivo
+p = fullfile(p, '/stls'); % ruta al directorio de los stls 
 
 robot;          % Llama al robot
 puntos_test;         % Define las T
@@ -8,10 +10,23 @@ trayectorias;   % Define las trayectorias
 time       = linspace(0, dt*(size(Q, 1) - 1), size(Q, 1));
 timeX       = linspace(0, dt*(size(pos_cartesianas,2)), size(pos_cartesianas,2));
 
+%Plot en la posicion de home
+R.plot(q_home,'scale', 0.001,'jointdiam', 0.001, 'trail', {'r', 'LineWidth', 1});
+
+%Plot con STLs
+R.plot3d(q_home,'path',p);
+disp('Presione una tecla para continuar')
+pause;
+R.teach(q_home)
+%R.animate(Q);
+
+% R.plot3d(Q);
+% title('Animación de la interpolación entre puntos');
+
 %Hacer el plot del robot con Q con trail en rojo
-figure;
-R.plot(Q,'scale', 1,'jointdiam', 1, 'trail', {'r', 'LineWidth', 1});  % Traza la trayectoria en rojo
-title('Animación de la interpolación entre puntos');
+% figure;
+% R.plot(Q,'scale', 0.001,'jointdiam', 0.001, 'trail', {'r', 'LineWidth', 1});  % Traza la trayectoria en rojo
+% title('Animación de la interpolación entre puntos');
 
 % Crea el slider
 hSlider = uicontrol('Style', 'slider', 'Min', 1, 'Max', length(time), ...

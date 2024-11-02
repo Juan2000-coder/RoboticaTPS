@@ -31,7 +31,7 @@ pitch_base  = 0;
 yawn_base   = 0;
 
 % traslación y rotación de la herramienta
-transl_tool = [0 0 0]; %TCP (Tool Center Point)
+transl_tool = [0 0 0.153]; %TCP (Tool Center Point)
 roll_tool   = 0;
 pitch_tool  = 0;
 yawn_tool   = 0;
