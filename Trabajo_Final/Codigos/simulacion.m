@@ -4,13 +4,14 @@ clc; clear; close all;
 robot;          % Llama al robot
 puntos_test;         % Define las T
 tiempos;        % Define los tiempos
-trayectorias_test;   % Define las trayectorias
+trayectorias;   % Define las trayectorias
 time       = linspace(0, dt*(size(Q, 1) - 1), size(Q, 1));
+timeX       = linspace(0, dt*(size(pos_cartesianas,2)), size(pos_cartesianas,2));
 
-% Hacer el plot del robot con Q con trail en rojo
-% figure;
-% R.plot(Q,'scale', 1,'jointdiam', 1, 'trail', {'r', 'LineWidth', 1});  % Traza la trayectoria en rojo
-% title('Animación de la interpolación entre puntos');
+%Hacer el plot del robot con Q con trail en rojo
+figure;
+R.plot(Q,'scale', 1,'jointdiam', 1, 'trail', {'r', 'LineWidth', 1});  % Traza la trayectoria en rojo
+title('Animación de la interpolación entre puntos');
 
 % Crea el slider
 hSlider = uicontrol('Style', 'slider', 'Min', 1, 'Max', length(time), ...
@@ -27,31 +28,31 @@ hText = uicontrol('Style', 'text', 'Units', 'normalized', ...
 addlistener(hSlider, 'Value', 'PostSet', @(src, event) updateRobot(R, Q, time, hSlider, hText));
 
 
-% Graficar coordenadas cartesianas
-% figure;
-% subplot(3,1,1);
-% plot(time, pos_cartesianas, 'LineWidth', 1.5);
-% title('Posición en el Espacio XYZ');
-% xlabel('Tiempo (s)');
-% ylabel('Posición (m)');
-% legend('X', 'Y', 'Z');
-% grid on;
-% 
-% subplot(3, 1, 2);
-% plot(linspace(0, dt*(length(vel_cartesianas)-1), length(vel_cartesianas)), vel_cartesianas', 'LineWidth', 1.5);
-% title('Velocidad en el Espacio XYZ');
-% xlabel('Tiempo (s)');
-% ylabel('Velocidad (m/s)');
-% legend('VX', 'VY', 'VZ');
-% grid on;
-% 
-% subplot(3, 1, 3);
-% plot(linspace(0, dt*(length(acc_cartesianas)-1), length(acc_cartesianas)), acc_cartesianas', 'LineWidth', 1.5);
-% title('Aceleración en el Espacio XYZ');
-% xlabel('Tiempo (s)');
-% ylabel('Aceleración (m/s^2)');
-% legend('AX', 'AY', 'AZ');
-% grid on;
+%Graficar coordenadas cartesianas
+figure;
+subplot(3,1,1);
+plot(timeX, pos_cartesianas, 'LineWidth', 1.5);
+title('Posición en el Espacio XYZ');
+xlabel('Tiempo (s)');
+ylabel('Posición (m)');
+legend('X', 'Y', 'Z');
+grid on;
+
+subplot(3, 1, 2);
+plot(linspace(0, dt*(length(vel_cartesianas)-1), length(vel_cartesianas)), vel_cartesianas', 'LineWidth', 1.5);
+title('Velocidad en el Espacio XYZ');
+xlabel('Tiempo (s)');
+ylabel('Velocidad (m/s)');
+legend('VX', 'VY', 'VZ');
+grid on;
+
+subplot(3, 1, 3);
+plot(linspace(0, dt*(length(acc_cartesianas)-1), length(acc_cartesianas)), acc_cartesianas', 'LineWidth', 1.5);
+title('Aceleración en el Espacio XYZ');
+xlabel('Tiempo (s)');
+ylabel('Aceleración (m/s^2)');
+legend('AX', 'AY', 'AZ');
+grid on;
 
 figure;
 subplot(3,1,1)
