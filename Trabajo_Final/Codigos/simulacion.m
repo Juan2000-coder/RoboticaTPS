@@ -4,23 +4,24 @@ p = fileparts(mfilename('fullpath'));  % ruta al directorio de este archivo
 p = fullfile(p, '/stls'); % ruta al directorio de los stls 
 
 robot;          % Llama al robot
-puntos_test;         % Define las T
+puntos;         % Define las T
 tiempos;        % Define los tiempos
 trayectorias;   % Define las trayectorias
 time       = linspace(0, dt*(size(Q, 1) - 1), size(Q, 1));
 timeX       = linspace(0, dt*(size(pos_cartesianas,2)), size(pos_cartesianas,2));
 
 %Plot en la posicion de home
-R.plot(q_home,'scale', 0.001,'jointdiam', 0.001, 'trail', {'r', 'LineWidth', 1});
+R.plot(q_home,'scale', 0.001,'jointdiam', 0.001, 'trail', {'r', 'LineWidth', 1},'nojoints','notiles');
+%R.plot(q_home,'scale', 0.001,'jointdiam', 0.001, 'nojoints','notiles');
 
 %Plot con STLs
 R.plot3d(q_home,'path',p);
 disp('Presione una tecla para continuar')
 pause;
-R.teach(q_home)
+%R.teach(q_home)
 %R.animate(Q);
 
-% R.plot3d(Q);
+%R.plot3d(Q);
 % title('Animación de la interpolación entre puntos');
 
 %Hacer el plot del robot con Q con trail en rojo

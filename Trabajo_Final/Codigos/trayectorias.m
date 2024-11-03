@@ -2,14 +2,21 @@
 M      = 30;
 
 %% Generación de Trayectorias DEFINIR Q, QD, QDD Y TRAJS
-%% 0 a 1, de home al punto 1, enfrentado a la cámara
-[Q0a1, Q0a1D, Q0a1DD]    = jtraj(q_home,q1,M);
-T0a1    = R.fkine(Q0a1).T;
+
+%% home a cero, con mstraj
+Q_home_0_1 = mstraj([q0; q1],[], segundos*ones(1,2), q_home, dt, 2);
+Q_home_0_1D = numerical_derivative(Q_home_0_1, dt);
+Q_home_0_1DD = numerical_derivative(Q_home_0_1D, dt);
+T_home_0_1 = R.fkine(Q_home_0_1).T;
+
+% %% 0 a 1, de home al punto 1, enfrentado a la cámara
+% [Q0a1, Q0a1D, Q0a1DD]    = jtraj(q0,q1,M);
+% T0a1    = R.fkine(Q0a1).T;
 
 %% Aproximación a la tapa de la cámara
 T1a2    = ctraj(T1,T2,M);
 % Calculo de la Trayectoria articular 
-q_sem = Q0a1(end,:);
+q_sem = Q_home_0_1(end,:);
 
 for i = 1:length(T1a2)
     q_sem = UR10e_ikine(R, T1a2(:, : , i), q_sem, true);
@@ -40,6 +47,17 @@ Q3a4DD=numerical_derivative(Q3a4D, dt);
 [Q4a5, Q4a5D, Q4a5DD]    = jtraj(Q3a4(end,:),q5,M);
 T4a5    = R.fkine(Q4a5).T;
 
+%T4a5 = ctraj(T4,T5,M);
+% Calculo de la Trayectoria articular
+%q_sem = Q3a4(end,:);
+%for i = 1:length(T4a5)
+%    q_sem = UR10e_ikine(R, T4a5(:, : , i), q_sem, true);
+%    Q4a5(i, :) = q_sem;
+%end
+
+%Q4a5D=numerical_derivative(Q4a5, dt);
+%Q4a5DD=numerical_derivative(Q4a5D, dt);
+
 %% Se deja la tapa en el suelo
 T5a6    = ctraj(T5,T6,M);
 % Calculo de la Trayectoria articular 
@@ -53,15 +71,15 @@ end
 Q5a6D=numerical_derivative(Q5a6, dt);
 Q5a6DD=numerical_derivative(Q5a6D, dt);
 
-%% Se va al primer punto de la trayectoria entre camara y mesa
-[Q6a7, Q6a7D, Q6a7DD] = jtraj(Q5a6(end,:),q7,M);
-T6a7    = R.fkine(Q6a7).T;
+%%% Se va al primer punto de la trayectoria entre camara y mesa
+%[Q6a7, Q6a7D, Q6a7DD] = jtraj(Q5a6(end,:),q7,M);
+%T6a7    = R.fkine(Q6a7).T;
 
-%% TRAYECTORIA CÁMARA MESA DIRECTA (7,8,9)
-qCM_traj1   = mstraj([q8; q9], [], segundos*ones(1, 2), q7, dt, 2);
+%% TRAYECTORIA CÁMARA MESA (6,7,8,9)
+qCM_traj1   = mstraj([q7; q8; q9], [], segundos*ones(1, 3), q6, dt, 2);
 qCM_traj1D  = numerical_derivative(qCM_traj1, dt);
 qCM_traj1DD = numerical_derivative(qCM_traj1D, dt);
-T7a9        = R.fkine(qCM_traj1).T;
+T6a9        = R.fkine(qCM_traj1).T;
 
 %% Aproximacion recta a los contenedores de pastillas
 T9a10   = ctraj(T9,T10,M);
@@ -256,13 +274,13 @@ T37a38  = R.fkine(Q37a38).T;
 
 %%Q, QD, QDD Y TRAJS
 
-Q = [Q0a1; Q1a2; Q2a3; Q3a4; Q4a5; Q5a6; Q6a7; qCM_traj1; Q9a10; Q10a11; Q11a12; Q12a13; Q13a14; Q14a15; Q15a16; Q16a17; qMC_traj1; Q19a20; Q20a21; Q21a22; Q22a23; Q23a24; Q24a25; Q25a26; Q26a27; Q27a28; Q28a29; qCM_traj2; Q32a33; Q33a34; Q34a35; Q35a36; Q36a37; Q37a38];
+Q = [Q_home_0_1; Q1a2; Q2a3; Q3a4; Q4a5; Q5a6; qCM_traj1; Q9a10; Q10a11; Q11a12; Q12a13; Q13a14; Q14a15; Q15a16; Q16a17; qMC_traj1; Q19a20; Q20a21; Q21a22; Q22a23; Q23a24; Q24a25; Q25a26; Q26a27; Q27a28; Q28a29; qCM_traj2; Q32a33; Q33a34; Q34a35; Q35a36; Q36a37; Q37a38];
 
-QD = [Q0a1D; Q1a2D; Q2a3D; Q3a4D; Q4a5D; Q5a6D; Q6a7D; qCM_traj1D; Q9a10D; Q10a11D; Q11a12D; Q12a13D; Q13a14D; Q14a15D; Q15a16D; Q16a17D; qMC_traj1D; Q19a20D; Q20a21D; Q21a22D; Q22a23D; Q23a24D; Q24a25D; Q25a26D; Q26a27D; Q27a28D; Q28a29D; qCM_traj2D; Q32a33D; Q33a34D; Q34a35D; Q35a36D; Q36a37D; Q37a38D];
+QD = [Q_home_0_1D; Q1a2D; Q2a3D; Q3a4D; Q4a5D; Q5a6D; qCM_traj1D; Q9a10D; Q10a11D; Q11a12D; Q12a13D; Q13a14D; Q14a15D; Q15a16D; Q16a17D; qMC_traj1D; Q19a20D; Q20a21D; Q21a22D; Q22a23D; Q23a24D; Q24a25D; Q25a26D; Q26a27D; Q27a28D; Q28a29D; qCM_traj2D; Q32a33D; Q33a34D; Q34a35D; Q35a36D; Q36a37D; Q37a38D];
 
-QDD = [Q0a1DD; Q1a2DD; Q2a3DD; Q3a4DD; Q4a5DD; Q5a6DD; Q6a7DD; qCM_traj1DD; Q9a10DD; Q10a11DD; Q11a12DD; Q12a13DD; Q13a14DD; Q14a15DD; Q15a16DD; Q16a17DD; qMC_traj1DD; Q19a20DD; Q20a21DD; Q21a22DD; Q22a23DD; Q23a24DD; Q24a25DD; Q25a26DD; Q26a27DD; Q27a28DD; Q28a29DD; qCM_traj2DD; Q32a33DD; Q33a34DD; Q34a35DD; Q35a36DD; Q36a37DD; Q37a38DD];
+QDD = [Q_home_0_1DD; Q1a2DD; Q2a3DD; Q3a4DD; Q4a5DD; Q5a6DD; qCM_traj1DD; Q9a10DD; Q10a11DD; Q11a12DD; Q12a13DD; Q13a14DD; Q14a15DD; Q15a16DD; Q16a17DD; qMC_traj1DD; Q19a20DD; Q20a21DD; Q21a22DD; Q22a23DD; Q23a24DD; Q24a25DD; Q25a26DD; Q26a27DD; Q27a28DD; Q28a29DD; qCM_traj2DD; Q32a33DD; Q33a34DD; Q34a35DD; Q35a36DD; Q36a37DD; Q37a38DD];
 
-trajs = cat(3, T0a1(:,:,1:end-1), T1a2(:,:,1:end-1), T2a3(:,:,1:end-1), T3a4(:,:,1:end-1), T4a5(:,:,1:end-1), T5a6(:,:,1:end-1), T6a7(:,:,1:end-1), T7a9(:,:,1:30), T7a9(:,:,31:60), T9a10(:,:,1:end-1), T10a11(:,:,1:end-1), T11a12(:,:,1:end-1), T12a13(:,:,1:end-1), T13a14(:,:,1:end-1), T14a15(:,:,1:end-1), T15a16(:,:,1:end-1), T16a17(:,:,1:end-1), T17a19(:,:,1:30), T17a19(:,:,31:60), T19a20(:,:,1:end-1), T20a21(:,:,1:end-1), T21a22(:,:,1:end-1), T22a23(:,:,1:end-1), T23a24(:,:,1:end-1), T24a25(:,:,1:end-1), T25a26(:,:,1:end-1), T26a27(:,:,1:end-1), T27a28(:,:,1:end-1), T28a29(:,:,1:end-1), T29a32(:,:,1:30), T29a32(:,:,31:60), T29a32(:,:,61:90), T32a33(:,:,1:end-1), T33a34(:,:,1:end-1), T34a35(:,:,1:end-1), T35a36(:,:,1:end-1), T36a37(:,:,1:end-1), T37a38);
+trajs = cat(3, T_home_0_1(:,:,1:30), T_home_0_1(:,:,31:60), T1a2(:,:,1:end-1), T2a3(:,:,1:end-1), T3a4(:,:,1:end-1), T4a5(:,:,1:end-1), T5a6(:,:,1:end-1), T6a9(:,:,1:30), T6a9(:,:,31:60), T6a9(:,:,61:90), T9a10(:,:,1:end-1), T10a11(:,:,1:end-1), T11a12(:,:,1:end-1), T12a13(:,:,1:end-1), T13a14(:,:,1:end-1), T14a15(:,:,1:end-1), T15a16(:,:,1:end-1), T16a17(:,:,1:end-1), T17a19(:,:,1:30), T17a19(:,:,31:60), T19a20(:,:,1:end-1), T20a21(:,:,1:end-1), T21a22(:,:,1:end-1), T22a23(:,:,1:end-1), T23a24(:,:,1:end-1), T24a25(:,:,1:end-1), T25a26(:,:,1:end-1), T26a27(:,:,1:end-1), T27a28(:,:,1:end-1), T28a29(:,:,1:end-1), T29a32(:,:,1:30), T29a32(:,:,31:60), T29a32(:,:,61:90), T32a33(:,:,1:end-1), T33a34(:,:,1:end-1), T34a35(:,:,1:end-1), T35a36(:,:,1:end-1), T36a37(:,:,1:end-1), T37a38);
 
 % Q = [Q0a1(1:end-1,:); Q1a2(1:end-1,:); Q2a3(1:end-1,:); Q3a4(1:end-1,:); Q4a5(1:end-1,:); Q5a6(1:end-1,:); Q6a7; qCM_traj1(1:end-1,:); Q9a10(1:end-1,:); Q10a11(1:end-1,:); Q11a12(1:end-1,:); Q12a13(1:end-1,:); Q13a14(1:end-1,:); Q14a15(1:end-1,:); Q15a16(1:end-1,:); Q16a17; qMC_traj1(1:end-1,:); Q19a20(1:end-1,:); Q20a21(1:end-1,:); Q21a22(1:end-1,:); Q22a23(1:end-1,:); Q23a24(1:end-1,:); Q24a25(1:end-1,:); Q25a26(1:end-1,:); Q26a27(1:end-1,:); Q27a28(1:end-1,:); Q28a29; qCM_traj2(1:end-1,:); Q32a33(1:end-1,:); Q33a34(1:end-1,:); Q34a35(1:end-1,:); Q35a36(1:end-1,:); Q36a37(1:end-1,:); Q37a38];
 % QD = numerical_derivative(Q, dt);
