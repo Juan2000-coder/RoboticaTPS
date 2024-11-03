@@ -6,6 +6,7 @@ fprintf('########### VISUALIZACIÓN DE SINGULARIDADES ##########\n');
 fprintf('######################################################\n\n');
 
 robot;
+workspace = [-1.5 1.5 -1.5 1.5 -0.5 1.5];
 
 %% Parametros de las ecuaciones
 global Ca Sb Sg
@@ -61,67 +62,63 @@ fprintf("\nPresiona enter para continuar: \n");
 pause;
 clc;
 
-figure(1);
+figure;
 fprintf('######################################################\n');
 fprintf('################# SINGULARIDAD DE MUÑECA #############\n');
 fprintf('######################################################\n\n');
 fprintf("\nq5 = n*pi (n entero).");
 q = [1 1 1 1 0 1];    % Vector articular ejemplo
-R.plot(q,'scale', 0.65,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+R.plot(q,'workspace',workspace,'scale', 0.65,'jointdiam', 0.85);
+axis(workspace);
 
 
 fprintf("\nPresiona enter para continuar: \n");
 pause;
 clc;
-figure(2);
 fprintf('######################################################\n');
 fprintf('################# SINGULARIDAD DE CODO ###############\n');
 fprintf('######################################################\n\n');
 fprintf("\nq3 = n*pi (n entero).");
 q = [1 pi/4 0 1 1 1];    % Vector articular ejemplo
-R.plot(q,'scale', 0.65,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+R.animate(q);
 
 fprintf("\nPresiona enter para continuar: \n");
 pause;
 clc;
-figure(3);
 fprintf('######################################################\n');
 fprintf('############### Singularidad 1 del par ###############\n');
 fprintf('######################################################\n\n');
 q = [1 pi/4 q3_1 q4_1 1 1];
 fprintf("\n Singularidad 1: (q3, q4) = (%f, %f)", q3_1, q4_1);
-R.plot(q,'scale', 0.65,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+R.animate(q)
 
 fprintf("\nPresiona enter para continuar: \n");
 pause;
 clc;
-figure(4);
 fprintf('######################################################\n');
 fprintf('############### Singularidad 2 del par ###############\n');
 fprintf('######################################################\n\n');
 q = [1 pi/4 q3_2 q4_2 1 1];
 fprintf("\n Singularidad 2: (q3, q4) = (%f, %f)", q3_2, q4_2);
-R.plot(q,'scale', 0.65,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+R.animate(q)
 
 fprintf("\nPresiona enter para continuar: \n");
 pause;
 clc;
-figure(5);
 fprintf('######################################################\n');
 fprintf('### Ejemplo singularidad q2 = f(q3, q4); hombro 1#####\n');
 fprintf('######################################################\n\n');
 q = [1 q2_1 q3_test q4_test pi/2 pi/2];
-R.plot(q,'scale', 0.65,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+R.animate(q)
 
 fprintf("\nPresiona enter para continuar: \n");
 pause;
 clc;
-figure(5);
 fprintf('######################################################\n');
 fprintf('### Ejemplo singularidad q2 = f(q3, q4); hombro 2#####\n');
 fprintf('######################################################\n\n');
 q = [1 q2_2 q3_test q4_test pi/2 pi/2];
-R.plot(q,'scale', 0.65,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
+R.animate(q)
 
 function [q2_1, q2_2] = f_q2(q3, q4)
     % Definir como globales las variables
