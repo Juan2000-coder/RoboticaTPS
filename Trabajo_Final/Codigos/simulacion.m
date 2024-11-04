@@ -19,7 +19,7 @@ R.plot3d(q_home,'path',p);
 disp('Presione una tecla para continuar')
 pause;
 %R.teach(q_home)
-%R.animate(Q);
+R.animate(Q);
 
 %R.plot3d(Q);
 % title('Animación de la interpolación entre puntos');

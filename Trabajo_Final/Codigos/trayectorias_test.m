@@ -4,7 +4,8 @@ M      = 30;
 %% Generación de Trayectorias DEFINIR Q, QD, QDD Y TRAJS
 
 %% home a cero, con mstraj
-Q_home_0_1 = mstraj([q0; q1],[], segundos*ones(1,2), q_home, dt, 2);
+%Q_home_0_1 = mstraj([q0; q1],[], segundos*ones(1,2), q_home, dt, 2);
+Q_home_0_1 = mstraj([q0; q1],pi, [], q_home, dt, 2);
 Q_home_0_1D = numerical_derivative(Q_home_0_1, dt);
 Q_home_0_1DD = numerical_derivative(Q_home_0_1D, dt);
 T_home_0_1 = R.fkine(Q_home_0_1).T;
@@ -27,7 +28,7 @@ Q1a2D=numerical_derivative(Q1a2, dt);
 Q1a2DD=numerical_derivative(Q1a2D, dt);
 
 %% Apertura de la tapa de la camara
-[Q2a3, Q2a3D, Q2a3DD]    = jtraj(Q1a2(end,:),q3,M);
+[Q2a3, Q2a3D, Q2a3DD]    = jtraj(Q1a2(end,:),q3,t1);
 T2a3    = R.fkine(Q2a3).T;
 
 %% Alejamiento, con la tapa
@@ -44,7 +45,7 @@ Q3a4D=numerical_derivative(Q3a4, dt);
 Q3a4DD=numerical_derivative(Q3a4D, dt);
 
 %% Horizonal al suelo, previo a dejar la tapa
-[Q4a5, Q4a5D, Q4a5DD]    = jtraj(Q3a4(end,:),q5,M);
+[Q4a5, Q4a5D, Q4a5DD]    = jtraj(Q3a4(end,:),q5,t1);
 T4a5    = R.fkine(Q4a5).T;
 
 %T4a5 = ctraj(T4,T5,M);
@@ -76,7 +77,8 @@ Q5a6DD=numerical_derivative(Q5a6D, dt);
 %T6a7    = R.fkine(Q6a7).T;
 
 %% TRAYECTORIA CÁMARA MESA (6,7,8,9)
-qCM_traj1   = mstraj([q7; q8; q9], [], segundos*ones(1, 3), q6, dt, 2);
+% qCM_traj1   = mstraj([q7; q8; q9], [], segundos*ones(1, 3), q6, dt, 2);
+qCM_traj1   = mstraj([q7; q8; q9], pi, [], q6, dt, 2);
 qCM_traj1D  = numerical_derivative(qCM_traj1, dt);
 qCM_traj1DD = numerical_derivative(qCM_traj1D, dt);
 T6a9        = R.fkine(qCM_traj1).T;
@@ -97,7 +99,7 @@ Q9a10DD=numerical_derivative(Q9a10D, dt);
 %[Q9a10, Q9a10D, Q9a10DD] = jtraj (qCM_traj(end,:),q10,M);
 
 %% Apertura de la tapa
-[Q10a11, Q10a11D, Q10a11DD] = jtraj(q10,q11,M);
+[Q10a11, Q10a11D, Q10a11DD] = jtraj(q10,q11,t1);
 T10a11  = R.fkine(Q10a11).T;
 
 %%
@@ -115,7 +117,7 @@ T10a11  = R.fkine(Q10a11).T;
 T11a12  = R.fkine(Q11a12).T;
 
 %% Camino al punto previo a dejar la tapa, horizontal
-[Q12a13, Q12a13D, Q12a13DD] = jtraj(q12,q13,M);
+[Q12a13, Q12a13D, Q12a13DD] = jtraj(q12,q13,t1);
 T12a13  = R.fkine(Q12a13).T;
 
 %%
@@ -154,7 +156,8 @@ Q15a16DD=numerical_derivative(Q15a16D, dt);
 T16a17  = R.fkine(Q16a17).T;
 
 %% Mstraj hasta la camara
-qMC_traj1   = mstraj([q18; q19], [], segundos*ones(1, 2), q17, dt, 2);
+% qMC_traj1   = mstraj([q18; q19], [], segundos*ones(1, 2), q17, dt, 2);
+qMC_traj1   = mstraj([q18; q19], pi, [], q17, dt, 2);
 qMC_traj1D = numerical_derivative(qMC_traj1, dt);
 qMC_traj1DD = numerical_derivative(qMC_traj1D, dt);
 T17a19  = R.fkine(qMC_traj1).T;
@@ -224,7 +227,7 @@ Q26a27D=numerical_derivative(Q26a27, dt);
 Q26a27DD=numerical_derivative(Q26a27D, dt);
 
 %% Cerrar la tapa
-[Q27a28, Q27a28D, Q27a28DD] = jtraj(q27,q28,M);
+[Q27a28, Q27a28D, Q27a28DD] = jtraj(q27,q28,t1);
 T27a28  = R.fkine(Q27a28).T;
 
 %% Alejarse de la camara
@@ -232,7 +235,8 @@ T27a28  = R.fkine(Q27a28).T;
 T28a29  = R.fkine(Q28a29).T;
 
 %% Mstraj, qCM_traj2
-qCM_traj2   = mstraj([q30; q31; q32], [], segundos*ones(1, 3), q29, dt, 2);
+% qCM_traj2   = mstraj([q30; q31; q32], [], segundos*ones(1, 3), q29, dt, 2);
+qCM_traj2   = mstraj([q30; q31; q32], pi,[], q29, dt, 2);
 qCM_traj2D = numerical_derivative(qCM_traj2, dt);
 qCM_traj2DD = numerical_derivative(qCM_traj2D, dt);
 T29a32  = R.fkine(qCM_traj2).T;
@@ -263,11 +267,11 @@ Q35a36D=numerical_derivative(Q35a36, dt);
 Q35a36DD=numerical_derivative(Q35a36D, dt);
 
 %% Cerrar la tapa
-[Q36a37, Q36a37D, Q36a37DD] = jtraj(q36,q37,M);
+[Q36a37, Q36a37D, Q36a37DD] = jtraj(q36,q37,t1);
 T36a37  = R.fkine(Q36a37).T;
 
 %% Alejarse del contenedor sin la tapa y homing
-[Q37a38, Q37a38D, Q37a38DD] = jtraj(q37,q_home,M);
+[Q37a38, Q37a38D, Q37a38DD] = jtraj(q37,q_home,t1);
 T37a38  = R.fkine(Q37a38).T;
 
 %% FIN
@@ -280,7 +284,7 @@ QD = [Q_home_0_1D; Q1a2D; Q2a3D; Q3a4D; Q4a5D; Q5a6D; qCM_traj1D; Q9a10D; Q10a11
 
 QDD = [Q_home_0_1DD; Q1a2DD; Q2a3DD; Q3a4DD; Q4a5DD; Q5a6DD; qCM_traj1DD; Q9a10DD; Q10a11DD; Q11a12DD; Q12a13DD; Q13a14DD; Q14a15DD; Q15a16DD; Q16a17DD; qMC_traj1DD; Q19a20DD; Q20a21DD; Q21a22DD; Q22a23DD; Q23a24DD; Q24a25DD; Q25a26DD; Q26a27DD; Q27a28DD; Q28a29DD; qCM_traj2DD; Q32a33DD; Q33a34DD; Q34a35DD; Q35a36DD; Q36a37DD; Q37a38DD];
 
-trajs = cat(3, T_home_0_1(:,:,1:30), T_home_0_1(:,:,31:60), T1a2(:,:,1:end-1), T2a3(:,:,1:end-1), T3a4(:,:,1:end-1), T4a5(:,:,1:end-1), T5a6(:,:,1:end-1), T6a9(:,:,1:30), T6a9(:,:,31:60), T6a9(:,:,61:90), T9a10(:,:,1:end-1), T10a11(:,:,1:end-1), T11a12(:,:,1:end-1), T12a13(:,:,1:end-1), T13a14(:,:,1:end-1), T14a15(:,:,1:end-1), T15a16(:,:,1:end-1), T16a17(:,:,1:end-1), T17a19(:,:,1:30), T17a19(:,:,31:60), T19a20(:,:,1:end-1), T20a21(:,:,1:end-1), T21a22(:,:,1:end-1), T22a23(:,:,1:end-1), T23a24(:,:,1:end-1), T24a25(:,:,1:end-1), T25a26(:,:,1:end-1), T26a27(:,:,1:end-1), T27a28(:,:,1:end-1), T28a29(:,:,1:end-1), T29a32(:,:,1:30), T29a32(:,:,31:60), T29a32(:,:,61:90), T32a33(:,:,1:end-1), T33a34(:,:,1:end-1), T34a35(:,:,1:end-1), T35a36(:,:,1:end-1), T36a37(:,:,1:end-1), T37a38);
+trajs = cat(3, T_home_0_1(:,:,1:end-1), T1a2(:,:,1:end-1), T2a3(:,:,1:end-1), T3a4(:,:,1:end-1), T4a5(:,:,1:end-1), T5a6(:,:,1:end-1), T6a9(:,:,1:end-1), T9a10(:,:,1:end-1), T10a11(:,:,1:end-1), T11a12(:,:,1:end-1), T12a13(:,:,1:end-1), T13a14(:,:,1:end-1), T14a15(:,:,1:end-1), T15a16(:,:,1:end-1), T16a17(:,:,1:end-1), T17a19(:,:,1:end-1), T19a20(:,:,1:end-1), T20a21(:,:,1:end-1), T21a22(:,:,1:end-1), T22a23(:,:,1:end-1), T23a24(:,:,1:end-1), T24a25(:,:,1:end-1), T25a26(:,:,1:end-1), T26a27(:,:,1:end-1), T27a28(:,:,1:end-1), T28a29(:,:,1:end-1), T29a32(:,:,1:end-1), T32a33(:,:,1:end-1), T33a34(:,:,1:end-1), T34a35(:,:,1:end-1), T35a36(:,:,1:end-1), T36a37(:,:,1:end-1), T37a38);
 
 % Q = [Q0a1(1:end-1,:); Q1a2(1:end-1,:); Q2a3(1:end-1,:); Q3a4(1:end-1,:); Q4a5(1:end-1,:); Q5a6(1:end-1,:); Q6a7; qCM_traj1(1:end-1,:); Q9a10(1:end-1,:); Q10a11(1:end-1,:); Q11a12(1:end-1,:); Q12a13(1:end-1,:); Q13a14(1:end-1,:); Q14a15(1:end-1,:); Q15a16(1:end-1,:); Q16a17; qMC_traj1(1:end-1,:); Q19a20(1:end-1,:); Q20a21(1:end-1,:); Q21a22(1:end-1,:); Q22a23(1:end-1,:); Q23a24(1:end-1,:); Q24a25(1:end-1,:); Q25a26(1:end-1,:); Q26a27(1:end-1,:); Q27a28(1:end-1,:); Q28a29; qCM_traj2(1:end-1,:); Q32a33(1:end-1,:); Q33a34(1:end-1,:); Q34a35(1:end-1,:); Q35a36(1:end-1,:); Q36a37(1:end-1,:); Q37a38];
 % QD = numerical_derivative(Q, dt);
