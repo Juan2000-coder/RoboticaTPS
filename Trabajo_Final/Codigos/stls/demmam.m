@@ -1,4 +1,5 @@
 function demmam(p, q)
+    % Función para convertir los stls de un directorio de mm a m
     % p: origen
     % q: destino
     files = dir(fullfile(p, '*.stl'));

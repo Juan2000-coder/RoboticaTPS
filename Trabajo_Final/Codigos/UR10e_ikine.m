@@ -1,3 +1,4 @@
+%% UR10e_ikine: Cinemática inversa del robot UR10e
 function qq = UR10e_ikine(R, T, q0, mejor)
     %% Verificacion de parámetros
 
