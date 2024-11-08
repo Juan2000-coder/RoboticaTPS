@@ -1,4 +1,4 @@
-function qq = UR10E_ikine(R, T, q0, mejor)
+function qq = UR10e_ikine(R, T, q0, mejor)
     %% Verificacion de parámetros
 
     % Verificación del robot
@@ -67,6 +67,7 @@ function qq = UR10E_ikine(R, T, q0, mejor)
     %% Cálculo de q5
     q5(1:2) = atan2(sqrt((nx*S1 - ny*C1).^2 + (ox*S1 - oy*C1).^2), -ax*S1 + ay*C1);
     q5(3:4) = -q5(1:2);
+    
 
     % Actualizaicón de q1
     q1(3:4) = q1(1:2);
@@ -127,19 +128,34 @@ function qq = UR10E_ikine(R, T, q0, mejor)
 
     %% Solucion final
     qq          = [q1; q2; q3; q4; q5; q6];
-    qq          = qq - offsets'*ones(1, 8);
+
+    %% Obtener el resto de las soluciones para el límite entre -2*pi a 2*pi
+    columns = 8;
+    for i = 1:6
+        for j = 1:columns
+            aux = qq(:, j);
+            if aux(i) > 0
+                aux(i) = aux(i) - 2*pi;
+            elseif aux(i) < 0
+                aux(i) = aux(i) + 2*pi;
+            end
+            qq  = [qq, aux];
+        end
+        columns = columns*2;
+    end
+
+    qq          = qq - offsets'*ones(1, columns);
     R.offset    = offsets;
 
     %% Cálculo de q_mejor
-
     if(mejor)
-        Qaux = qq - q0' * ones(1,8);
-        normas = zeros(1,8);
-            for i=1:8
-                normas(i) = norm(Qaux(:,i));
+        Qaux = qq - q0' * ones(1, columns);
+        normas = zeros(1, columns);
+            for i = 1:columns
+                normas(i) = norm(Qaux(:, i));
             end
-        [~,pos] = min(normas);
+        [~, pos] = min(normas);
         qq = qq(:, pos);
     end
-
+    qq = qq';   % Las soluciones se devuelven por filas
 end

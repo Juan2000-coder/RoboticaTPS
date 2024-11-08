@@ -19,25 +19,25 @@ R.qlim = [-2*pi,2*pi;
           -2*pi,2*pi];
 
 % vector de variables articulares
-q = [1,1,1,1,1,1];
+q = [0 0 0 0 0 0];
 
 % desplazamiento del rango articular
 R.offset = [pi/2 pi/2 0 pi/2 -pi 0];
 
 % traslación y rotación de la base
-transl_base = [0 0 0.1];
+transl_base = [0 0 0]; %Base
 roll_base   = 0;
 pitch_base  = 0;
 yawn_base   = 0;
 
 % traslación y rotación de la herramienta
-transl_tool = [0 0 0];
+transl_tool = [0 0 0.05]; %TCP (Tool Center Point)
 roll_tool   = 0;
 pitch_tool  = 0;
 yawn_tool   = 0;
 
 % workspace
-workspace = [-1 1 -0.6 1 -transl_base(3) 1.8];
+workspace   = [-1.5 1.5 -1.5 1.5 -2 2];
 
 % transformación de la base
 R.base = transl(transl_base)*trotx(roll_base)*troty(pitch_base)*trotz(yawn_base);
