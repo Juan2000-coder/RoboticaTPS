@@ -1,91 +1,57 @@
-clc;clear;close all;
+clc;
+clear;
+close all;
 
-% robotFile = fullfile(fileparts(mfilename('fullpath')), '../../../../robot/robot');
-run("robot.m");
+%% CODIGO PARA PROBAR LA FUNCION UR10E_ikine
+pause;
+fprintf('######################################################\n')
+fprintf('#               PRUEBA UR10e_ikine.m                 #\n')
+fprintf('######################################################\n\n')
+fprintf('Iniciando prueba de la función UR10E_ikine...\n');
 
-% % Postura problema
-% T = [0.866  -0.500 0.000 0.800;
-%      0.500   0.866 0.000 0.300;
-%      0.000   0.000 1.000 0.400;
-%      0.000   0.000 0.000 1.000];
-
-%Caso con soluciones singulares
-
-T = [0.0000    0.0000   1.0000    0.2907;
-    -0.7071    0.7071   0.0000    0.4459;
-    -0.7071   -0.7071   0.0000    0.6306;
-     0.0000    0.0000   0.0000    1.0000];
-
-% Posición en la postura inicial
-figure(1);
+robot;
+f = figure;
 R.plot(q, 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-hold on;
-trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
+global q_final;
 
-mejor = false;
+% Espera a que se cierre la ventana
+waitfor(f);
 
-% Resolución analítica
-qq = UR10E_ikine(R, T, zeros(1,6), mejor);
+% teach propio.
+teach(R, f);
+R.teach('callback', @(~,~) update_position(R));
 
-if(mejor)
-    figure(2);
-    R.plot(qq(:, 1)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-    hold on;
-    trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
+% Crea el slider
+hSlider = uicontrol('Style', 'slider', 'Min', 1, 'Max', length(time), ...
+    'Value', 1, 'Units', 'normalized', ...
+    'Position', [0.1, 0.0, 0.8, 0.05], ...
+    'SliderStep', [1/(length(time)-1), 1/(length(time)-1)]);
 
-else
+% Texto que mostrará el tiempo actual
+hText = uicontrol('Style', 'text', 'Units', 'normalized', ...
+    'Position', [0.1, 0.05, 0.8, 0.05], ...
+    'String', sprintf('Time: %.2f', time(1)));
 
-    % Robots para cada una de las soluciones
-    R1 = SerialLink(R, 'name','q1');
-    R2 = SerialLink(R, 'name','q2');
-    R3 = SerialLink(R, 'name','q3');
-    R4 = SerialLink(R, 'name','q4');
-    R5 = SerialLink(R, 'name','q5');
-    R6 = SerialLink(R, 'name','q6');
-    R7 = SerialLink(R, 'name','q7');
-    R8 = SerialLink(R, 'name','q8');
+% Actualiza el robot y el texto cuando el slider cambia
+addlistener(hSlider, 'Value', 'PostSet', @(src, event) updateRobot(R, Q, time, hSlider, hText))
+function updateRobot(R, Q, t, hSlider, hText)
+    % Obtener el valor del slider y redondearlo
+    idx = round(get(hSlider, 'Value'));
     
-    figure(2);
-    R1.plot(qq(:, 1)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-    hold on;
-    trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
-
-        
-    figure(3);
-    R2.plot(qq(:, 2)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-    hold on;
-    trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
+    % Asegurar que el índice esté en rango
+    idx = min(max(idx, 1), length(t));
     
-    figure(4);
-    R3.plot(qq(:, 3)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-    hold on;
-    trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
-    
-    figure(5);
-    R4.plot(qq(:, 4)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-    hold on;
-    trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
-    
-    figure(6);
-    R5.plot(qq(:, 5)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-    hold on;
-    trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
-    
-    figure(7);
-    R6.plot(qq(:, 6)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-    hold on;
-    trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
-    
-    figure(8);
-    R7.plot(qq(:, 7)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-    hold on;
-    trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
-    
-    figure(9);
-    R8.plot(qq(:, 8)', 'workspace', workspace, 'scale', 0.5,'jointdiam', 0.85, 'trail', {'r', 'LineWidth', 0.1});
-    hold on;
-    trplot(T, 'frame', 'E', 'color', 'red', 'length', 0.8);
-    hold on;
-
+    % Actualizar la posición del robot y el texto
+    R.animate(Q(idx, :));
+    set(hText, 'String', sprintf('Time: %.2f', t(idx)));
 end
 
+% La última posición articular se almacena en q_final
+disp('Última posición articular:');
+disp(q_final);
+
+% Función para actualizar la posición articular
+function update_position(robot)
+    global q_final;
+    q_final = robot.getpos(); % Obtiene y guarda la última posición articular
+end
