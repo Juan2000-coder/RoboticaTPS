@@ -22,7 +22,7 @@ R.qlim = [-2*pi,2*pi;
 q = [0 0 0 0 0 0];
 
 % desplazamiento del rango articular
-R.offset = [pi/2 pi/2 0 pi/2 -pi 0];
+R.offset = [pi/2 pi/2 0 pi/2 pi 0];
 
 % traslación y rotación de la base
 transl_base = [0 0 0]; %Base

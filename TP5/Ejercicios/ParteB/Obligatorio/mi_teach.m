@@ -1,4 +1,4 @@
-function posicionesGrabadas = miTeach(R, varargin)
+function posicionesGrabadas = mi_teach(R, varargin)
     posicionesGrabadas = [];
 
     % Verificación del robot

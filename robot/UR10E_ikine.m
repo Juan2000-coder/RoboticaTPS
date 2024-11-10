@@ -57,8 +57,8 @@ function qq = UR10e_ikine(R, T, q0, mejor)
     end
 
     phi   = atan2(d(6)*ay - py, px - d(6)*ax);
-    q1(1) = real(atan2(d(4),  sqrt(disc))) - phi;
-    q1(2) = real(atan2(d(4), -sqrt(disc))) - phi;
+    q1(1) = atan2(d(4),  real(sqrt(disc))) - phi;
+    q1(2) = atan2(d(4), -real(sqrt(disc))) - phi;
 
     % S1 Y C1
     S1    = sin(q1);
@@ -67,7 +67,6 @@ function qq = UR10e_ikine(R, T, q0, mejor)
     %% Cálculo de q5
     q5(1:2) = atan2(sqrt((nx*S1 - ny*C1).^2 + (ox*S1 - oy*C1).^2), -ax*S1 + ay*C1);
     q5(3:4) = -q5(1:2);
-    
 
     % Actualizaicón de q1
     q1(3:4) = q1(1:2);
@@ -80,7 +79,7 @@ function qq = UR10e_ikine(R, T, q0, mejor)
     %% Cálculo de q6
     if any(abs(S5) < eps)        % Para 0 y npi se tiene singularidad
         warning('UR10e:q5_singularidad','Hay una singularidad debida a q5');
-        % En este caso q6 y q234defaults to 45°
+        % En este caso q6 y q234 defaults to 45°
     end
     q6    = atan2((-ox*S1 + oy*C1) ./ S5, (nx*S1 - ny*C1) ./ S5);
     
@@ -96,15 +95,15 @@ function qq = UR10e_ikine(R, T, q0, mejor)
     %  Verificación del discriminante de la raiz
     disc = 4*a(2)^2*(A.^2 + B.^2) - (A.^2 + B.^2 + a(2)^2-a(3)^2).^2;
 
-    if (any(disc<0))
+    if (any(disc < 0))
         warning('UR10e_ikine:q2_complejo', 'El punto está fuera del alcance de robot. Conservando la parte real...');
     end
 
     num     = A.^2 + B.^2 + a(2)^2 - a(3)^2;
-    den     = sqrt(disc);
+    den     = real(sqrt(disc));
 
-    q2(1:4) = real(atan2(num,  den)) - atan2(A, B);
-    q2(5:8) = real(atan2(num, -den)) - atan2(A, B);
+    q2(1:4) = atan2(num,  den) - atan2(A, B);
+    q2(5:8) = atan2(num, -den) - atan2(A, B);
     C2      = cos(q2);
     S2      = sin(q2);
 
