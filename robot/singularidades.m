@@ -1,4 +1,5 @@
-clc; clear all;pause;
+clc; clear all;
+pause;
 
 %% Comienzo del ejercicio
 fprintf('######################################################\n');
@@ -69,12 +70,14 @@ fprintf('######################################################\n\n');
 fprintf("\nq5 = n*pi (n entero).");
 q = [1 1 1 1 0 1];    % Vector articular ejemplo
 R.plot(q,'workspace',workspace,'scale', 0.65,'jointdiam', 0.85);
+R.teach(q);
 axis(workspace);
-
+pause;
 
 fprintf("\nPresiona enter para continuar: \n");
 pause;
 clc;
+pause;
 fprintf('######################################################\n');
 fprintf('################# SINGULARIDAD DE CODO ###############\n');
 fprintf('######################################################\n\n');
@@ -85,6 +88,7 @@ R.animate(q);
 fprintf("\nPresiona enter para continuar: \n");
 pause;
 clc;
+pause;
 fprintf('######################################################\n');
 fprintf('############### Singularidad 1 del par ###############\n');
 fprintf('######################################################\n\n');
@@ -114,6 +118,7 @@ R.animate(q)
 fprintf("\nPresiona enter para continuar: \n");
 pause;
 clc;
+pause;
 fprintf('######################################################\n');
 fprintf('### Ejemplo singularidad q2 = f(q3, q4); hombro 2#####\n');
 fprintf('######################################################\n\n');
