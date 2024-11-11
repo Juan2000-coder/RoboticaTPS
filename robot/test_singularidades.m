@@ -1,4 +1,4 @@
-clc; clear all;
+clc; clear;
 pause;
 
 %% Comienzo del ejercicio
@@ -7,9 +7,26 @@ fprintf('########### VISUALIZACIÓN DE SINGULARIDADES ##########\n');
 fprintf('######################################################\n\n');
 
 robot;
-workspace = [-1.5 1.5 -1.5 1.5 -0.5 1.5];
 
+%{
 % Primero analizamos las singularidades del par constante q34_singu
 q34 = q34_singu(R);
 
-% Visualizamos las singularidades
+% Visualizamos las singularidades con mi_teach
+mi_teach(R, 'q', [0 0 q34(2, :) 0 0], 'workspace', workspace, 'scale', 0.8, 'jointdiam', 0.8, 'trail', {'r', 'LineWidth', 0.1}, 'frames', true, 'sistemas', [0 1 0 0 0 1 0 0], 'nowrist', 'wrist', 'notiles', 'notiles');
+
+fprintf('Traslación de S5 respecto a S1 en la singularidad q34_1: \n');
+disp(R.A(2:5, [1 2 q34(1, :) 3 2]).t);
+fprintf('Traslación de S5 respecto a S1 en la singularidad q34_2: \n');
+disp(R.A(2:5, [-2 0 q34(2, :) -1 2]).t);
+%}
+
+%% Singularidad de q234
+q = mi_teach(R, 'q', [1 0.5 0.5 0.5 1 1],'workspace', workspace, 'scale', 0.8, 'jointdiam', 0.8, 'trail', {'r', 'LineWidth', 0.1}, 'nowrist', 'nowrist', 'notiles', 'notiles','frames',true, 'sistemas', [0 1 0 0 0 1 0 0]);
+
+% Entonces la hipótesis sería que en esta singularidad el origen del
+% sistema de referencia 5 es un punto sobre el eje Z del sistema 0
+
+%fprintf('Traslación de S5 respecto a S0\n');
+%disp(R.A(1:5, q).t);
+det(R.jacob0(q(1,:)))

@@ -8,10 +8,6 @@ function q34 = q34_singu(R)
     b = 2 * (Sg^2 * Ca + Sg * Sb * Ca^2 + Sg * Sb + Sb^2 * Ca - Ca);
     c = (Sg * Ca + Sb)^2 - 1 - Ca^2;
 
-    %% Llamada a la función f(q3, q4)
-    q3_test      = pi/4;
-    q4_test      = pi;
-    [q2_1, q2_2] = f_q2(q3_test, q4_test);  % Calcular los valores de q2
 
     % Calcular el discriminante
     discriminante = b^2 - 4*a*c;

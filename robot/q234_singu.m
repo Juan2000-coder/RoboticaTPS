@@ -23,7 +23,7 @@ function [qsol1, qsol2] = q234_singu(R, varargin)
     q3           = p.Results.q3;
     q4           = p.Results.q4;
 
-    if (q2 == false)
+    if islogical(q2)
         % Definir A y B de acuerdo con las formulas
         A = cos(2*q3) - Ca*cos(q4) + Ca*cos(2*q3 + q4) - 1;
         B = Sg*sin(q4) - 2*sin(q3) - Sg*sin(2*q3 + q4) - Sb*sin(2*q3);
@@ -33,7 +33,7 @@ function [qsol1, qsol2] = q234_singu(R, varargin)
         q2_2 = q2_1 - pi;
         qsol1 = q2_1;
         qsol2 = q2_2;
-    else if (q4 == false)
+    elseif islogical(q4)
         m       = -1/tan(q2);
         a       = Sg*sin(q3)      + m*Sb*Ca*cos(q3);
         b       = m*Sb*Ca*sin(q3) - Sg*cos(q3);
@@ -50,10 +50,10 @@ function [qsol1, qsol2] = q234_singu(R, varargin)
             c4_1 = (-b_cuad + sqrt(disc)) / (2*a_cuad);
             c4_2 = (-b_cuad - sqrt(disc)) / (2*a_cuad);
             % obtener c4_i con valor absoluto menor a 1
-            if abs(c4_1) <= 1
+            if (abs(c4_1) <= 1)
                 q4_1 = atan2(sqrt(1 - c4_1^2), c4_1);
                 q4_2 = atan2(-sqrt(1 - c4_1^2), c4_1);
-            else if abs(c4_2) <= 1
+            elseif (abs(c4_2) <= 1)
                 q4_1 = atan2(sqrt(1 - c4_2^2), c4_2);
                 q4_2 = atan2(-sqrt(1 - c4_2^2), c4_2);
             else
@@ -64,7 +64,8 @@ function [qsol1, qsol2] = q234_singu(R, varargin)
         end
         qsol1 = q4_1;
         qsol2 = q4_2;
-    else if (q3 == false)
+
+    elseif islogical(q3)
         m       = -1/tan(q2);
 
         % Coeficientes a, b y c del polinomio
@@ -77,17 +78,17 @@ function [qsol1, qsol2] = q234_singu(R, varargin)
         c_cuad  = c^2 - a^2;
 
         % Calcular el discriminante
-        discriminante = b^2 - 4*a*c;
+        discriminante = b_cuad^2 - 4*a_cuad*c_cuad;
 
         % Calcular las soluciones de la ecuación cuadrática
-        c3_1 = (-b + sqrt(discriminante)) / (2*a);
-        c3_2 = (-b - sqrt(discriminante)) / (2*a);
+        c3_1 = (-b_cuad + sqrt(discriminante)) / (2*a_cuad);
+        c3_2 = (-b_cuad - sqrt(discriminante)) / (2*a_cuad);
 
         % obtener c3_i con valor absoluto menor a 1
-        if abs(c3_1) <= 1
+        if (abs(c3_1) <= 1)
             q3_1 = atan2(sqrt(1 - c3_1^2), c3_1);
             q3_2 = atan2(-sqrt(1 - c3_1^2), c3_1);
-        else if abs(c3_2) <= 1
+        elseif (abs(c3_2) <= 1)
             q3_1 = atan2(sqrt(1 - c3_2^2), c3_2);
             q3_2 = atan2(-sqrt(1 - c3_2^2), c3_2);
         else

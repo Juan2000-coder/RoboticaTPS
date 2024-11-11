@@ -14,9 +14,10 @@ function posicionesGrabadas = mi_teach(R, varargin)
     addOptional(p, 'scale', 0.5);                       % Escala del plot
     addOptional(p, 'jointdiam', 0.5);                   % Diámetro de las juntas
     addOptional(p, 'trail', {'r', 'LineWidth', 0.1});   % Configuración del rastro
-    addOptional(p, 'nowrist', false);                   % Opción de muñeca desactivada
+    addOptional(p, 'nowrist', 'nowrist');               % Opción de muñeca desactivada
+    addOptional(p, 'notiles', 'tiles');
     addOptional(p, 'frames', false);                    % Opción de marcos de referencia
-    addOptional(p, 'sistemas', zeros(1, 6));             % Máscara de sistemas de referencia
+    addOptional(p, 'sistemas', zeros(1, 8));            % Máscara de sistemas de referencia
 
     % Parseo de argumentos
     parse(p, varargin{:});
@@ -28,14 +29,16 @@ function posicionesGrabadas = mi_teach(R, varargin)
     jointdiam   = p.Results.jointdiam;
     trail       = p.Results.trail;
     nowrist     = p.Results.nowrist;
+    notiles     = p.Results.notiles;
     frames      = p.Results.frames;
     sistemas    = p.Results.sistemas;
 
     % Creación de la figura y plot del robot
     fig = figure;
-    R.plot(q, 'workspace', workspace, 'scale', scale, 'jointdiam', jointdiam, 'trail', trail);
+    R.plot(q, 'workspace', workspace,'scale',scale, 'jointdiam', jointdiam, 'trail', trail, nowrist, notiles);
     if frames
-        frames(R, sistemas, q);
+        hold on;
+        handlers = plot_frames(R, sistemas, q);
     end
 
     % Configuración de sliders para cada articulación
@@ -65,7 +68,11 @@ function posicionesGrabadas = mi_teach(R, varargin)
     'Callback', @(~, ~) grabarPosicion());
 
     % listener dee los sliders
-    addlistener(sliders, 'Value', 'PostSet', @(src, event) updateRobot(R, sliders, texts));
+    if frames
+        addlistener(sliders, 'Value', 'PostSet', @(src, event) updateRobot(R, sliders, texts, 'frames', frames, 'sistemas', sistemas, 'handlers', handlers));
+    else
+        addlistener(sliders, 'Value', 'PostSet', @(src, event) updateRobot(R, sliders, texts));
+    end
 
     % Espera a que la figura se cierre para devolver las posiciones grabadas
     waitfor(fig);
@@ -85,25 +92,39 @@ function posicionesGrabadas = mi_teach(R, varargin)
 end
 
 % Función auxiliar para actualizar el robot al mover los sliders
-function updateRobot(R, sliders, text, varargin)
+function updateRobot(R, sliders, texts, varargin)
     p = inputParser;
 
     addOptional(p, 'frames', false);
-    addOptional(p, 'sistemas', zeros(1, 6));
+    addOptional(p, 'sistemas', zeros(1, 8));
+    addOptional(p, 'handlers', {false, false, false, false, false, false, false, false});
 
     parse(p, varargin{:});
 
     frames      = p.Results.frames;
     sistemas    = p.Results.sistemas;
+    handlers    = p.Results.handlers;
 
     % Obtiene el valor actual de cada slider
     q = arrayfun(@(s) get(s, 'Value'), sliders);
+
+    %% Para prueba q234
+    [q3 ~]  = q234_singu(R, 'q2', q(2),'q4', q(4));
+
+    if ~isempty(q3)
+        q(3)    = q3;
+    end
+
+    % actualizar los sliders
+    for i = 1:R.n
+        set(sliders(i), 'Value', q(i));
+    end
 
     % Actualiza la posición del robot en la gráfica
     R.animate(q');
 
     if frames
-        frames(R, sistemas, q');
+        handlers = plot_frames(R, sistemas, q', 'handlers', handlers);
     end
 
     for i = 1:R.n
@@ -113,18 +134,27 @@ function updateRobot(R, sliders, text, varargin)
 end
 
 % Función auxiliar para graficar los sistemas de referencia
-function frames(R, sistemas, q)
+function handlers = plot_frames(R, sistemas, q, varargin)
+    p = inputParser;
+    addOptional(p, 'handlers', {false, false, false, false, false, false, false, false});
+    parse(p, varargin{:});
+    handlers = p.Results.handlers;
+
     % definir colores alternados: rojo ('r') y azul ('b')
     colors = ['r', 'b'];  % Alternar entre rojo y azul
 
     % graficar el sistema de referencia base S0
     if sistemas(1)
-        trplot(R.base, 'frame', '0', 'color', 'r', 'length', 0.5, 'thick', 1);
+        if handlers{1} == false
+            handlers{1} = trplot(R.base, 'frame', '0', 'color', 'g', 'length', 1, 'thick', 1);
+        else
+            trplot(R.base, 'frame', '0', 'color', 'g', 'length', 1, 'thick', 1, 'handle', handlers{1});
+        end
     end
 
     for i = 1:length(R.links)
         if sistemas(i + 1)
-            T = R.A(1:i, q);  % calcula la transformación acumulada hasta el eslabón i
+            T = R.A(1:i, q);           % calcula la transformación acumulada hasta el eslabón i
             T = (R.base.T)*(T.T);      % extraer la matriz homogénea de la transformación
 
             if i == length(R.links)
@@ -135,7 +165,11 @@ function frames(R, sistemas, q)
             color = colors(mod(i, 2) + 1);
 
             % graficar el sistema de referencia correspondiente con el color alternado
-            trplot(T, 'frame', num2str(i), 'color', color, 'length', 0.5, 'thick', 1);
+            if handlers{i + 1} == false
+                handlers{i + 1} = trplot(T, 'frame', num2str(i), 'color', color, 'length',1, 'thick', 1);
+            else
+                trplot(T, 'frame', num2str(i), 'color', color, 'length', 1, 'thick', 1, 'handle', handlers{i + 1});
+            end
         end
     end
 end
