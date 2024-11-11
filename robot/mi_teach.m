@@ -109,11 +109,12 @@ function updateRobot(R, sliders, texts, varargin)
     q = arrayfun(@(s) get(s, 'Value'), sliders);
 
     %% Para prueba q234
-    [q3 ~]  = q234_singu(R, 'q2', q(2),'q4', q(4));
-
-    if ~isempty(q3)
-        q(3)    = q3;
+    %{
+    qsol  = q234_singu(R, 'q2', q(2),'q3', q(3));
+    if ~isempty(qsol)
+        q(4)    = qsol(1);
     end
+    %}
 
     % actualizar los sliders
     for i = 1:R.n

@@ -21,12 +21,12 @@ fprintf('Traslación de S5 respecto a S1 en la singularidad q34_2: \n');
 disp(R.A(2:5, [-2 0 q34(2, :) -1 2]).t);
 %}
 
+%{
 %% Singularidad de q234
 q = mi_teach(R, 'q', [1 0.5 0.5 0.5 1 1],'workspace', workspace, 'scale', 0.8, 'jointdiam', 0.8, 'trail', {'r', 'LineWidth', 0.1}, 'nowrist', 'nowrist', 'notiles', 'notiles','frames',true, 'sistemas', [0 1 0 0 0 1 0 0]);
+fprintf('Traslación de S5 respecto a S1 en la singularidad q234: \n');
+for qi = q'
+    disp(R.A(2:5, qi').t);
+end
+%}
 
-% Entonces la hipótesis sería que en esta singularidad el origen del
-% sistema de referencia 5 es un punto sobre el eje Z del sistema 0
-
-%fprintf('Traslación de S5 respecto a S0\n');
-%disp(R.A(1:5, q).t);
-det(R.jacob0(q(1,:)))
