@@ -1,4 +1,4 @@
-function qq = UR10e_ikine(R, T, q0, mejor)
+function qq = UR10e_ikine(R, Tp, q0, mejor)
     %% Verificacion de parámetros
 
     % Verificación del robot
@@ -7,10 +7,8 @@ function qq = UR10e_ikine(R, T, q0, mejor)
         throw(ME);
     end
 
-    % Verificación de T
-    if (~isa(T, 'SE3'))
-        T  = SE3(T);
-    end
+    T   = SE3(Tp);
+
     if (~T.ishomog())
         ME = MException("UR10e_ikine:isHomog", "T debe ser matriz de transformación homogénea");
         throw(ME);
@@ -179,7 +177,11 @@ function qq = UR10e_ikine(R, T, q0, mejor)
         Qaux = qq - q0' * ones(1, columns);
         normas = zeros(1, columns);
             for i = 1:columns
-                normas(i) = norm(Qaux(:, i));
+                if ~(norm(R.fkine(qq(:, i)') - SE3(T)) < eps)
+                    normas(i) = Inf;
+                else
+                    normas(i) = norm(Qaux(:, i));
+                end
             end
         [~, pos] = min(normas);
         qq = qq(:, pos);
