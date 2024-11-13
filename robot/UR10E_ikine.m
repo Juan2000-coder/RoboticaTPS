@@ -43,6 +43,10 @@ function qq = UR10e_ikine(R, T, q0, mejor)
     py         =  T.t(2);
     pz         =  T.t(3);
 
+    % Singularidad muñeca
+    % booleano para verificar si hay singularidad de muñeca
+    q5_singu   = false;
+
     %  Rescatar los offsets
     offsets    = R.offset;
     R.offset   = zeros(1, 6);
@@ -75,17 +79,41 @@ function qq = UR10e_ikine(R, T, q0, mejor)
     S1    = sin(q1);
     C1    = cos(q1);
     S5    = sin(q5);
+    C5    = cos(q5);
 
     %% Cálculo de q6
     if any(abs(S5) < eps)        % Para 0 y npi se tiene singularidad
+        q5_singu = true;
         warning('UR10e:q5_singularidad','Hay una singularidad debida a q5');
-        % En este caso q6 y q234 defaults to 45°
+        % En este caso q6 defaults to 45°
     end
     q6    = atan2((-ox*S1 + oy*C1) ./ S5, (nx*S1 - ny*C1) ./ S5);
-    
-    %% Cálculo de q2
-    q234  = atan2((az ./ S5), (ax*C1 + ay*S1) ./ S5);
 
+    %% Cálculo de q234 
+    if q5_singu
+        % Hay caso singular de muñeca
+        for i = 1:length(q5)
+            if abs(S5(i)) < eps
+                % Con Singularidad de muñeca
+                if C5(i) > 0 % q5 = 0
+                    q2346   = atan2(nz, -oz);
+                    q234(i) = q2346 + q6(i);
+                else         % q5 = pi
+                    q2346 = atan2(-nz, -oz);
+                    q234(i) = q2346 - q6(i);
+                end
+            else
+                % Sin singularidad de muñeca
+                q234(i)  = atan2((az ./ S5(i)), (ax*C1(i) + ay*S1(i)) ./ S5(i));
+            end
+        end
+    else
+        % No hay un solo caso son singularidad de muñeca
+        q234  = atan2((az ./ S5), (ax*C1 + ay*S1) ./ S5);
+    end
+
+    fprintf("Aprete enter");
+    pause;
     S234  = sin(q234);
     C234  = cos(q234);
 

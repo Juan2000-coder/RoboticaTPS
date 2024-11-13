@@ -30,7 +30,7 @@ for i = 1:size(Q_test, 1)
 end
 
 for i = 1:size(Q_test, 1)
-    fprintf('q_test(%d)\n', i);
+    fprintf('\nq_test(%d)\n', i);
     disp(Q_test(i, :));
     fprintf('q_test(%d)_ikine mas cercana \n', i);
     disp(Q_closest(i, :));
