@@ -37,8 +37,9 @@ for i = 1:size(Q_test, 1)
 end
 
 %% Obtener la posición cartesiana para cada Q_ikine(i, :, j) y compararla con T_test(:, :, j).
+
 for i = 1:size(Q_test, 1)
-    T_ikine = R.fkine(Q_ikine(1:end, :, i));
+    T_ikine = R.fkine(Q_ikine(:, :, i));
     fprintf('q_test(%d): distancia fkine(q_ikine_test) a T_test(%d) \n', i, i);
     for j = 1:size(Q_ikine, 1)
         % mostrar por pantalla la norma de la diferencia en notación científica con fprintf

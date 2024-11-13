@@ -110,8 +110,6 @@ function qq = UR10e_ikine(R, Tp, q0, mejor)
         q234  = atan2((az ./ S5), (ax*C1 + ay*S1) ./ S5);
     end
 
-    fprintf("Aprete enter");
-    pause;
     S234  = sin(q234);
     C234  = cos(q234);
 
@@ -172,19 +170,20 @@ function qq = UR10e_ikine(R, Tp, q0, mejor)
     qq          = qq - offsets'*ones(1, columns);
     R.offset    = offsets;
 
+    %% Verificación de las soluciones
+    aux = [];
+    for i = 1:columns
+        dif = R.fkine(qq(:, i)) - SE3(Tp);
+        if (norm(dif) < 1e-12)
+            aux = [aux, qq(:, i)];
+        end
+    end
+    qq = aux;
     %% Cálculo de q_mejor
     if(mejor)
-        Qaux = qq - q0' * ones(1, columns);
-        normas = zeros(1, columns);
-            for i = 1:columns
-                if ~(norm(R.fkine(qq(:, i)') - SE3(T)) < eps)
-                    normas(i) = Inf;
-                else
-                    normas(i) = norm(Qaux(:, i));
-                end
-            end
-        [~, pos] = min(normas);
-        qq = qq(:, pos);
+        Qaux        = qq - q0' * ones(1, size(qq, 2));
+        [~, pos]    = min(vecnorm(Qaux, 2, 1));
+        qq          = qq(:, pos);
     end
     qq = qq';   % Las soluciones se devuelven por filas
 end
