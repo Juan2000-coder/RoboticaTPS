@@ -13,7 +13,7 @@ function posicionesGrabadas = mi_teach(R, varargin)
     addOptional(p, 'workspace', [-1 1 -1 1 0 1]);       % Espacio de trabajo
     addOptional(p, 'scale', 0.5);                       % Escala del plot
     addOptional(p, 'jointdiam', 0.5);                   % Diámetro de las juntas
-    addOptional(p, 'trail', {'r', 'LineWidth', 0.1});   % Configuración del rastro
+    addOptional(p, 'trail', false);                     % Configuración del rastro
     addOptional(p, 'nowrist', 'nowrist');               % Opción de muñeca desactivada
     addOptional(p, 'notiles', 'tiles');
     addOptional(p, 'frames', false);                    % Opción de marcos de referencia
@@ -35,7 +35,11 @@ function posicionesGrabadas = mi_teach(R, varargin)
 
     % Creación de la figura y plot del robot
     fig = figure;
-    R.plot(q, 'workspace', workspace,'scale',scale, 'jointdiam', jointdiam, 'trail', trail, nowrist, notiles);
+    if ~islogical(trail)
+        R.plot(q, 'workspace', workspace,'scale',scale, 'jointdiam', jointdiam, 'trail', trail, nowrist, notiles);
+    else
+        R.plot(q, 'workspace', workspace,'scale',scale, 'jointdiam', jointdiam, nowrist, notiles);
+    end
     if frames
         hold on;
         handlers = plot_frames(R, sistemas, q);
