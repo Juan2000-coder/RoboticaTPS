@@ -40,7 +40,6 @@ function qq = UR10e_ikine(R, Tp, q0, mejor)
     px         =  T.t(1);
     py         =  T.t(2);
     pz         =  T.t(3);
-
     % Singularidad muñeca
     % booleano para verificar si hay singularidad de muñeca
     q5_singu   = false;
@@ -86,7 +85,6 @@ function qq = UR10e_ikine(R, Tp, q0, mejor)
         % En este caso q6 defaults to 45°
     end
     q6    = atan2((-ox*S1 + oy*C1) ./ S5, (nx*S1 - ny*C1) ./ S5);
-
     %% Cálculo de q234 
     if q5_singu
         % Hay caso singular de muñeca
@@ -122,7 +120,6 @@ function qq = UR10e_ikine(R, Tp, q0, mejor)
     if (any(disc < 0))
         warning('UR10e_ikine:q2_complejo', 'El punto está fuera del alcance de robot. Conservando la parte real...');
     end
-
     num     = A.^2 + B.^2 + a(2)^2 - a(3)^2;
     den     = real(sqrt(disc));
 
